@@ -22,17 +22,26 @@
     </header>
 
     <!-- Wrapping the button in a block-level element to center it -->
-    <div style="text-align: center;">
-        <button id="dark-mode-toggle">Toggle dark mode</button>
-    </div>
+<!-- Wrapping the button in a block-level element to center it -->
+<div style="text-align: center;">
+  <button id="dark-mode-toggle">Toggle dark mode</button>
+</div>
 
-    <script>
-        document
-            .querySelector("#dark-mode-toggle")
-            .addEventListener('click', () => {
-                document.body.classList.toggle("latex-dark");
-            });
-    </script>
+<script>
+  const button = document.querySelector("#dark-mode-toggle");
+
+  button.addEventListener('click', () => {
+      const isDarkMode = document.body.classList.toggle("latex-dark");
+
+      // Change the button text based on the current mode
+      if (isDarkMode) {
+          button.textContent = "Toggle light mode";
+      } else {
+          button.textContent = "Toggle dark mode";
+      }
+  });
+</script>
+
 
     <nav role="navigation" class="toc">
         <h2>Contents</h2>
