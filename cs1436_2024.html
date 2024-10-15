@@ -11,10 +11,30 @@
         <h1>CS 1436.001/.009 <br> Programming Fundamentals</h1>
         <p>Instructor: <a href="https://wtd-1.github.io/ricks/">Brian Wescott Ricks</a>
         <br>Teaching Assistant: <a href="https://wtd-1.github.io/web/">William T. Doan</a></p>
-        <p>Syllabus: <a href="https://dox.utdallas.edu/syl144268">click here</a></p>
+        <p>Syllabus: <a href="https://dox.utdallas.edu/syl144268">click here</a></p><br>
 
     </header>
     
+    <div style="text-align: center;">
+        <button id="dark-mode-toggle">Toggle dark mode</button>
+      </div>
+      
+      <script>
+        const button = document.querySelector("#dark-mode-toggle");
+      
+        button.addEventListener('click', () => {
+            const isDarkMode = document.body.classList.toggle("latex-dark");
+      
+            // Change the button text based on the current mode
+            if (isDarkMode) {
+                button.textContent = "Toggle light mode";
+            } else {
+                button.textContent = "Toggle dark mode";
+            }
+        });
+      </script>
+      
+
     <section>
         <h2>Course Overview</h2>
         <p> Introduces the fundamental concepts of structured programming. 
