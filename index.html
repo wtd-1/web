@@ -8,41 +8,53 @@
     <link rel="stylesheet" href="https://latex.vercel.app/prism/prism.css">
     <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Apply theme based on localStorage -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("latex-dark");
+            }
+        });
+    </script>
 </head>
 
 <body id="top">
     <header>
-        <h1 class="author">William T. Doan<br> </h1>
-        <hr>
-        <h3 class="author">Undergraduate Researcher <br> </h3>
-        <div class="abstract">
-            <h2>Abstract</h2>
-            <p>This webpage presents the work of William T. Doan. <br>It was written using a
-                classless CSS library that converts HTML content into a website that resembles 
-                a  <span class="latex">L<span>a</span>T<span>e</span>X</span> document.</p>
-        </div>
+      <h1><br>William T. Doan</h1>
+        <p class="author">
+          Undergraduate Researcher
+        </p><br>
     </header>
 
-    <!-- Wrapping the button in a block-level element to center it -->
-<!-- Wrapping the button in a block-level element to center it -->
-<div style="text-align: center;">
-  <button id="dark-mode-toggle">Toggle dark mode</button>
-</div>
+    <div style="text-align: center;">
+        <button id="dark-mode-toggle">Toggle dark mode</button>
+    </div>
 
-<script>
-  const button = document.querySelector("#dark-mode-toggle");
+    <script>
+        const button = document.querySelector("#dark-mode-toggle");
 
-  button.addEventListener('click', () => {
-      const isDarkMode = document.body.classList.toggle("latex-dark");
+        function applyTheme(theme) {
+            if (theme === "dark") {
+                document.body.classList.add("latex-dark");
+                button.textContent = "Toggle light mode";
+            } else {
+                document.body.classList.remove("latex-dark");
+                button.textContent = "Toggle dark mode";
+            }
+        }
 
-      // Change the button text based on the current mode
-      if (isDarkMode) {
-          button.textContent = "Toggle light mode";
-      } else {
-          button.textContent = "Toggle dark mode";
-      }
-  });
-</script>
+        applyTheme(localStorage.getItem("theme") || "light");
+
+        button.addEventListener('click', () => {
+            const currentTheme = document.body.classList.toggle("latex-dark") ? "dark" : "light";
+            localStorage.setItem("theme", currentTheme);
+            applyTheme(currentTheme);
+        });
+    </script>
+</body>
+</html>
+
 
 <br>
 <blockquote>
@@ -56,50 +68,15 @@
     <nav role="navigation" class="toc">
         <h2>Contents</h2>
         <ol>
-          <li><a href="#about">Biography</a></li>
-          <li><a href="#headlines">Headlines</a></li>
-          <li><a href="#teaching">Teaching</a></li>
-          <ol>
-            <li><a href="#teaching_24">Fall 2024</a></li>
-          </ol>
-          <li><a href="#publications">Publications</a></li>
-          <li><a href="#grants">Grants</a></li>
-          <li><a href="#awards">Awards and Accolades</a></li>
-          <li><a href="#people">People</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="biography.html">Biography</a></li>
+         <!-- <li><a href="#headlines">Headlines</a></li> -->
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="grants.html">Grants</a></li>
+          <li><a href="teaching.html">Teaching</a></li>
+          <li><a href="awards.html">Awards and Accolades</a></li>
+          <li><a href="people.html">People</a></li>
+          <!-- <li><a href="#contact">Contact</a></li> -->
     </nav>
-    
-    <article class="indent-pars">
-        <section id="about">
-            <h2>Biography</h2>
-            <p>William T. Doan is an undergraduate researcher 
-                with a passion for theoretical computer science, algorithm design, string algorithms,
-                computational biology, ad hoc networks, social networks, and data structures. He is 
-                supervised by Dr. <a href="https://personal.utdallas.edu/~djg230002/">Daniel Gibney</a>.
-                <br><br>
-                Mr. Doan also does work for Dr. <a href="https://personal.utdallas.edu/~jxh101000/hsu.html">
-                    Julia W.P. Hsu</a> under a Research Experience for Undergraduates grant he received from 
-                    the National Science Foundation.
-                <br><br>
-                In addition to his research, Doan is also the Lead Teaching Assistant for the 
-                laboratories of CS 1436.001 and CS 1436.009. His teaching is advised by 
-                Dr. <a href="https://profiles.utdallas.edu/absolutefunk">Brian Ricks</a>.
-                <br><br>
-                Previously, Mr. Doan did research under Dr. 
-                <a href="https://www.yapengtian.com/">Yapeng Tian</a>. 
-                Under Dr. Tian, Doan conducted research in audiovisual novelty detection, 
-                audiovisual sound-source segmentation, and object detection according to 
-                joint attention at looking targets.
-                <br><br>
-                For more on Mr. Doan's work, see his 
-                <a href="https://wtd-1.github.io/web/Curriculum_Vitae (4).pdf">Curriculum Vitae</a> or 
-                <a href="https://wtd-1.github.io/web/Resume_v2 (1).pdf">Resume</a>. For a consistently updated list of his
-                publications, refer to his <a href="https://dblp.org/pid/381/4112.html">DBLP</a> and 
-                <a href="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en">Google Scholar</a> profiles. 
-                </p>
-                <label for="sn-plus" class="sidenote-toggle"><kbd>+</kbd></label>
-<input type="checkbox" id="sn-plus" class="sidenote-toggle" />
-<span class="sidenote">Return to the top <a href="#top">here</a>.</span>
           
         <section id="headlines">
             <h2>Headlines</h2>
@@ -162,155 +139,19 @@
               </table>
             </div>
           </section> 
-          <label for="sn-plus10" class="sidenote-toggle"><kbd>+</kbd></label>
-          <input type="checkbox" id="sn-plus10" class="sidenote-toggle" />
-          <span class="sidenote">Return to the top <a href="#top">here</a>.</span>
-
-
-          
-          <section id="publications">
-            <h2>Publications</h2>
-            <h5>Hear Me, See Me, Understand Me: Audio-Visual Autism Behavior Recognition.
-              <i>IEEE Transactions on Multimedia.</i></h5>
-              Shijian Deng, Erin E. Kosloski, Siddhi Patel, Zeke A. Barnett, Yiyang Nan, Alexander Kaplan, 
-              Sisira Aarukapalli, <b>William T. Doan</b>, Matthew Wang, Harsh Singh, Pamela R. Rollins, Yapeng Tian<br>
-            </section>   
-            <label for="sn-plus45" class="sidenote-toggle"><kbd>+</kbd></label>
-            <input type="checkbox" id="sn-plus45" class="sidenote-toggle" />
-            <span class="sidenote">Return to the top <a href="#top">here</a>.</span>   
-
-            <section id="grants">
-              <h2>Grants</h2>
-    
-              <table>
-                <strong>Table 2.</strong> Funding Amounts Disbursed.
-                <thead>
-                  <tr>
-                    <th>Grant Name</th>
-                    <th>Date<br>Disbursed</th>
-                    <th>Source Organization</th>
-                    <th>Dollar Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Research Experiences for Undergradutes</td>
-                    <td>September 2024</td>
-                    <td>The National Science Foundation</td>
-                    <td>$2,250</td>
-                  </tr>
-                  <tr>
-                    <td>Summer Platform for Undergraduate Research</td>
-                    <td>April 2024</td>
-                    <td>The University of Texas at Dallas</td>
-                    <td>$4,500</td>
-                  </tr>
-                </tbody>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th></th>
-                    <th>Total Amount:</th>
-                    <th>$6,750</th>
-                  </tr>
-              </table>
-    
-              <label for="sn-plus44" class="sidenote-toggle"><kbd>+</kbd></label>
-    <input type="checkbox" id="sn-plus44" class="sidenote-toggle" />
-    <span class="sidenote">Return to the top <a href="#top">here</a>.</span>
-          </section>
-
-        <section id="teaching">
-          <section id="teaching_24">
-            <h2>Teaching</h2>
-            <h5>Fall 2024: CS 1436. <i><a href="cs1436_2024.html">Programming Fundamentals</a></i>.</h5>
-            Introduces the fundamental concepts of structured programming. 
-                Topics include software development methodology, data types, control structures, 
-                functions, arrays, and the mechanics of running, testing, and debugging.<br>
-
-            <h5>Fall 2024: The College Level Examination Program. <i>American Government.</i></h5>
-            Evaluates an understanding of American government and political processes, similar to a 
-            one-semester introductory college course. It covers key topics like the institutions 
-            of the federal government (presidency, Congress, courts), civil liberties, political parties, 
-            interest groups, political beliefs and behavior, and the U.S. Constitution<br>
-        </section>
-        <h5>Fall 2024: The College Level Examination Program. <i>Principles of Macroeconomics.</i></h5>
-        Evaluates a student's understanding of macroeconomic principles, including aggregate demand, 
-        aggregate supply, and the use of monetary and fiscal policy tools. Focuses on the broader 
-        aspects of economics that apply to an entire economy, such as the general price level, output, 
-        income, and the relationships among different sectors of the economy. Overview
-        basic economic concepts like scarcity and comparative advantage, as well as measurements such 
-        as gross domestic product (GDP), consumption, investment, unemployment, and inflation.<br>
-      </section>
-      </section>
-      <label for="sn-plus54" class="sidenote-toggle"><kbd>+</kbd></label>
-      <input type="checkbox" id="sn-plus54" class="sidenote-toggle" />
-      <span class="sidenote">Return to the top <a href="#top">here</a>.</span>
-
-      <section id="awards">
-        <h2>Awards and Accolades</h2>
-        <h5>The Erik Jonsson School of Engineering and Computer Science Poster Award. 
-          <i>Issued: 2 August 2024.</i></h5>
-          Awards are given based on judging of poster presentations. 
-          Posters are judged by 2-4 experts who may include faculty, 
-          graduate students, and staff members.<br>
-
-        <h5>Certificate of Congressional Recognition. 
-        <i>Issued: 4 June 2022.</i></h5>
-        This Certificate of Congressional Recognition was bestowed upon Mr. Doan by 
-        Congressman Van Taylor, the United States representative for Texas's third 
-        congressional district at the time in recognition and furtherance of his
-        "outstanding citizenship in [his] community and for [his] country."<br>
-
-        <h5>Certificate of Congratulations. 
-          <i>Issued: 4 June 2022.</i></h5>
-          This Certificate of Congratulations was bestowed upon Mr. Doan by Texas 
-          State Senator Angela Paxton and State Representative Jeff Leach of the 
-          eighth senatorial district and the sixty-seventh representative district respectively. 
-          It was given to recognize Mr. Doan's graduation as well as his work "in [his] community, 
-          state, and country."<br>
-  </section>
-  <label for="sn-plus3" class="sidenote-toggle"><kbd>+</kbd></label>
-<input type="checkbox" id="sn-plus3" class="sidenote-toggle" />
-<span class="sidenote">Return to the top <a href="#top">here</a>.</span>
-
-
-  <section id="people">
-    <h2>People</h2>
-    <li>
-      <b>Dr. <a href="https://personal.utdallas.edu/~djg230002/">Daniel Gibney</a></b>, thesis advisor.
-    </li>
-    <li>
-      <b>Dr. <a href="https://personal.utdallas.edu/~jxh101000/hsu.html">Julia W.P. Hsu</a></b>, REU advisor.
-    </li>
-    <li>
-      <b>Dr. <a href="https://profiles.utdallas.edu/absolutefunk">Brian Ricks</a></b>, teaching advisor.
-    </li>
-    <li>
-      <b>Dr. <a href="https://www.yapengtian.com/">Yapeng Tian</a></b>, former research advisor.
-    </li>
-</section>
-<label for="sn-plus4" class="sidenote-toggle"><kbd>+</kbd></label>
-<input type="checkbox" id="sn-plus4" class="sidenote-toggle" />
-<span class="sidenote">Return to the top <a href="#top">here</a>.</span>
 
         <section id="contact">
-            <h2>Contact</h2>
+            <h2>Contact <label for="sn-plus4" class="sidenote-toggle"><kbd>+</kbd></label>
+              <input type="checkbox" id="sn-plus4" class="sidenote-toggle" />
+              <span class="sidenote">Return to the top <a href="#top">here</a>.</span></h2>
             <p>Queries can be sent to <code> lastname <kbd>@</kbd> (institution:= utdallas) <kbd>.</kbd> edu</code>. 
               Connect with Mr. Doan on <a href="www.linkedin.com/in/wt3">LinkedIn</a> and view his GitHub <a href="https://github.com/wtd-1">here</a>.
             </p>
+            <br>
         </section>
-
-
-        <div class="footnotes">
-          <div style="text-align: center;">
-              <h5 style="padding-top: 5px; padding-bottom: 20px;">Return to the top <i><a href="index.html">here</a></i>.</h5>
-              </div>
-        </div>
-      
+        <br>
       
       <div class="footnotes">
-          <br>
           <p>&copy; 2024 William T. Doan. All rights reserved.<br><br>
                </p>
         </div>

@@ -5,39 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CS 1436 F24</title>
     <link rel="stylesheet" href="https://latex.vercel.app/style.css">
+
+        <!-- JavaScript to set initial theme from localStorage -->
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+              if (localStorage.getItem("theme") === "dark") {
+                  document.body.classList.add("latex-dark");
+              }
+          });
+      </script>
 </head>
 <body>
     <header>
-        <h1>Fall 2024: CS 1436 <br> <i>Programming Fundamentals</i></h1>
+        <h1>Fall 2024: CS 1436 <br> <i>Programming Fundamentals <label for="sn-plus54" class="sidenote-toggle"><kbd>+</kbd></label>
+          <input type="checkbox" id="sn-plus54" class="sidenote-toggle" />
+          <span class="sidenote">Return to the previous page <a href="teaching.html">here</a>.</span></i></h1>
         <hr>
         <p>Instructor: <a href="https://personal.utdallas.edu/~bwr031000/">Brian Wescott Ricks</a>
         <br>Laboratory Teaching Assistant: <a href="https://wtd-1.github.io/web/">William T. Doan</a>
         <br>Course Teaching Assistant: <a href="https://www.linkedin.com/in/bhavana-gurram-714633193/">Bhavana Bramaram Gurram</a>
         </a></p>
         <p style="padding-top: 5px; padding-bottom: 15px;">Syllabus: <a href="https://dox.utdallas.edu/syl144268">View here</a></p>
-        <hr> <br>
+        <hr>
     </header>
     
-    <div style="text-align: center;">
-        <button id="dark-mode-toggle">Toggle dark mode</button>
-      </div>
-      
-      <script>
-        const button = document.querySelector("#dark-mode-toggle");
-      
-        button.addEventListener('click', () => {
-            const isDarkMode = document.body.classList.toggle("latex-dark");
-      
-            // Change the button text based on the current mode
-            if (isDarkMode) {
-                button.textContent = "Toggle light mode";
-            } else {
-                button.textContent = "Toggle dark mode";
-            }
-        });
-      </script>
-      
-
     <section>
         <h2>Course Overview</h2>
         <p> Introduces the fundamental concepts of structured programming. 
@@ -102,15 +93,8 @@
 </section>
 
 <br>
-<div class="footnotes">
-    <div style="text-align: center;">
-        <h5 style="padding-top: 5px; padding-bottom: 20px;">Return to the homepage <i><a href="index.html">here</a></i>.</h5>
-    </div>
-  </div>
-
 
 <div class="footnotes">
-    <br>
     <p>&copy; 2024 William T. Doan. All rights reserved.<br><br>
 
         <strong>Confidential and Proprietary — Not for External Distribution.</strong><br><br>
