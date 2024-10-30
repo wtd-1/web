@@ -23,7 +23,7 @@
         /* Lightbulb styling */
         .lightbulb {
     position: relative;
-    top: 1.5rem; /* Moves the lightbulb down by 2rem */
+    top: -0.5rem; /* Moves the lightbulb down by 2rem */
     width: 3rem;
     height: 4rem;
     background: #ffc107; /* Lightbulb color */
@@ -37,11 +37,11 @@
         .lightbulb::before {
     content: '';
     position: absolute;
-    bottom: -2rem; /* Moves the base lower */
+    bottom: -1.5rem; /* Moves the base lower */
     left: 50%; /* Centers the base horizontally */
     width: 0.9rem;
-    height: 2rem;
-    background: #333; /* Bulb base color */
+    height: 1.5rem;
+    background: #708090; /* Bulb base color */
     border-radius: 0 0 10% 10%;
     transform: translateX(-50%); /* Centers the base exactly under the bulb */
 }
