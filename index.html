@@ -12,18 +12,86 @@
     <!-- Apply theme based on localStorage -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem("theme") === "dark") {
-                document.body.classList.add("latex-dark");
-            }
+            const theme = localStorage.getItem("theme") || "light";
+            document.body.classList.toggle("latex-dark", theme === "dark");
+            document.documentElement.setAttribute("data-theme", theme);
         });
     </script>
 </head>
-
-
 <body id="top">
-  <header style="border: 2px solid currentColor; padding: 0px; text-align: center; width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
-      <h1 style="margin: 0;">William T. Doan</h1>
+  <header style="border: 2px solid currentColor; padding: 0; text-align: center; width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; position: relative; overflow: hidden;">
+    <!-- Subtle 3D Rotating Cube -->
+    <div class="scene">
+      <div class="cube">
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face left"></div>
+        <div class="face right"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+      </div>
+    </div>
   </header>
+
+  <style>
+    :root {
+      --text-color: black;
+    }
+
+    [data-theme="dark"] {
+      --text-color: white;
+    }
+
+    /* Positioning the cube scene within the header */
+    .scene {
+      width: 70px;
+      height: 70px;
+      perspective: 600px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1; /* Keep cube behind the text */
+    }
+
+    /* Cube setup */
+    .cube {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCube 10s infinite linear;
+    }
+
+    /* Cube faces */
+    .face {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 128, 255, 0.3); /* Increase transparency */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.5); /* Less prominent border */
+    }
+
+    .front  { transform: translateZ(30px); }
+    .back   { transform: rotateY(180deg) translateZ(30px); }
+    .left   { transform: rotateY(-90deg) translateZ(30px); }
+    .right  { transform: rotateY(90deg) translateZ(30px); }
+    .top    { transform: rotateX(90deg) translateZ(30px); }
+    .bottom { transform: rotateX(-90deg) translateZ(30px); }
+
+    /* Animation for rotating the cube */
+    @keyframes rotateCube {
+      0%   { transform: rotate3d(1, 1, 0, 0deg); }
+      100% { transform: rotate3d(1, 1, 0, 360deg); }
+    }
+  </style>
+<br>
+
+<h1 style="margin: 0; color: var(--text-color); z-index: 2; font-size: 2.5em; text-align: center;">William T. Doan</h1>
+
 <br>
   <hr>
   <div id="carousel-container" style="overflow: hidden; white-space: nowrap; width: 100%; max-width: 100vw;">
@@ -59,27 +127,24 @@
         <button id="dark-mode-toggle">Toggle dark mode</button>
     </div>
 
-    <script>
-        const button = document.querySelector("#dark-mode-toggle");
+  <script>
+      const button = document.querySelector("#dark-mode-toggle");
 
-        function applyTheme(theme) {
-            if (theme === "dark") {
-                document.body.classList.add("latex-dark");
-                button.textContent = "Toggle light mode";
-            } else {
-                document.body.classList.remove("latex-dark");
-                button.textContent = "Toggle dark mode";
-            }
-        }
+      function applyTheme(theme) {
+          document.body.classList.toggle("latex-dark", theme === "dark");
+          document.documentElement.setAttribute("data-theme", theme);
+          button.textContent = theme === "dark" ? "Toggle light mode" : "Toggle dark mode";
+      }
 
-        applyTheme(localStorage.getItem("theme") || "light");
+      applyTheme(localStorage.getItem("theme") || "light");
 
-        button.addEventListener('click', () => {
-            const currentTheme = document.body.classList.toggle("latex-dark") ? "dark" : "light";
-            localStorage.setItem("theme", currentTheme);
-            applyTheme(currentTheme);
-        });
-    </script>
+      button.addEventListener('click', () => {
+          const newTheme = document.body.classList.contains("latex-dark") ? "light" : "dark";
+          localStorage.setItem("theme", newTheme);
+          applyTheme(newTheme);
+      });
+  </script>
+
 
 <br>
 <blockquote>

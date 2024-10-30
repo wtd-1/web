@@ -6,6 +6,67 @@
     <title>CS 1436 F24</title>
     <link rel="stylesheet" href="https://latex.vercel.app/style.css">
     
+    <header style="border: 2px solid currentColor; padding: 0; text-align: center; width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; position: relative; overflow: hidden;">
+        <!-- Lightbulb animation container -->
+        <div class="lightbulb"></div>
+    </header>
+    
+    <style>
+        :root {
+            --text-color: #708090;
+        }
+    
+        [data-theme="latex-dark"] {
+            --text-color: rgb(140, 140, 140);
+        }
+    
+        /* Lightbulb styling */
+        .lightbulb {
+    position: relative;
+    top: 1.5rem; /* Moves the lightbulb down by 2rem */
+    width: 3rem;
+    height: 4rem;
+    background: #ffc107; /* Lightbulb color */
+    border-radius: 50% 50% 45% 45%; /* Bulb shape */
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.6);
+    animation: flicker 3s infinite;
+}
+
+    
+        /* Filament */
+        .lightbulb::before {
+    content: '';
+    position: absolute;
+    bottom: -2rem; /* Moves the base lower */
+    left: 50%; /* Centers the base horizontally */
+    width: 0.9rem;
+    height: 2rem;
+    background: #333; /* Bulb base color */
+    border-radius: 0 0 10% 10%;
+    transform: translateX(-50%); /* Centers the base exactly under the bulb */
+}
+    
+        /* Flicker animation */
+        @keyframes flicker {
+            0%, 20%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 25px rgba(255, 193, 7, 0.8), 0 0 50px rgba(255, 193, 7, 0.6);
+                background: #ffeb3b;
+            }
+            10%, 30% {
+                opacity: 0.7;
+                box-shadow: 0 0 5px rgba(255, 193, 7, 0.3), 0 0 20px rgba(255, 193, 7, 0.2);
+                background: #ff9800;
+            }
+            40% {
+                opacity: 0.5;
+                box-shadow: 0 0 2px rgba(255, 193, 7, 0.2), 0 0 10px rgba(255, 193, 7, 0.1);
+                background: #ff9800;
+            }
+        }
+    </style>
+    
+
     <!-- Script to set theme based on localStorage without a toggle button -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
