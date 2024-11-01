@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://latex.vercel.app/prism/prism.css">
     <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Apply theme based on localStorage -->
     <script>
@@ -32,62 +33,101 @@
       </div>
     </div>
   </header>
-
+  
   <style>
     :root {
       --text-color: black;
     }
-
+  
     [data-theme="dark"] {
       --text-color: white;
     }
-
-    /* Positioning the cube scene within the header */
+  
+    /* Positioning the scene to span the entire header */
     .scene {
-      width: 70px;
-      height: 70px;
+      width: 100%;
+      height: 100%;
       perspective: 600px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1; /* Keep cube behind the text */
+      position: relative;
     }
-
-    /* Cube setup */
+  
+    /* Cube setup and initial centering */
     .cube {
       width: 60px;
       height: 60px;
-      position: relative;
+      position: absolute; /* For drag positioning */
+      top: 30%;
+      left: 45%;
+      transform: translate(-50%, -50%);
       transform-style: preserve-3d;
       animation: rotateCube 10s infinite linear;
+      cursor: grab;
     }
-
+  
     /* Cube faces */
     .face {
       position: absolute;
       width: 60px;
       height: 60px;
-      background: rgba(0, 128, 255, 0.3); /* Increase transparency */
+      background: rgba(0, 128, 255, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.5); /* Less prominent border */
+      border: 1px solid rgba(255, 255, 255, 0.5);
     }
-
+  
     .front  { transform: translateZ(30px); }
     .back   { transform: rotateY(180deg) translateZ(30px); }
     .left   { transform: rotateY(-90deg) translateZ(30px); }
     .right  { transform: rotateY(90deg) translateZ(30px); }
     .top    { transform: rotateX(90deg) translateZ(30px); }
     .bottom { transform: rotateX(-90deg) translateZ(30px); }
-
+  
     /* Animation for rotating the cube */
     @keyframes rotateCube {
       0%   { transform: rotate3d(1, 1, 0, 0deg); }
       100% { transform: rotate3d(1, 1, 0, 360deg); }
     }
   </style>
+  
+  <script>
+    const cube = document.querySelector('.cube');
+    const scene = document.querySelector('.scene');
+    let isDragging = false;
+    let offsetX, offsetY;
+  
+    // Handle mouse down
+    cube.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      cube.style.cursor = 'grabbing';
+      offsetX = e.clientX - cube.getBoundingClientRect().left;
+      offsetY = e.clientY - cube.getBoundingClientRect().top;
+    });
+  
+    // Handle mouse move
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const rect = scene.getBoundingClientRect();
+        let x = e.clientX - rect.left - offsetX;
+        let y = e.clientY - rect.top - offsetY;
+  
+        // Constrain the cube within the entire scene (header) box
+        x = Math.max(0, Math.min(x, rect.width - cube.offsetWidth));
+        y = Math.max(0, Math.min(y, rect.height - cube.offsetHeight));
+  
+        // Apply the position while maintaining rotation animation
+        cube.style.left = `${x}px`;
+        cube.style.top = `${y}px`;
+      }
+    });
+  
+    // Handle mouse up
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      cube.style.cursor = 'grab';
+    });
+  </script>
+  
 <br>
 
 <h1 style="margin: 0; color: var(--text-color); z-index: 2; font-size: 2.5em; text-align: center;">William T. Doan</h1>
@@ -157,7 +197,7 @@
 
 <nav role="navigation" class="toc">
   <h2>Table of Contents</h2>
-  <ol style="columns: 2; -webkit-columns: 3; -moz-columns: 2; list-style-position: inside; padding-left: 0;">
+  <ol style="columns: 2; -webkit-columns: 2; -moz-columns: 2; list-style-position: inside; padding-left: 0;">
       <li><a href="biography.html">Biography</a></li>
       <li><a href="publications.html">Publications</a></li>
       <li><a href="grants.html">Grants</a></li>
@@ -234,10 +274,51 @@
             <h2>Contact <label for="sn-plus4" class="sidenote-toggle"><kbd>+</kbd></label>
               <input type="checkbox" id="sn-plus4" class="sidenote-toggle" />
               <span class="sidenote">Return to the top <a href="#top">here</a>.</span></h2>
-            <p>Queries can be sent to <code> lastname <kbd>@</kbd> (institution:= utdallas) <kbd>.</kbd> edu</code>. 
-              Connect with Mr. Doan on <a href="www.linkedin.com/in/wt3">LinkedIn</a> and view his GitHub <a href="https://github.com/wtd-1">here</a>.
+            <p>Queries can be sent to <code> lastname <kbd>@</kbd> (institution:= utdallas) <kbd>.</kbd> edu</code>.
             </p>
             <br>
+
+            <fieldset id="forms__action">
+              <legend>External Links</legend>
+              <p style="text-align: center;">
+                  <!-- LinkedIn Button with Icon -->
+                  <button onclick="window.open('https://www.linkedin.com/in/wt3/', '_blank')" class="icon-button">
+                      <i class="fab fa-linkedin"></i> LinkedIn
+                  </button>
+          
+                  <!-- GitHub Button with Icon -->
+                  <button onclick="window.open('https://github.com/wtd-1', '_blank')" class="icon-button">
+                      <i class="fab fa-github"></i> GitHub
+                  </button>
+              </p>
+              <br>
+          </fieldset>
+          
+          
+<style>
+
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    margin: 0 10px;
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.icon-button i {
+    margin-right: 8px; /* Space between icon and text */
+    font-size: 18px;
+}
+
+
+</style>
+
         </section>
         <br>
       
