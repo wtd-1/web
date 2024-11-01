@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CS 1436 F24</title>
     <link rel="stylesheet" href="https://latex.vercel.app/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     
     <header style="border: 2px solid currentColor; padding: 0; text-align: center; width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; position: relative; overflow: hidden;">
         <!-- Waving man -->
@@ -177,13 +179,54 @@
             <fieldset id="forms__action">
               <legend>More on Mr. Doan</legend>
               <p style="text-align: center;">
-                <input type="button" value="Curriculum Vitae" onclick="window.location.href='https://wtd-1.github.io/web/Curriculum_Vitae (4).pdf'">
-                <input type="button" value="Resume" onclick="window.location.href='https://wtd-1.github.io/web/Resume_v2 (1).pdf'">
-                <input type="button" value="DBLP" onclick="window.location.href='https://dblp.org/pid/381/4112.html'">
-                <input type="button" value="Google Scholar" onclick="window.location.href='https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en'">
+                  <!-- Curriculum Vitae Button with Icon -->
+                  <button onclick="window.open('https://wtd-1.github.io/web/Curriculum_Vitae (4).pdf', '_blank')" class="icon-button">
+                      <i class="fas fa-file-alt"></i>Curriculum Vitae
+                  </button>
+          
+                  <!-- Resume Button with Icon -->
+                  <button onclick="window.open('https://wtd-1.github.io/web/Resume_v2 (1).pdf', '_blank')" class="icon-button">
+                      <i class="fas fa-file"></i>Resume
+                  </button>
+
+                </p>
+
+                <p style="text-align: center;">
+          
+                  <!-- DBLP Button with Custom Icon -->
+                  <button onclick="window.open('https://dblp.org/pid/381/4112.html', '_blank')" class="icon-button">
+                    <img src="dblp.svg" alt="DBLP Logo" style="width:18px; height:18px; margin-right:8px;">
+                    DBLP
+                  </button>
+          
+                  <!-- Google Scholar Button with Icon -->
+                  <button onclick="window.open('https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en', '_blank')" class="icon-button">
+                      <i class="fas fa-graduation-cap"></i>Google Scholar
+                  </button>
               </p>
               <br>
-            </fieldset>
+          </fieldset>
+          
+          <style>
+            .icon-button {
+                display: inline-flex;
+                align-items: center;
+                padding: 8px 12px;
+                margin: 0 20px; /* Space between buttons */
+                font-size: 16px;
+                text-decoration: none;
+                color: black;
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            
+            .icon-button i, .icon-button img {
+                margin-right: 8px; /* Space between icon and text */
+            }
+            </style>
+          
         </p>
     </section>
     <br>
