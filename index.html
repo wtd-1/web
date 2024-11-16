@@ -21,6 +21,7 @@
 </head>
 <body id="top">
   <header style="border: 2px solid currentColor; padding: 0; text-align: center; width: 100%; height: 150px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; position: relative; overflow: hidden;">
+
     <!-- Subtle 3D Rotating Cube -->
     <div class="scene">
       <div class="cube">
@@ -33,7 +34,7 @@
       </div>
     </div>
   </header>
-  
+
   <style>
     :root {
       --text-color: black;
@@ -130,16 +131,35 @@
   
 <br>
 
-<h1 style="margin: 0; color: var(--text-color); z-index: 2; font-size: 2.5em; text-align: center;">William T. Doan</h1>
+<h1 style="margin: 0; color: var(--text-color); z-index: 2; font-size: 2.5em; text-align: center;">William T. Doan 
+  <span class="sidenote"><div style="display: flex; justify-content: center;">
+  
+    <label class="switch">
+        <input class="switch-input" type="checkbox" id="dark-mode-toggle" />
+        <span class="switch-label" data-on="Light" data-off="Dark"></span>
+        <span class="switch-handle"></span>
+    </label>
+  </div></span>
+
+</h1>
 
 <br>
   <hr>
   <div id="carousel-container" style="overflow: hidden; white-space: nowrap; width: 100%; max-width: 100vw;">
     <p id="carousel-text" style="margin-top: 2px; display: inline-block;">
         Undergraduate Researcher • Bachelor of Science in Computer Science Student • Teaching Assistant •
-    </p><hr><br>
+    </p><hr>
 </div>
 
+<div class="abstract">
+  <h2>Abstract</h2>
+  <p>
+    This website uses an almost classless CSS library that turns any HTML page into a
+    website that resembles a
+    <span class="latex">L<span>a</span>T<span>e</span>X</span>
+    document. It is the homepage of one Mr. William T. Doan. Read more about him and his work herewith.
+  </p>
+</div>
 
   <script>
       // JavaScript for smooth horizontal scrolling with duplicated text
@@ -161,18 +181,9 @@
   
       scrollText(); // Start the scrolling animation
   </script>
-  
-<br>
 
 
-<div style="display: flex; justify-content: center;">
-  
-  <label class="switch">
-      <input class="switch-input" type="checkbox" id="dark-mode-toggle" />
-      <span class="switch-label" data-on="Light" data-off="Dark"></span>
-      <span class="switch-handle"></span>
-  </label>
-</div>
+
 
 
 
@@ -301,16 +312,6 @@
       });
   </script>
 
-
-<br>
-<blockquote>
-  For me, great algorithms are the poetry of computation. Just like verse, they can be terse, 
-  allusive, dense, and even mysterious. But once unlocked, they cast a brilliant new light 
-  on some aspect of computing. <br>
-  <cite>— John G. F. Francis</cite>
-</blockquote>
-
-
 <nav role="navigation" class="toc">
   <h2>Table of Contents</h2>
   <ol style="columns: 2; -webkit-columns: 2; -moz-columns: 2; list-style-position: inside; padding-left: 0;">
@@ -389,7 +390,7 @@
         <section id="contact">
             <h2>Contact <label for="sn-plus4" class="sidenote-toggle"><kbd>+</kbd></label>
               <input type="checkbox" id="sn-plus4" class="sidenote-toggle" />
-              <span class="sidenote">Return to the top <a href="#top">here</a>.</span></h2>
+              <span class="sidenote">↑ <a href="#top">Return to the top here</a>.</span></h2>
             <p>Queries can be sent to <code> lastname <kbd>@</kbd> (institution:= utdallas) <kbd>.</kbd> edu</code>.
             </p>
             <br>
