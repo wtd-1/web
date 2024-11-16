@@ -1,0 +1,36 @@
+#include <iostream>
+
+int main() {
+
+        int students = 0;
+        int grades = 0;
+        int grades_sum = 0;
+        int total_grade = 0;
+
+        for ( int i = 1; i <= 30; i++  ) {
+
+                std::cout << "Enter grade: ";
+                std::cin >> grades;
+
+                while ( grades < 0 || grades > 100 ) {
+
+                        std::cout << "Error: invalid input. \n"
+                                  << "Grades must be within "
+                                  << "0 - 100."
+                                  << std::endl;
+
+                        std::cout << "Enter the grade again: ";
+                        std::cin >> grades;
+
+                }
+
+                students++;
+                grades_sum += grades;
+
+        }
+
+        std::cout << "The total number of grades entered: "
+                  << students  << std::endl;
+
+        return 0;
+}
