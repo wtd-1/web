@@ -1,0 +1,6 @@
+body {
+    max-width: 50%; /* Allow content to span the full viewport width */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin: 0 auto; /* Center the content if max-width is less than 100% */
+}
+

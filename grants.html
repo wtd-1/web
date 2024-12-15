@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WTD Grants</title>
     <link rel="stylesheet" href="https://latex.vercel.app/style.css">
+    <link rel="stylesheet" href="styles.css">
     
     <!-- Script to set theme based on localStorage without a toggle button -->
     <script>
@@ -20,14 +21,12 @@
 <body>
 
     <!-- Your content here -->
-    <section id="grants">
-      <h1>Grants <label for="sn-plus54" class="sidenote-toggle"><kbd>+</kbd></label>
-        <input type="checkbox" id="sn-plus54" class="sidenote-toggle" />
-        <span class="sidenote"><kbd><a href="index.html">Return to the homepage here</a></kbd></span></h1><hr>
+    <section id="grants"; class="scrollable-table">
+      <hr><h1><center>Grants</center></h1><hr>
         <br>
-        <div class="scroll-wrapper">
-        <table>
-          <strong>Table 3.</strong> Funding Amounts Disbursed.
+        <div>
+          <table style="width: 100%; border-collapse: collapse;">
+            <strong>Table 3.</strong> Funding Amounts Disbursed.
           <thead>
             <tr>
               <th>Grant Name</th>
@@ -63,8 +62,11 @@
     <br>
     <br>
     <div class="footnotes">
-        <p>&copy; 2024 William T. Doan. All rights reserved.<br><br>
-        </p>
+      <br>
+      <p style="display: flex; justify-content: space-between; align-items: center; margin: 0;">
+          <span style="flex: 1; text-align: left;">&copy; 2024 William T. Doan. All rights reserved.</span>
+          <span style="flex: 1; text-align: right;"><kbd><a href="index.html">Return to the homepage here</a></kbd></span>
+      </p>
       </div>
     </body>
 
