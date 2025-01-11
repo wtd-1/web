@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>WTD Website</title>
+    <meta name="description" content="A pure HTML example, without dependencies." />
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="container">
+      <hgroup>
+        <h1>Biography        </h1>
+        <p>Read all about me!</p>
+      </hgroup>
+      <br>
+      <blockquote>
+        "For me, great algorithms are the poetry of computation. Just like verse, 
+        they can be terse, allusive, dense, and even mysterious. But once unlocked, 
+        they cast a brilliant new light on some aspect of computing."
+        <footer>
+          <cite>- Francis Sullivan</cite>
+        </footer>
+      </blockquote>
+      <br>
+      <p>William T. Doan is an undergraduate researcher 
+        with a passion for theoretical computer science, algorithm design, string algorithms,
+        computational biology, ad hoc networks, social networks, and data structures. He is 
+        supervised by Dr. <a href="https://personal.utdallas.edu/~djg230002/">Daniel Gibney</a>.
+        Furthermore, Mr. Doan is also working on problems related to the Fréchet Distnace, supervised 
+        by Dr. <a href="https://personal.utdallas.edu/~kyle.fox/">Emily Fox</a>.
+        <br><br>
+        In addition to his research, Doan is an undergraduate teaching assistant
+        for Data Structures and Introduction to Algorithmic Analysis, taught by Dr. 
+        <a href="https://ieeexplore.ieee.org/author/37087079843">
+          Meghana Satpute</a>. He was also the Lead Teaching Assistant for the 
+        laboratories of two courses on Programming Fundaments. His teaching then was advised by 
+        Dr. <a href="https://profiles.utdallas.edu/absolutefunk">Brian Ricks</a>.
+        <br><br>
+        Previously, Mr. Doan did research under Dr. 
+        <a href="https://www.yapengtian.com/">Yapeng Tian</a>. 
+        Under Dr. Tian, Doan conducted research in audiovisual novelty detection, 
+        audiovisual sound-source segmentation, and object detection according to 
+        joint attention at looking targets. Mr. Doan also did work for Dr. 
+        <a href="https://personal.utdallas.edu/~jxh101000/hsu.html">
+          Julia W.P. Hsu</a> under a Research Experience for Undergraduates grant he received from 
+          the National Science Foundation. He worked on a better grain segmentation model using Meta's 
+          SAM as well as FTIR problems. 
+              </p>
+    </header>
+    <!-- Main -->
+    <main class="container">
+          <!--
+          <details>
+            <summary>More on Mr. Doan</summary>
+            <ul>
+                <li><a href="https://wtd-1.github.io/web/CV_v2%20(10).pdf" class="contrast">Curriculum Vitæ</a></li>
+                <li><a href="https://wtd-1.github.io/web/Resume_v2%20(2).pdf" class="contrast">Resume</a></li>
+                <li><a href="https://dblp.org/pid/381/4112.html" class="contrast">DBLP</a></li>
+                <li><a href="https://orcid.org/0009-0005-3135-6346" class="contrast">ORCiD</a></li>
+                <li><a href="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en" class="contrast">Google Scholar</a></li>
+                <li><a href="https://openreview.net/profile?id=~William_T._Doan1" class="contrast">Open Review</a></li>
+              </ul>
+          </details> -->
+          
+          <label for="select">More on Mr. Doan</label>
+          <select id="redirect-dropdown">
+            <option value="" selected>Select…</option>
+            <option value="https://wtd-1.github.io/web/CV_v2%20(10).pdf">Curriculum Vitæ</option>
+            <option value="https://wtd-1.github.io/web/Resume_v2%20(2).pdf">Resume</option>
+            <option value="https://dblp.org/pid/381/4112.html">DBLP</option>
+            <option value="https://orcid.org/0009-0005-3135-6346">ORCiD</option>
+            <option value="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en">Google Scholar</option>
+            <option value="https://openreview.net/profile?id=~William_T._Doan1">Open Review</option>
+          </select>
+        
+          <script>
+            // Add event listener for the dropdown
+            document.getElementById('redirect-dropdown').addEventListener('change', function() {
+              if (this.value) {
+                window.location.href = this.value;
+              }
+            });
+          </script>
+          <br><br>
+    <!-- Footer -->
+    <footer class="container" style="display: flex; justify-content: space-between; align-items: center;">
+        <small>© 2025 William T. Doan. All rights reserved.</small>
+        <small>        <kbd><a href="index.html" style="color: #009dff; text-decoration: none;">Return to the homepage</a></kbd>
+        </small>       </footer>
+      <br><br>
+    <!-- Minimal theme switcher -->
+    <script src="minimal-theme-switcher.js"></script>
+
+    <!-- Modal -->
+    <script src="modal.js"></script>
+  </body>
+</html>
