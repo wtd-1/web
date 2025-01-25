@@ -208,10 +208,34 @@
           <table class="striped">
             <thead>
               <tr>
-                <th scope="col" style="position: sticky; top: 0; background: #141820; z-index: 1; text-align: left; padding: 22px; ">Announcement</th>
-                <th scope="col" style="position: sticky; top: 0; background: #141820; z-index: 1; text-align: left; padding: 22px; ">Date</th>
+                <th
+                  scope="col"
+                  style="
+                    position: sticky;
+                    top: 0;
+                    background: var(--table-header-bg);
+                    z-index: 1;
+                    text-align: left;
+                    padding: 22px;
+                  "
+                >
+                  Announcement
+                </th>
+                <th
+                  scope="col"
+                  style="
+                    position: sticky;
+                    top: 0;
+                    background: var(--table-header-bg);
+                    z-index: 1;
+                    text-align: left;
+                    padding: 22px;
+                  "
+                >
+                  Date
+                </th>
               </tr>
-            </thead>
+            </thead>          
             <tbody>
               <tr>
                 <td>Won first prize ($1000 value) at HackReason UTD.</td>
@@ -330,6 +354,38 @@
           grace in awaiting my response.
         </p>
       
+        <!-- CSS -->
+<style>
+  :root {
+    --table-header-bg: #141820; /* Default dark mode background */
+  }
+
+  [data-theme="light"] {
+    --table-header-bg: #ffffff; /* Light mode background */
+  }
+
+  [data-theme="dark"] {
+    --table-header-bg: #141820; /* Dark mode background */
+  }
+</style>
+
+<!-- JavaScript -->
+<script>
+  const themeLinks = document.querySelectorAll("[data-theme-switcher]");
+  const rootElement = document.documentElement;
+
+  themeLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      const theme = link.getAttribute("data-theme-switcher");
+      if (theme === "auto") {
+        rootElement.removeAttribute("data-theme");
+      } else {
+        rootElement.setAttribute("data-theme", theme);
+      }
+    });
+  });
+</script>
         <!--
         <blockquote>
           "Maecenas vehicula metus tellus, vitae congue turpis hendrerit non. Nam at dui sit amet
