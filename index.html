@@ -143,7 +143,52 @@
           }
         }
       </script>
-  <br><br>
+      <br>
+            <!-- Warning Tab -->
+            <br>
+            <label for="invalid" style="display: block; margin-bottom: 8px;">
+              <div
+                id="invalid"
+                name="invalid"
+                role="alert"
+                aria-invalid="true"
+                style="
+                  padding: 16px;
+                  border: 2px solid red;
+                  border-radius: 4px;
+                  text-align: center;
+                  box-sizing: border-box;
+                  position: relative;
+                "
+              >
+              <span style="
+              display: block; /* Treat it as a block for justification */
+              text-align: justify; /* Justify the text */
+              line-height: 1.6; /* Add some line spacing for better readability */
+              margin: 0px 0; /* Add spacing above and below */
+          ">
+              It seems you are viewing this webpage on a smaller screen size. 
+              This content is viewed best on larger screens. Although this does 
+              not impede the functionality of the website, it may hinder the
+              experience through which the information is conveyed.
+          </span>
+          
+                <span
+                  style="
+                    position: absolute;
+                    right: 4px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    font-size: 1.5em;
+                    color: red;
+                  "
+                >
+                     <!--⚠-->
+                </span>
+              </div>
+            </label>      
+          
+  <br>
       <!-- Preview -->
       <section id="preview">
         <h3>Table of Contents</h3>
@@ -161,44 +206,21 @@
           <button onclick="location.href='ppl.html';" class="secondary">People</button>
         </p>
       </section>
-      <!-- ./ Preview -->
-       <!--
-      <br>
+      <style>
+        /* Default state: the box is hidden */
+        #invalid {
+          display: none;
+        }
       
-      <label for="invalid" style="display: block; margin-bottom: 8px;">
-        <div
-          id="invalid"
-          name="invalid"
-          role="alert"
-          aria-invalid="true"
-          style="
+        /* Show the box on small screens (e.g., screens narrower than 768px) */
+        @media screen and (max-width: 768px) {
+          #invalid {
             display: block;
-            width: 100%;
-            padding: 16px;
-            border: 2px solid red;
-            border-radius: 4px;
-            position: relative;
-            text-align: center;
-            box-sizing: border-box;
-          "
-        >
-          <span style="display: inline-block;">Here, find any important updates I might have. Check back soon!</span>
-          <span
-            style="
-              position: absolute;
-              right: 16px;
-              top: 50%;
-              transform: translateY(-50%);
-              font-size: 1.5em;
-              color: red;
-            "
-          >
-          ⚠
-          </span>-->
-        </div>
-      </label>
-      
-      
+            width: 90%; /* Adjust width to fit smaller screens */
+            margin: 16px auto; /* Center the box horizontally */
+          }
+        }
+      </style>
 
       <!-- Typography-->
        <br>
