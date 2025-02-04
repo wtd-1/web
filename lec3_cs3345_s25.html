@@ -199,12 +199,66 @@ the sum. <mark>This is just the formal definition for saying if you have multipl
   that if you have a polynomial, the time complexity of that polynomial is big-Oh of the term with the highest degree.</p>
 <p><strong>Rule 3.</strong>&nbsp  If \(log^{k}(n)\) is a base-\(2\) logarithm taken to the \(kth\) power, then 
 \(log^{k}(n) = O(n)\) for any contant \(k\).</p>
+<h2>A Quick Reference</h2>
+<style>
+  .center-wrapper {
+      display: flex;
+      flex-direction: column; /* Stacks image and caption vertically */
+      justify-content: center; /* Centers horizontally */
+      align-items: center; /* Centers vertically */
+      width: 100%;
+      margin-top: 20px; /* Adds spacing above */
+  }
+
+  .image-container {
+      display: inline-block; /* Ensures the container wraps tightly around the image */
+      padding: 6px; /* Space between the image and border */
+      border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+      border-radius: 5px; /* Slightly rounded corners */
+  }
+
+  img {
+      display: block; /* Removes inline spacing */
+      max-width: 100%; /* Ensures image responsiveness */
+  }
+
+  .image-caption {
+      margin-top: 8px; /* Adds space between image and caption */
+      font-size: 0.85rem; /* Makes caption slightly smaller */
+      text-align: center; /* Centers text */
+      color: var(--text-color); /* Adjusts color based on theme */
+  }
+
+  /* Define light and dark mode styles */
+  @media (prefers-color-scheme: dark) {
+      :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+  }
+  
+  @media (prefers-color-scheme: light) {
+      :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+  }
+</style>
+
+<!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+<div class="center-wrapper">
+  <div class="image-container">
+      <img src="https://wtd-1.github.io/web/0_MPwgKd4lgXACfuNt (1).png" alt="Asy_Ref_Guide" width="700">
+  </div>
+  <p class="image-caption">
+      <a href="https://stackoverflow.com/questions/1364444/difference-between-big-o-and-little-o-notation">Craig Gidney</a>, 
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via Stack Overflow
+  </p>
+</div>
+<p>You might notice in the figure above that the author used set membership symbols in addition to inequalities.
+  For our friends who want to leap into theory more deeply, using set membership is technically a more formal and rigorous way 
+  to denote the relationship between two functions. However, using inequalities alone is common and is just fine! 
+</p>
 <!-- Footer -->
  <br><br>
 <footer class="container" style="display: flex; justify-content: space-between; align-items: center;">
   <small>© 2025 William T. Doan. All rights reserved.</small>
   <small><kbd><a href="lec2_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Previous Lecture</a></kbd></small>
-  <small><kbd><a href="#" style="color: #009dff; text-decoration: none;">Next Lecture</a></kbd></small>
+  <small><kbd><a href="lec4_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Next Lecture</a></kbd></small>
   <small><kbd><a href="index.html" style="color: #009dff; text-decoration: none;">Return to the homepage</a></kbd></small>
 </footer>
 <br><br>
