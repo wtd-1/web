@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Lecture Five</title>
+    <meta name="description" content="Lecture transcript organized and formatted." />
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css"
+    />
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="container">
+      <hgroup>
+        <h1>Lecture Five</h1>
+        <h1>CS 3345: Data Structures and Introduction to Algorithmic Analysis</h1>
+      </hgroup>
+      <br>
+      <article id="article">
+        <h4>Content Overview</h4>
+        <p>
+          In this lecture, we talk about abstract data types, the List ADT, and the Array and Linked List implementations of the List ADT.
+        </p>
+        <small><kbd><a href="https://cometmail.sharepoint.com/:v:/r/sites/CS3345002CE3345002SE33450022252/Shared%20Documents/General/Recordings/View%20Only/3345.002%20Class-20250206_130520-Meeting%20Recording.mp4?csf=1&web=1&e=gEa3Wn&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D" style="color: #009dff; text-decoration: none;">Lecture Video</a></kbd></small>
+      </article>
+
+    <!-- Transcript -->
+    <section class="container">
+      <h2>Introduction</h2>
+      <p>
+        So far, we have been hammering away at theory—theory, theory, theory! Now, we will get into the actual code of things, the data
+        structures, and that 
+        starts with the Abstract Data Type (ADT). 
+      </p>
+      <h2>Abstract Data Types</h2>
+      <p><strong>Definition. </strong>An abstract data type (ADT) is a set of objects having a set of oeprations.</p>
+      <p>ADTs are focused on <underline>defining the operations</underline>, but leave you to implement them using <em>classes</em>, which 
+      separate the interface from the implementation proper. Plus, these ADTs should not seem unfamiliar: lists, sets, graphs, and their 
+    associated operations are all objects that are ADTs! In other words, <mark>ADTs care about what <strong><em>should</em></strong> happen to the data it stores and leave
+    the rest of the implementation to you</mark>.</p>
+    <p>In this class, you will get to meet the <strong>List</strong>, the <strong>Stack</strong>, and the <strong>Queue</strong> ADTs!</p>
+      <h2>The List ADT</h2>
+      <p><strong>Definition. </strong>A list is a collection of \(n\) items where each item has a position \(i\) in the list.</p>
+      <p>Lists are <em>ordered</em> and <em>mutable</em>, meaning you can change the contents of the list. A list of size zero is said to be called 
+        the <strong>empty list</strong>. The operations you can perform on a list
+      include 
+      <ul>
+        <li><strong><code>printList</code></strong>, where you just print everything in the list</li>
+        <li><strong><code>makeEmpty</code></strong>, where you wipe an entire list clean</li> 
+        <li><strong><code>Find</code></strong>, where you return the position of first occurence for an element in the list</li>
+        <ul><li>Depending on how you want to implement it, you can have <code>Find</code> return either the value or the position</li></ul>
+        <li><strong><code>Insert</code></strong>, where you try to place an element in the list at a specific position</li> 
+        <ul>
+          <li>Inserting at the beginning of the list is something you can do, and you can call it <strong><code>insertAtFront</code></strong></li>
+          <li>Inserting at the end of the list is another thing you can do, and it can be called <strong><code>insertAtEnd</code></strong></li>
+          <li>You could also just keep <code>Insert</code> as is, where <code>insert( • , • )</code> is what you use to invoke the function. 
+          The first argument you pass is the specific index at which you want to insert the second argument. </li>
+        </ul>
+        <li><strong><code>Remove</code></strong>, where you try to take out an element of the list at a particular location</li>
+        <ul>
+          <li>a.k.a., <code>Delete</code></li>
+          <li>Use something like <code>remove( • )</code> or <code>delete( • )</code> to remove an element at a specific position</li>
+        </ul>
+        <li><strong><code>findKth</code></strong>, where you try to find that element stored at the \(kth\) position</li>
+        <ul><li>Invoke this with <code>findKth( • )</code></li></ul>
+      </ul></p>
+<h2>The Array Implementation of the List ADT</h2>
+<p>Arrays are a great way to implement lists! You can do so like this</p>
+<pre><code>
+int[] arr = new int[10];
+
+//...//
+
+// Later, we might decide the array arr needs to be bigger. 
+
+int[] newArr = new int[arr.length* 2];
+
+for( i = 0; i \lt arr.length; i++ ) {
+
+  newArr[i] = arr[i]; // Populate the array.
+
+}
+
+arr = newArr; // Update the array.
+
+</code>
+</pre>
+<p>The <code>findKth</code> operation takes \(O(1)\), as does removing or adding <underline>at the <strong>end</strong> of the array</underline>. 
+<code>printList</code> is executed in \(O(n)\), as is <code>insert</code> and <code>delete</code>. That lattermost fact
+should come at no surprise! Since insertion and deletion occur throughout the list, per the array implementation, you would need to start at the front 
+and then search for the location at which you want to insert or delete.</p>
+
+<h2>The Linked List Implementation of the List ADT</h2>
+<p>Linked lists are another way to implement lists! They contain a series of nodes that are not necessarily stored
+  adjacent to one another in memory. Instead, each node contains a reference to the next node in the list. This 
+gives rise to <mark>dynamism</mark> in memory. </p>
+
+<style>
+  .center-wrapper {
+      display: flex;
+      flex-direction: column; /* Stacks image and caption vertically */
+      justify-content: center; /* Centers horizontally */
+      align-items: center; /* Centers vertically */
+      width: 100%;
+      margin-top: 20px; /* Adds spacing above */
+  }
+
+  .image-container {
+      display: inline-block; /* Ensures the container wraps tightly around the image */
+      padding: 6px; /* Space between the image and border */
+      border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+      border-radius: 5px; /* Slightly rounded corners */
+  }
+
+  img {
+      display: block; /* Removes inline spacing */
+      max-width: 100%; /* Ensures image responsiveness */
+  }
+
+  .image-caption {
+      margin-top: 8px; /* Adds space between image and caption */
+      font-size: 0.85rem; /* Makes caption slightly smaller */
+      text-align: center; /* Centers text */
+      color: var(--text-color); /* Adjusts color based on theme */
+  }
+
+  /* Define light and dark mode styles */
+  @media (prefers-color-scheme: dark) {
+      :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+  }
+  
+  @media (prefers-color-scheme: light) {
+      :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+  }
+</style>
+
+<!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+<div class="center-wrapper">
+  <div class="image-container">
+      <img src="https://wtd-1.github.io/web/C_language_linked_list_adding_a_link_step_3.png" alt="linkedlist" width="700">
+  </div>
+  <p class="image-caption">
+      <a href="https://commons.wikimedia.org/wiki/File:C_language_linked_list_adding_a_link_step_3.png">Thedsadude</a>, 
+      <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 4.0</a>, via Wikimedia Commons
+  </p>
+</div>
+<p>You can implement a linked list like this:
+<pre><code>
+public class Node {
+  int data;
+  Node next;
+
+  public Node( int data ) {
+    this.data = data;
+    this.next = null;
+  }
+
+}
+
+</code></pre>
+<p>Here, <code>printList</code> and <code>find( • )</code> take \(O(n)\), and that is because linked lists 
+are not indexed unlike their cousin the array! This means you need to traverse the entire linked list to print everything
+or to find what you are looking for. But, since linked lists are not indexed, <code>findKth( i )</code> becomes more
+efficient, running at \(O(i)\) time. This is not quite the same as taking \(O(1)\) or \(O(n)\) time; for instance, 
+if \(i = 3\) then <code>findKth(3)</code> takes \(O(3) \rightarrow O(1)\) time. However, if \(i = n\), then 
+it takes \(O(n)\) time. It depends on the \(i\) value chosen!</p>
+<p>Removing from the linked list implementation is relatively simple. Looking at the figure above, to remove an element, you can just
+  change the <code>next</code> pointer of the previous node to the <code>next</code> pointer of the node you want to remove. 
+  This is done in \(O(1)\) time if you are removing the starting or ending node! That is of course assuming you are keeping a reference to 
+  both ends of the list. If you are trying to remove a node in the 
+  middle or end (if you do not have a reference to the end), you need to take \(n\) steps which is \(O(n)\).</p>
+  <p>Inserting is at the beginning is 
+   done in \(O(1)\) time. You can insert by changing the <code>next</code> pointer of the node
+  you want to insert to the <code>next</code> pointer of the previous node. If you insert at the end or somewhere in the middle, the
+time complexity is once again \(O(n)\).</p>
+</p>
+<h2>Briefly on Doubly Linked Lists</h2>
+<p>The doubly linked list, like it's sibling the linked list, dynamically links each node to each other in memory, except now there are two pointers for each node 
+  (minus the ends of the list). This allows for traversal in both directions, which is a nice feature to have! Though, the 
+  fact that there is an extra pointer for each node means that there is more memory overhead.
+</p>
+
+<style>
+  .center-wrapper {
+      display: flex;
+      flex-direction: column; /* Stacks image and caption vertically */
+      justify-content: center; /* Centers horizontally */
+      align-items: center; /* Centers vertically */
+      width: 100%;
+      margin-top: 20px; /* Adds spacing above */
+  }
+
+  .image-container {
+      display: inline-block; /* Ensures the container wraps tightly around the image */
+      padding: 6px; /* Space between the image and border */
+      border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+      border-radius: 5px; /* Slightly rounded corners */
+  }
+
+  img {
+      display: block; /* Removes inline spacing */
+      max-width: 100%; /* Ensures image responsiveness */
+  }
+
+  .image-caption {
+      margin-top: 8px; /* Adds space between image and caption */
+      font-size: 0.85rem; /* Makes caption slightly smaller */
+      text-align: center; /* Centers text */
+      color: var(--text-color); /* Adjusts color based on theme */
+  }
+
+  /* Define light and dark mode styles */
+  @media (prefers-color-scheme: dark) {
+      :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+  }
+  
+  @media (prefers-color-scheme: light) {
+      :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+  }
+</style>
+
+<!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+<div class="center-wrapper">
+  <div class="image-container">
+      <img src="https://wtd-1.github.io/web/DubbelGelinkt.png" alt="doublelinkedlist" width="700">
+  </div>
+  <p class="image-caption">
+      <a href="https://commons.wikimedia.org/wiki/File:DubbelGelinkt.png">ElieDeBrauwer</a>, 
+      <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 4.0</a>, via Wikimedia Commons
+  </p>
+</div>
+<h2>The Java Collections API</h2>
+<p>The Java language includes in its library an implementation of common data structures known as the <em>Collection 
+  API</em>. This API includes the List ADT and resides in the <code>java.util</code> package.</p>
+<p>A <underline><em>collection</em></underline> stores objects of the same type. It has methods such as 
+<ul>
+  <li><code>isEmpty</code></li>
+  <li><code>size</code></li>
+  <li><code>contains</code></li>
+  <li><code>add</code></li>
+  <li><code>remove</code></li>
+</ul>
+The Collection interface <strong>extends</strong> the Iterable interface for interating through the collection.</p>
+<p>But what exactly is a "collection"? Well, it is a container object that holds a group of other objects called <em>elements</em>. 
+The Java Collections Framework suppots two types of collections
+<ul>
+  <li><strong>Collection</strong>, what I just mentioned. It is there to store a collection</li>
+    <ul><li><strong>Set</strong> and <strong>List</strong> are subinterfaces of Collection</li></ul>
+  <li><strong>Map</strong>, which is there to store key-value pairs</li>
+</ul></p>
+
+<h4>Iterators</h4>
+<p>Iterators are objects that allow you to traverse through a collection. It is a classic design pattern 
+  used to walk through a data structure without exposin the details of how data is stored in the data structure. 
+  </p>
+  <p>These are used by enhanced <code>for</code> loops, and the iterator interface has a limited number of methods. The <code>remove</code> method on an interator is 
+  preferred over the <code>remove</code> method of a collection as the iterator already has the item's position. 
+An iterator's <code>remove</code> will take out the last item returned by the iterator's <code>next()</code> method. That means
+you would have to call <code>next()</code> once again before calling <code>remove()</code>. What <code>remove</code> does is take out that last item returned by <code>next</code>. After that, until you call <code>next</code>
+again, <code>remove</code> cannot be called.</p>
+<p><strong>Fundamental Rule. </strong> If the collection is changed using its own methods, the iterator is thus invalidated.</p>
+<p>It is because of that terrible rule that <code>remove()</code> of the Iterator Interface is far superior: the iterator is left alone!</p>
+  <h4>Comparators</h4>
+  <p>A <strong>Comparator</strong> is a functional interface which has a single method: <code>compare</code>. We can 
+  use lambda expressions to simplify coding. </p>
+  <h2>On the List Interface, ArrayList, and LinkedList</h2>
+  <p>The List Interface extends the Collection Interface; it contains all methods in Collection and a few others, like
+    <ul>
+      <li><code>get</code></li>
+      <li><code>set</code></li>
+      <li><code>add</code>, which places a new item to the list at the index location, pushing other elements down the list. Calling 
+      <code>add</code> at position <code>0</code> will place the new element at the beginning.</li>
+      <li><code>remove</code></li>
+      <li><code>listIterator()</code></li>
+    </ul>
+  </p>
+
+<h4>ArrayList Implementation: Revisited</h4>
+<p><code>ArrayList</code> provides a growable array implementation of the List. The great thing about it is <code>get()</code> 
+and <code>set()</code> takes \(O(1)\). But, when you are inserting and deleting in the <code>ArrayList</code>, things get more expensive
+at \(O(n)\) (unless it is at the end, which means it is \(O(1)\)). 
+The reason for that is if you have a list, nice and prestine, and you need to insert a new element, you need to make space for it. 
+That means making new space for all the elements, plus the new one, and moving the existing elements in the list around to make room 
+for what you want to insert at that particular position. Likewise, if you want to delete an element, you need to find the
+ element you want to delete, get rid of it, and then shift all the elements so that they lie contiguous in memory.</p>
+ <h4>LinkedList Implementation: Revisited</h4>
+ <p>Using a doubly linked list for this is great, and it means insertion and deletion are cheap operations. Woo hoo (but with a caveat, see above)! But, that means <code>get()</code>
+and <code>set()</code> are expensive at \(O(n)\) since you need to traverse the links of the list.</p>
+    <!-- Footer -->
+ <br><br>
+<footer class="container" style="display: flex; justify-content: space-between; align-items: center;">
+  <small>© 2025 William T. Doan. All rights reserved.</small>
+  <small><kbd><a href="lec4_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Previous Lecture</a></kbd></small>
+  <small><kbd><a href="lec5_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Next Lecture</a></kbd></small>
+  <small><kbd><a href="index.html" style="color: #009dff; text-decoration: none;">Return to the homepage</a></kbd></small>
+</footer>
+<br><br>
+
+  <!-- Minimal theme switcher -->
+  <script src="minimal-theme-switcher.js"></script>
+
+  <!-- Modal -->
+  <script src="modal.js"></script>
+</body>
+</html>
