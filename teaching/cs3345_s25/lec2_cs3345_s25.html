@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Lecture Two</title>
+    <meta name="description" content="Lecture transcript organized and formatted." />
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css"
+    />
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="container">
+      <hgroup>
+        <h1>Lecture Two</h1>
+        <h1>CS 3345: Data Structures and Introduction to Algorithmic Analysis</h1>
+      </hgroup>
+      <br>
+      <article id="article">
+        <h4>Content Overview</h4>
+        <p>This lecture covers topics including running time, experimentation, theoretical analysis, pseudocode, operations, time complexity, estimating 
+          running times, and polynomial running times.</p>
+        <small><kbd><a href="https://cometmail.sharepoint.com/:v:/r/sites/CS3345002CE3345002SE33450022252/Shared%20Documents/General/Recordings/View%20Only/3345.002%20Class-20250128_130511-Meeting%20Recording.mp4?csf=1&web=1&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=fl9hcd" style="color: #009dff; text-decoration: none;">Lecture Video</a></kbd></small>
+      </article>
+
+    <!-- Transcript -->
+    <section class="container">
+      <h2>Introduction</h2>
+      <p>
+        Recall that algorithms are a set of instructions that solve a problem. We can analyze algorithms by comparing their time complexity, which is the amount of time it takes to run the algorithm. 
+        We can also compare their space complexity, which is the amount of memory the algorithm uses.
+      </p>
+      <h2>Running Time</h2>
+      <p>Most algorithms transform input objects into output objects. The running time of an algorithm is the number of primitive operations or steps executed. 
+        The running time of an algorithm depends on the input size and the input itself.</p>
+        <p>The average case is often difficult to determine, so we focus on the worst case instead—it just makes our life easier! Although, it is 
+          critical to note that just because something has a bad worse case does not necessarily mean it is bad overall. Take for instance a simple linear search. 
+          Compared to its cousin, the binary search, the linear search has a worst case of \( O(n) \) while the binary search has a worst case of \( O(logn) \). 
+          Later in this lecture, you will see why that is important. For now, just take my word for it that the binary search has a better worst case 
+          running time than the linear search. That's all fine and good, but the linear search is easier to implement since it is just a for loop. Plus, for 
+          some small or otherwise reasonable amount of numbers, a linear search will get to the answer without having you wait too long. </p>
+          <p>
+            Think about it: suppose I have an a list \( L \) of 10 numbers and I want to find one of them—let's call it \( x \). A binary search 
+          will basically start at the middle and if \( x \) is greater than the middle, it will look at the right half of the list. If \( x \) is less than the middle, 
+          the opposite is true. This is repeated until \( x \) is found. A linear search, on the other hand, will just go through the list one by one until it finds \( x \).
+          Would the binary search be faster? Yes, but only if the list is sorted. If the list is not sorted, the binary search will not work quite as well. The linear search, however, might be better. 
+          Even if the list is sorted, the linear search in this case is still fine because the list is so small. So, for small, known values for how 
+          long the list is, either one works since, asymptotically, the difference is negligible.</p>
+
+          <p>When it comes to analyzing algorithms, though, we care about the worse-case: for HUGE lists that are insanely long. We do that because
+            it is theoretically interesting to examine how well an algorithm scales. </p>
+      <h2>Experimentation</h2>
+      <p>Typically, if you want to find out the running time of an algorithm, you would run an experiment. When you do so, just know:</p>
+      <ul>
+        <li>Implementation might be hard.</li>
+        <li>Results might not actually be meaningful after all. This is a limitation of the testing environment. How 
+          well do you know the running of an algorithm in a case you did not assess for?
+        </li>
+        <li>In order to compare two algorithms, the testing environments must be the same: same hardware, software, etcetera.</li>
+      </ul>
+    <h2>Theoretical Analysis</h2>
+    <p>
+      Theoretical analysis is a way to predict the running time of an algorithm without running it.
+      The number of operations is then expressed as a function of the input size, \( n \), and allows us to account for all possible inputs. 
+      This function is called the <mark>time complexity</mark> of the algorithm. And since this is all theoretical, 
+      we do not need to worry about the hardware or software environments; the only thing we need to do is count 
+      the number of operations the algorithm performs. Neat!
+    </p>
+    <h4><i>Pseudocode</i></h4>
+    <p>Something that helps us count the number of operations is pseudocode. Let us be clear:  <span style="color: red;">pseudocode is NOT an algorithm</span>!
+    Rather, it is a high level description of one. The <code>LargestNumber</code> Algorithm from lecture one was 
+  illustrated using pseudocode! It allows us to understand what the program is doing in (mostly) plain English, albeit with a little 
+more structure. The fact that we are able to ignore the hardware and software implementations is why pseudocode is there: we don't care what
+language you use: Python, C++, Java, Rust, or whatever! What we care about is what the program is doing and how many operations it executes. </p>
+<p> 
+  Some of the details of pseudocode include:
+  <ul>
+    <li><strong>Control Flow Statements.</strong></li> 
+      <ul>
+        <li>\( if \) ... \( then \) ... \( else \) </li>
+        <li>\( while \) ... \( do \)</li>
+        <li>\( for \) ... \( do \)</li>
+        <li>\( repeat \) ... \( until \)</li>
+        <li>Indentation <u>replaces</u> using braces.</li>
+      </ul>
+    <li><strong>Methods and Returns.</strong></li>
+      <ul><pre>
+
+            Algorithm method( arg[ , arg... ] )   // Method declaration
+
+                Input ...
+                Output ...
+
+                Begin
+
+                    // ... Code ... //
+
+                    var.method( arg[ , arg... ] )   // Method Call
+
+                    return expression     // Retrn value
+
+                End
+      </pre></ul>
+      <li><strong>Expressions</strong></li>
+        <ul>
+          <li>\( ← \) for assignment (like how Java has <code>=</code>).</li>
+          <li>\( = \) for equality (like Java's <code>==</code>).</li>
+          <li>You can even use superscripts and other mathematical formatting!</li>
+        </ul>
+  </ul>
+  <h2>Operations</h2>
+  <p>We've been discussing the idea of counting operations, and here is when we begin to formally define it. When 
+    there is an operation, say you initialize a variable <code>i</code> to two. The act of initializing that variable
+    is an operation that the CPU performs (in this case, the value two is being stored at a memory location in your computer's 
+    RAM). When your program uses <code>i</code>, such as in <code> int value = i + i;</code>, another operation is 
+    performed in order to find that memory location in which <code>i</code> is stored, retrieve the value, and then
+    calculate the sum. 
+  </p>
+  <h2>Time Complexity</h2>
+  <p>
+    A cast of seven functions often appear in algorithmic analysis. They are listed below. These functions describe how algorithms perform <strong>as input size increases</strong>.  
+    Recognizing different complexities helps in selecting the <strong>right algorithm</strong> for the job.  
+    <mark>Ideally, we aim for algorithms with \( O(1) \), \( O(\log n) \), or \( O(n) \) complexity, as they scale well.</mark>  
+    Avoid \( O(n^2) \) and worse, especially for large inputs, unless absolutely necessary. Keep in mind the numbering as it 
+    is intentional! We go from one, the MOST efficient, to seven, the LEAST efficient.
+  </p>
+  
+  <h4>1. Constant Time – \( O(1) \)</h4>
+  <p>
+    A function runs in <strong>constant time</strong> if it performs the same number of operations regardless of input size.  
+    Example: Accessing an element in an array by index.
+  </p>
+  
+  <pre>
+  
+          <i><strong>int</strong> x = arr[5];      // O(1) operation
+  
+  </pre>
+  
+  <p>
+    No matter how large the array is, accessing an element takes the same amount of time.
+  </p>
+  
+  <h4>2. Logarithmic Time – \( O(\log n) \)</h4>
+  <p>
+    An algorithm runs in <strong>logarithmic time</strong> if it reduces the problem size by a constant factor at each step.  
+    Example: <strong>Binary search</strong>, where the search space is halved at every iteration.
+  </p>
+  
+  <pre>
+  
+          <i><strong>public static int</strong> binarySearch(int arr[], int size, int target) {
+  
+              <strong>int</strong> left = 0, right = size - 1;
+  
+              <strong>while</strong> (left <= right) {
+  
+                  <strong>int</strong> mid = (left + right) / 2;
+  
+                  <strong>if</strong> (arr[mid] == target) 
+                      <strong>return</strong> mid;
+  
+                  <strong>if</strong> (arr[mid] < target) 
+                      left = mid + 1;
+                  <strong>else</strong> 
+                      right = mid - 1;
+              }
+  
+              <strong>return</strong> -1; 
+  
+          }
+  
+  </pre>
+  
+  <h4>3. Linear Time – \( O(n) \)</h4>
+  <p>
+    If an algorithm processes <strong>each element</strong> exactly once, it runs in <strong>linear time</strong>.  
+    Example: <strong>Linear search</strong>, where we check every element until we find the target.
+  </p>
+  
+  <pre>
+  
+          <i><strong>public static int</strong> linearSearch(int arr[], int size, int target) {
+  
+              <strong>for</strong> (int i = 0; i < size; i++) {
+  
+                  <strong>if</strong> (arr[i] == target) 
+                      <strong>return</strong> i;
+              }
+  
+              <strong>return</strong> -1;
+  
+          }
+  
+  </pre>
+  
+  <h4>4. Linearithmic Time – \( O(n \log n) \)</h4>
+  <p>
+    <strong>Sorting algorithms</strong> like <strong>Merge Sort</strong> and <strong>Quick Sort</strong> typically run in \( O(n \log n) \).
+  </p>
+  
+  <pre>
+  
+          <i><strong>public static void</strong> mergeSort(int arr[], int left, int right) {
+  
+              <strong>if</strong> (left < right) {
+  
+                  <strong>int</strong> mid = (left + right) / 2;
+  
+                  mergeSort(arr, left, mid);
+                  mergeSort(arr, mid + 1, right);
+  
+                  merge(arr, left, mid, right);
+              }
+          }
+  
+  </pre>
+  
+  <h4>5. Quadratic Time – \( O(n^2) \)</h4>
+  <p>
+    When an algorithm performs \( n \) operations for each of the \( n \) elements, it runs in <strong>quadratic time</strong>.  
+    This is common in <strong>nested loops</strong>.
+  </p>
+  
+  <pre>
+  
+          <i><strong>public static void</strong> bubbleSort(int arr[], int n) {
+  
+              <strong>for</strong> (int i = 0; i < n - 1; i++) {
+  
+                  <strong>for</strong> (int j = 0; j < n - i - 1; j++) {
+  
+                      <strong>if</strong> (arr[j] > arr[j + 1]) {
+                          swap(arr[j], arr[j + 1]);
+                      }
+                  }
+              }
+          }
+  
+  </pre>
+  
+  <h4>6. Cubic Time – \( O(n^3) \)</h4>
+  <p>
+    Algorithms with <strong>three nested loops</strong> typically run in <strong>cubic time</strong>.  
+    This is common in <strong>matrix operations</strong>, such as matrix multiplication.
+  </p>
+  
+  <pre>
+  
+          <i><strong>for</strong> (int i = 0; i < n; i++) {
+  
+              <strong>for</strong> (int j = 0; j < n; j++) {
+  
+                  <strong>for</strong> (int k = 0; k < n; k++) {
+  
+                      C[i][j] += A[i][k] * B[k][j];
+                  }
+              }
+          }
+  
+  </pre>
+  
+  <h4>7. Exponential Time – \( O(2^n) \)</h4>
+  <p>
+    If an algorithm's runtime <strong>doubles</strong> with each additional input, it runs in <strong>exponential time</strong>.  
+    This happens in <strong>brute force recursive solutions</strong> that explore all possibilities.
+  </p>
+  
+  <pre>
+  
+          <i><strong>public static int</strong> fibonacci(int n) {
+  
+              <strong>if</strong> (n <= 1) 
+                  <strong>return</strong> n;
+  
+              <strong>return</strong> fibonacci(n - 1) + fibonacci(n - 2);
+  
+          }
+  
+  </pre>
+  
+  <h4>Time Complexity: Visualized</h4>
+ 
+  <style>
+    .center-wrapper {
+        display: flex;
+        flex-direction: column; /* Stacks image and caption vertically */
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        width: 100%;
+        margin-top: 20px; /* Adds spacing above */
+    }
+
+    .image-container {
+        display: inline-block; /* Ensures the container wraps tightly around the image */
+        padding: 6px; /* Space between the image and border */
+        border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+        border-radius: 5px; /* Slightly rounded corners */
+    }
+  
+    img {
+        display: block; /* Removes inline spacing */
+        max-width: 100%; /* Ensures image responsiveness */
+    }
+
+    .image-caption {
+        margin-top: 8px; /* Adds space between image and caption */
+        font-size: 0.85rem; /* Makes caption slightly smaller */
+        text-align: center; /* Centers text */
+        color: var(--text-color); /* Adjusts color based on theme */
+    }
+  
+    /* Define light and dark mode styles */
+    @media (prefers-color-scheme: dark) {
+        :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+    }
+    
+    @media (prefers-color-scheme: light) {
+        :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+    }
+</style>
+
+<!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+<div class="center-wrapper">
+    <div class="image-container">
+        <img src="https://wtd-1.github.io/web/Comparison_computational_complexity.svg.png" alt="Comparison_computational_complexity.svg.png" width="500">
+    </div>
+    <p class="image-caption">
+        <a href="https://commons.wikimedia.org/wiki/File:Comparison_computational_complexity.svg">Cmglee</a>, 
+        <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons
+    </p>
+</div>
+<h2>Note!</h2>
+<p>
+  For the linear, quadratic, and cubic time complexities, notice how we illustrate them using <code>for</code> loops; likewise, how the 
+  logarithmic time complexity is illustrated using a <code>while</code> loop. Just because we used <code>for</code> and <code>while</code>
+  loops <strong>does not</strong> mean that is the only way to achieve those time complexities. They are just the most common ways to do so. Furthermore, it also
+  <strong>does not</strong> mean all <code>for</code> loops are \( O(n) \) or all <code>while</code> loops are \( O(\log n) \). Remember the list \( L \) from earlier?
+  For a list that small, a <code>for</code> loop would only run 10 times in the worse case, which is \( O(10) \rightarrow O(1) \).
+  Be careful, do not fall into the trap!
+</p>
+<h2>Estimating the Running Time</h2>
+<p>
+  This is best visualized with an example. Suppose an algorithm <code>ArrayMax</code> which executes
+  \( 8n - 2 \) primitive operations. The time complexity of this algorithm is \( O(n) \). Let us continue further
+  by defining the existence of two things: 
+</p>
+
+<ul>
+  <li>\( a := \) the time taken by the fastest primitive operation. </li>
+  <li>\( b := \) the time taken by the slowest primitive operation. </li>
+</ul>
+
+<p>
+  If we let \( T(n) \) be the worst-case time—sometimes just referred to as the "time"—of 
+  <code>ArrayMax</code>, then we observe:
+</p>
+
+\[
+a(8n - 2) \leq T(n) \leq b(8n - 2)
+\]
+<p>This means the running time \( T(n) \) of <code>ArrayMax</code> is <u>bounded</u> by two linear functions.</p>
+<h2>Polynomial Running Times</h2>
+<p>
+  Algorithms with polynomial running times are generally considered efficient. Furthermore, they are encountered often. 
+  When you see a runtime expressed as a polynomial, you can be confident that the algorithm will run in a reasonable amount of time.
+  The general form of a polynomial running time is
+  \[ p(n) = a_0 + a_1n + a_2n^2 + \ldots + a_kn^k 
+  \] The time complexity of this algorithm is \( O(n^k) \). Look at how we have \( n^k \) as the highest term. Since
+  we are interested in the worse case, it makes sense for us to choose the term of highest order since it would mean it 
+  is most inefficient. So, if I had instead chose a different polynomial, such as
+  \[ p(n) = 10,000,000,000,000,000 + 60n + n^{10} + 90,876,999n^5
+  \] then the time complexity would be \( O(n^{10}) \) because the highest term is \( n^{10} \).
+</p>
+<p>What can we conclude, then? <mark>The growth rate of an algorithm is <strong>NOT</strong> affected by constants
+and lower-order terms</mark>.</p>
+    </section>
+
+<!-- Footer -->
+ <br><br>
+<footer class="container" style="display: flex; justify-content: space-between; align-items: center;">
+  <small>© 2025 William T. Doan. All rights reserved.</small>
+  <small><kbd><a href="lec1_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Previous Lecture</a></kbd></small>
+  <small><kbd><a href="lec3_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Next Lecture</a></kbd></small>
+  <small><kbd><a href="index.html" style="color: #009dff; text-decoration: none;">Return to the homepage</a></kbd></small>
+</footer>
+<br><br>
+
+  <!-- Minimal theme switcher -->
+  <script src="minimal-theme-switcher.js"></script>
+
+  <!-- Modal -->
+  <script src="modal.js"></script>
+</body>
+</html>

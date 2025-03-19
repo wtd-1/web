@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>WTD Website</title>
+    <meta name="description" content="A pure HTML example, without dependencies." />
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="container">
+      <hgroup>
+        <h1>Teaching        </h1>
+        <p>Here are all the courses I have worked with. Check out the content I made!</p>
+      </hgroup>
+      <br>
+      <h6 style="font-size: 1.25rem;">Spring 2025</h6>
+      <article id="article">
+        <input onclick="location.href='teach_cs3345_s25.html';" class="secondary" type="submit" value="Data Structures and Introduction to Algorithmic Analysis" />
+        <footer>
+          Analysis of algorithms including time complexity and Big-O notation. 
+          Analysis of stacks, queues, and trees, including B-trees. Heaps, 
+          hashing, and advanced sorting techniques. Disjoint sets and graphs. 
+          Course emphasizes design and implementation.
+        </footer>
+      </article>
+      <h6 style="font-size: 1.25rem;">Fall 2024</h6>
+      <article id="article">
+        <input onclick="location.href='teach_cs1435_f24.html';" class="secondary"; type="submit" value="Programming Fundamentals" />
+        <footer>
+          Introduce the fundamental concepts of structured programming. 
+          Topics include software development methodology, data types, 
+          control structures, functions, arrays, and the mechanics of 
+          running, testing, and debugging.
+        </footer>
+      </article>
+          <br><br>
+    <!-- Footer -->
+    <footer class="container" style="display: flex; justify-content: space-between; align-items: center;">
+        <small>© 2025 William T. Doan. All rights reserved.</small>
+        <small>        <kbd><a href="index.html" style="color: #009dff; text-decoration: none;">Return to the homepage</a></kbd>
+        </small>       </footer>
+      <br><br>
+    <!-- Minimal theme switcher -->
+    <script src="minimal-theme-switcher.js"></script>
+
+    <!-- Modal -->
+    <script src="modal.js"></script>
+  </body>
+</html>

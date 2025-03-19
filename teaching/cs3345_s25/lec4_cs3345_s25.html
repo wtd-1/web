@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Lecture Four</title>
+    <meta name="description" content="Lecture transcript organized and formatted." />
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css"
+    />
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="container">
+      <hgroup>
+        <h1>Lecture Four</h1>
+        <h1>CS 3345: Data Structures and Introduction to Algorithmic Analysis</h1>
+      </hgroup>
+      <br>
+      <article id="article">
+        <h4>Content Overview</h4>
+        <p>We define here equivalence relations and talk about alorithmic complexity, especially with regard to 
+          those of the same time complexity. We also discuss the tightest bound and how it is selected to represent
+          the complexity of two algorithms.
+        </p>
+        <small><kbd><a href="https://cometmail.sharepoint.com/sites/CS3345002CE3345002SE33450022252/_layouts/15/stream.aspx?id=%2Fsites%2FCS3345002CE3345002SE33450022252%2FShared%20Documents%2FGeneral%2FRecordings%2FView%20Only%2F3345%2E002%20Class%2D20250204%5F130730%2DMeeting%20Recording%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2Eb2894cca%2Dfea2%2D4c8b%2Da2dd%2D82ce8e39b544" style="color: #009dff; text-decoration: none;">Lecture Video</a></kbd></small>
+      </article>
+
+    <!-- Transcript -->
+    <section class="container">
+      <h2>Introduction</h2>
+      <p>
+        By now, you have been shown the cast of bounds we can use to express the time complexities 
+        of algorithms: Big-O (the upper, possibly equal bound), Big-Theta (the strictly equal bound),
+        little-o (the upper, not equal bound), little-omega (the lower, not equal bound), and Big-Omega
+       (the lower, possibly equal bound) notations. Today, we will be discussing Big-Theta!
+      </p>
+      <h2>A Gentle Reminder</h2>
+      <p>In case you are still a bit rocky on asymptotic notiation, here's an example Dr. Satpute did in class. I will not 
+        bother repeating myself with a description for this—check out lectures <a href="lec2_cs3345_s25.html">two</a> and 
+        <a href="lec3_cs3345_s25.html">three</a> for more!
+        <style>
+          .center-wrapper {
+              display: flex;
+              flex-direction: column; /* Stacks image and caption vertically */
+              justify-content: center; /* Centers horizontally */
+              align-items: center; /* Centers vertically */
+              width: 100%;
+              margin-top: 20px; /* Adds spacing above */
+          }
+        
+          .image-container {
+              display: inline-block; /* Ensures the container wraps tightly around the image */
+              padding: 6px; /* Space between the image and border */
+              border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+              border-radius: 5px; /* Slightly rounded corners */
+          }
+        
+          img {
+              display: block; /* Removes inline spacing */
+              max-width: 100%; /* Ensures image responsiveness */
+          }
+        
+          .image-caption {
+              margin-top: 8px; /* Adds space between image and caption */
+              font-size: 0.85rem; /* Makes caption slightly smaller */
+              text-align: center; /* Centers text */
+              color: var(--text-color); /* Adjusts color based on theme */
+          }
+        
+          /* Define light and dark mode styles */
+          @media (prefers-color-scheme: dark) {
+              :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+          }
+          
+          @media (prefers-color-scheme: light) {
+              :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+          }
+        </style>
+        
+        <!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+        <div class="center-wrapper">
+          <div class="image-container">
+              <img src="https://wtd-1.github.io/web/Screenshot 2025-02-09 at 14.25.21.png" alt="Satpute_Lec_Notes" width="700">
+          </div>
+          <p class="image-caption">
+              <a href="#">Meghana Navanth Satpute</a>, 
+              <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via The University of Texas at Dallas
+          </p>
+        </div>
+      </p>
+      <h2>The Equivalence Relation</h2>
+      <p> 
+        Big-Theta is an <underline>equivalence relation</underline>. This means it is <strong>reflexive</strong>, <strong>symmetric</strong>, and
+         <strong>transitive</strong>. Since Big-Theta establishes that two functions are equal (i.e., have the same 
+         growth), we observe that a relation of equivalence is formed such that a partition is given over the set of all 
+         differentiable functions that form equivalence classes. Simply put, functions in one and the same class are 
+         <i>equivalent</i> with respect to their growth. 
+      </p>
+      <h4>Reflexivity</h4>
+      <p><strong>Definition.</strong> For all elements \(a \in A \), \( (a,a) \in \mathbb{R} \).</p>
+      <p>In set theory, if you recall Discrete Maths, this means each element \(a\) in a bigger set \(A\) is 
+        related or linked to itself. In the context of Big-Theta, this means a function is related to itself,
+        which is quite intuitive! If a function is \(f(n)\), then it is \(f(n)\) and not a different function \(g(n)\) or 
+        another different function \(h(n)\). So, \(f(n)\) is \(O(f(n))\)!
+      </p>
+      <p>Don't believe me? Let me show you a proof of how! I'll use the integers as an example.</p>
+      <p><strong>Proof. </strong> Let there be pairs of integers \( {(a,b), (a,b)} \in \mathbb{Z}\). Since 
+      multiplication across the integers is closed, we may say \(a \times b = a \times b\) ; likewise, \(b 
+    \times a = b \times a\). <strong>QED</strong>.</p>
+      <h4>Symmetry</h4>
+      <p><strong>Definition.</strong> For all elements \(a,b \in A \), if \( (a,b) \in \mathbb{R} \), then \( (b,a) \in \mathbb{R} \).</p>
+      <p>This is the second condition to acheiving full <underline>equivalence</underline>. What we are saying here is if a function \(f(n)\) is 
+        related to another function \(g(n)\), then \(g(n)\) is related to in the same way\(f(n)\). And that makes sense! 
+      What we want to see is if \(f(n)\) is \(O(g(n))\), then \(g(n)\) is \(O(f(n))\) as well. 
+      </p>
+      <p>Let me show you a proof of this using the integers again!</p>
+      <p><strong>Proof. </strong> Let there be pairs of integers \( {(a,b), (b,a)} \in \mathbb{Z}\). Since
+        multiplication across the integers is commutative, we may say \(a \times b = b \times a\) ; likewise, \(b
+        \times a = a \times b\). <strong>QED</strong>.</p>
+      <h4>Transitivity</h4>
+      <p><strong>Definition.</strong> For all elements \(a,b,c \in A \), if \( (a,b) \in \mathbb{R} \) and \( (b,c) \in \mathbb{R} \), then \( (a,c) \in \mathbb{R} \).</p>
+      <p>This is the final condition for <underline>equivalence</underline>. It means that if an element \(a\) is related to 
+      another element \(b\) and \(b\) is itself related to another element \(c\), you can imagine something like this \[a \rightarrow b \rightarrow c\]
+    Transitivity says you can just take out the middleman, \(b\), and just say \[a \rightarrow c\]</p>
+      <p>This allows us to form chains of equivalence between functions. 
+        For example, if we have three functions \(f(n)\), \(g(n)\), and \(h(n)\) such that 
+        \(f(n)\) is \(O(g(n))\) and \(g(n)\) is \(O(h(n))\), then by transitivity, \(f(n)\) is 
+        \(O(h(n))\).</p>
+      <p>Let me show you a proof of this using the integers one last time!</p>
+      <p><strong>Proof. </strong> Let there be pairs of positive integers \( ((a, b), (c, d)) \in \mathbb{Z} \) and \( ((c, d), (e, f)) \in \mathbb{Z} \). Since
+        \( ((a, b), (c, d)) \in \mathbb{R} \) and \( ((c, d), (e, f)) \in \mathbb{R} \), we have \( a \cdot d = c \cdot b \) and \( c \cdot f = d \cdot e \).
+        This implies \( \frac{a}{b} = \frac{c}{d} \) and \( \frac{c}{d} = \frac{e}{f} \), so \( \frac{a}{b} = \frac{e}{f} \), which gives us \( a \cdot f = b \cdot e \).
+        Therefore, \( ((a, b), (e, f)) \in \mathbb{R} \). <strong>QED</strong>.</p>
+  <h2>Algorithms of the Same Time Complexity</h2>
+  <p>I might have spoken about this before, but if two algorithms have the same complexity, it has the same growth rate. 
+    This means that the two algorithms will take the same amount of time to execute, regardless of the input size. To 
+    represent the complexity of both, we use Big-Theta notation and select the <strong>tightest</strong> bound—that simplest function—to represent the complexity.
+  </p>
+  <p>In algorithmic analysis, and I might have also mentioned this before (I'm not sure), we care about how bad an algorithm performs. This means
+    you will usually see Big-O notation being thrown about. 
+  </p>
+  <h4>Some Notes from the Lecture</h4>
+  <p>This was gone over in lecture <a href="lec3_cs3345_s25.html">three</a>, but thisis a quick reference for you that Dr. 
+  Satpute mentioned in class. </p>
+  <style>
+    .center-wrapper {
+        display: flex;
+        flex-direction: column; /* Stacks image and caption vertically */
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        width: 100%;
+        margin-top: 20px; /* Adds spacing above */
+    }
+  
+    .image-container {
+        display: inline-block; /* Ensures the container wraps tightly around the image */
+        padding: 6px; /* Space between the image and border */
+        border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+        border-radius: 5px; /* Slightly rounded corners */
+    }
+  
+    img {
+        display: block; /* Removes inline spacing */
+        max-width: 100%; /* Ensures image responsiveness */
+    }
+  
+    .image-caption {
+        margin-top: 8px; /* Adds space between image and caption */
+        font-size: 0.85rem; /* Makes caption slightly smaller */
+        text-align: center; /* Centers text */
+        color: var(--text-color); /* Adjusts color based on theme */
+    }
+  
+    /* Define light and dark mode styles */
+    @media (prefers-color-scheme: dark) {
+        :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+    }
+    
+    @media (prefers-color-scheme: light) {
+        :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+    }
+  </style>
+  
+  <!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+  <div class="center-wrapper">
+    <div class="image-container">
+        <img src="https://wtd-1.github.io/web/Screenshot 2025-02-09 at 16.48.49.png" alt="Satpute_Lec_Notes" width="700">
+    </div>
+    <p class="image-caption">
+        <a href="#">Meghana Navanth Satpute</a>, 
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via The University of Texas at Dallas
+    </p>
+  </div>
+<!-- Footer -->
+ <br><br>
+<footer class="container" style="display: flex; justify-content: space-between; align-items: center;">
+  <small>© 2025 William T. Doan. All rights reserved.</small>
+  <small><kbd><a href="lec3_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Previous Lecture</a></kbd></small>
+  <small><kbd><a href="lec5_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Next Lecture</a></kbd></small>
+  <small><kbd><a href="index.html" style="color: #009dff; text-decoration: none;">Return to the homepage</a></kbd></small>
+</footer>
+<br><br>
+
+  <!-- Minimal theme switcher -->
+  <script src="minimal-theme-switcher.js"></script>
+
+  <!-- Modal -->
+  <script src="modal.js"></script>
+</body>
+</html>
