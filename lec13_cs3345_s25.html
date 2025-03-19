@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Lecture Thirteen</title>
+    <meta name="description" content="Lecture transcript organized and formatted." />
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css"
+    />
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body>
+    <header class="container">
+      <hgroup>
+        <h1>Lecture Thirteen</h1>
+        <h1>CS 3345: Data Structures and Introduction to Algorithmic Analysis</h1>
+      </hgroup>
+      <br>
+      <article id="article">
+        <h4>Content Overview</h4>
+        <p>
+            Splay trees. 
+        </p>
+      </article>
+    </header>
+
+    <section class="container">
+<h2>Introduction</h2>
+
+<p>Splay Trees are Binary Search Trees. Ergo, they are bound by the same rules. Recall:
+    <ul>
+        <li>Entries are stored only at internal nodes.</li>
+        <li>Keys stored at nodes in the left subtree of \( v \) are less than or equal to the key stored at \( v \), i.e., 
+        \[
+        \forall k_L \in \text{LeftSubtree}(v), \quad k_L \leq k_v.
+        \]
+        </li>
+        <li>Keys stored at nodes in the right subtree of \( v \) are greater than or equal to the key stored at \( v \), i.e., 
+        \[
+        \forall k_R \in \text{RightSubtree}(v), \quad k_R \geq k_v.
+        \]
+        </li>
+    </ul>
+Furthermore, an inorder traversal will return the keys in order.   
+</p>
+<p>In many cases, some values in a data structure are accessed more frequently than others, but we often don’t know which ones in advance. 
+    A <strong>splay tree</strong> <mark>optimizes</mark> for this by <u>dynamically moving recently accessed values to the root</u>, making future accesses faster. 
+    This self-adjusting behaviour applies not only to searches but also to insertions and deletions. While this improves efficiency for frequently accessed elements, 
+    it also raises concerns about maintaining the binary search tree properties and the potential trade-off of making some operations slower.</p>
+
+    <p>The concept of splay trees was introduced in the paper <em><a href="https://wtd-1.github.io/web/self-adjusting.pdf">Self-Adjusting Binary Search Trees</a></em> in 1985. It builds upon the earlier <em><a href="https://wtd-1.github.io/web/322092.322094.pdf">Self-Organizing Binary Search Trees</a></em> method published in the <em>Journal of the ACM</em> (JACM) in 1978, which used a move-to-root operation to bring frequently accessed nodes closer to the top. The key improvement of splay trees is the specific way in which nodes are moved, which allows tree operations to run in amortized \( O(\log n) \) time instead of \( O(n) \) in the worst case.</p>
+
+
+<h2>Rotations, Revisited</h2>
+<p>To move a value upward in a binary search tree while preserving order, we use tree rotations. A rotation swaps the positions of a parent and child while maintaining the subtree structure.</p>
+
+<ul>
+    <li>The child moves up to the parent’s position, bringing one of its subtrees.</li>
+    <li>The parent moves down into the child’s former position, shifting one of its subtrees downward.</li>
+    <li>After rotation, one of the child’s subtrees becomes a subtree of the parent.</li>
+</ul>
+
+<p>A rotation can be described in different ways:</p>
+
+<ul>
+    <li>By specifying the parent node and rotation direction.</li>
+    <li>By identifying the edge being rotated.</li>
+    <li>By stating which node moves upward.</li>
+</ul>
+
+<p>Incidentally, rotations can also be done at non-root nodes.</p>
+
+<h2>Splay Operations</h2>
+<p>Operations such as <code>find</code>, <code>insert</code>, and <code>delete</code> start at the root and traverse the tree, forming paths, to a particular node. That's fine and dandy, but in splay trees, each 
+traversal is repeated in <mark>reverse</mark>—where we go from the node of interest up to the root. Simply put, whereas we are used to trickling <em>down</em> in a binary search tree, we trickle <em>up</em> in splay trees.
+At each level of the BST, we will perform tree rotations that move the node of interest (i.e., that node which holds data that is most accessed) up to replace the old root node. Of course, 
+that does not necessarily mean the old root node is discarded. This whole process is called <mark>splaying</mark>.</p>
+
+<style>
+    .center-wrapper {
+        display: flex;
+        flex-direction: column; /* Stacks image and caption vertically */
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        width: 100%;
+        margin-top: 20px; /* Adds spacing above */
+    }
+  
+    .image-container {
+        display: inline-block; /* Ensures the container wraps tightly around the image */
+        padding: 6px; /* Space between the image and border */
+        border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+        border-radius: 5px; /* Slightly rounded corners */
+    }
+  
+    img {
+        display: block; /* Removes inline spacing */
+        max-width: 100%; /* Ensures image responsiveness */
+    }
+  
+    .image-caption {
+        margin-top: 8px; /* Adds space between image and caption */
+        font-size: 0.85rem; /* Makes caption slightly smaller */
+        text-align: center; /* Centers text */
+        color: var(--text-color); /* Adjusts color based on theme */
+    }
+  
+    /* Define light and dark mode styles */
+    @media (prefers-color-scheme: dark) {
+        :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+    }
+    
+    @media (prefers-color-scheme: light) {
+        :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+    }
+  </style>
+  
+  <!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+  <div class="center-wrapper">
+    <div class="image-container">
+        <img src="https://wtd-1.github.io/web/Lectures12_13_14_15_Trees.pptx (6).png" alt="Satpute_Lec_Notes" width="1600">
+    </div>
+    <p class="image-caption">
+        <a href="#">Meghana Navanth Satpute</a>,
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via The University of Texas at Dallas
+    </p>
+  </div>
+  <p>The splay operation follows a specific sequence of tree rotations to move a node to the root:
+
+  <ul>
+      <li>Each step consists of two tree rotations, except when the node is at level 0 or 1.</li>
+      <li>The order of rotations depends on whether the node is a left or right grandchild.</li>
+  </ul>
+</p>
+<h4>Zigs, Zags, and Zig-Zags</h4>
+<p>We can go even further, saying that each particular step, "splay step," in the splay operation depends on three things:
+    <ul>
+        <li>Is the node of interest \(x\) a left or right child of the parent node?</li>
+        <li>Is the parent node of \(x\) a root node?</li>
+        <li>If the parent node of \(x\) is not a root node, is it the left or right child of its parent (the grandparent of \(x\))?</li>
+    </ul>
+</p>
+<p>Based on these three questions, we can classify the splay operation into three types:
+    <ul>
+        <li><strong>Zig</strong>. When the parent of \(x\) is the root node.</li>
+        <li><strong>Zag</strong>. When the parent of \(x\) is not the root node and \(x\) is a left child.</li>
+        <li><strong>Zig-Zag</strong>. When the parent of \(x\) is not the root node and \(x\) is a right child.</li>
+    </ul>
+</p>
+
+<p>The <strong>Zig</strong> step is a single rotation is performed on the edge between \( x \) and its parent \( p \). This step is only executed as the final step in a splay operation and is necessary when \( x \) starts at an odd depth to resolve the parity issue.</p>
+
+<p>The <strong>Zig-Zig</strong> step applies when both \( x \) and its parent \( p \) are either left children or right children. The process involves two consecutive rotations: first on the edge between \( p \) and its parent \( g \), and then on the edge between \( x \) and \( p \). This step distinguishes splay trees from the rotate-to-root method developed by Allen and Munro.</p>
+
+<p>The <strong>Zig-Zag</strong> step is used when \( x \) and its parent \( p \) are opposite children, meaning one is a left child and the other is a right child. The tree first rotates on the edge between \( p \) and \( x \), followed by a second rotation on the newly created edge between \( x \) and \( g \). This step corrects imbalances caused by alternating child relationships in the tree.</p>
+
+<style>
+    .center-wrapper {
+        display: flex;
+        flex-direction: column; /* Stacks image and caption vertically */
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        width: 100%;
+        margin-top: 20px; /* Adds spacing above */
+    }
+  
+    .image-container {
+        display: inline-block; /* Ensures the container wraps tightly around the image */
+        padding: 6px; /* Space between the image and border */
+        border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+        border-radius: 5px; /* Slightly rounded corners */
+    }
+  
+    img {
+        display: block; /* Removes inline spacing */
+        max-width: 100%; /* Ensures image responsiveness */
+    }
+  
+    .image-caption {
+        margin-top: 8px; /* Adds space between image and caption */
+        font-size: 0.85rem; /* Makes caption slightly smaller */
+        text-align: center; /* Centers text */
+        color: var(--text-color); /* Adjusts color based on theme */
+    }
+  
+    /* Define light and dark mode styles */
+    @media (prefers-color-scheme: dark) {
+        :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+    }
+    
+    @media (prefers-color-scheme: light) {
+        :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+    }
+  </style>
+  
+  <!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+  <div class="center-wrapper">
+    <div class="image-container">
+        <img src="https://wtd-1.github.io/web/Lectures12_13_14_15_Trees.pptx (7).png" alt="Satpute_Lec_Notes" width="1600">
+    </div>
+    <p class="image-caption">
+        <a href="#">Meghana Navanth Satpute</a>,
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via The University of Texas at Dallas
+    </p>
+  </div>
+<p>Think about what's happening here:
+    <ol>
+        <li>If \(x\) is the root, nothing needs to be done!</li>
+        <li>If \(x\) is a left or right child of the root, rotate the tree to the right or left respectively about the root. That will mean \(x\) becomes the root, so the splay tree has been formed.</li>
+        <li>If \(x\) is the left child of \(p\), which is itself the left child of \(g\) (\(x\)'s grandparent), then:
+            <ul>
+                <li>Rotate \(p\) right about \(g\).</li>
+                <li>Then, rotate \(x\) right about \(p\).</li>
+            </ul>
+            A symmetric pair of rotations can happen if \(x\) is the left child of \(p\) and \(p\) is the left child of \(g\) (the left child of another left child).
+            After this double rotation, continue splaying at \(x\).
+        </li>
+        <li>If \(x\) is the right child of \(p\) and \(p\) is the left child of \(g\), then:
+            <ul>
+                <li>Rotate \(x\) left about \(p\).</li>
+                <li>Then, rotate \(x\) right about \(g\).</li>
+            </ul>
+    </ol>Take a look at how these can be visualised below.</p>
+  <style>
+    .center-wrapper {
+        display: flex;
+        flex-direction: column; /* Stacks image and caption vertically */
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        width: 100%;
+        margin-top: 20px; /* Adds spacing above */
+    }
+  
+    .image-container {
+        display: inline-block; /* Ensures the container wraps tightly around the image */
+        padding: 6px; /* Space between the image and border */
+        border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+        border-radius: 5px; /* Slightly rounded corners */
+    }
+  
+    img {
+        display: block; /* Removes inline spacing */
+        max-width: 100%; /* Ensures image responsiveness */
+    }
+  
+    .image-caption {
+        margin-top: 8px; /* Adds space between image and caption */
+        font-size: 0.85rem; /* Makes caption slightly smaller */
+        text-align: center; /* Centers text */
+        color: var(--text-color); /* Adjusts color based on theme */
+    }
+  
+    /* Define light and dark mode styles */
+    @media (prefers-color-scheme: dark) {
+        :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+    }
+    
+    @media (prefers-color-scheme: light) {
+        :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+    }
+  </style>
+  
+  <!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+  <div class="center-wrapper">
+    <div class="image-container">
+        <img src="https://wtd-1.github.io/web/Lectures12_13_14_15_Trees.pptx (8).png" alt="Satpute_Lec_Notes" width="1600">
+    </div>
+    <p class="image-caption">
+        <a href="#">Meghana Navanth Satpute</a>, edited by William T. Doan,
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via The University of Texas at Dallas
+    </p>
+  </div>
+
+For more help on visualising what is going on and how specific nodes are splayed, I invite the image below, taken from the CS 136 lecture slides written by Aaron Williams at Williams College.
+
+<style>
+    .center-wrapper {
+        display: flex;
+        flex-direction: column; /* Stacks image and caption vertically */
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        width: 100%;
+        margin-top: 20px; /* Adds spacing above */
+    }
+  
+    .image-container {
+        display: inline-block; /* Ensures the container wraps tightly around the image */
+        padding: 6px; /* Space between the image and border */
+        border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+        border-radius: 5px; /* Slightly rounded corners */
+    }
+  
+    img {
+        display: block; /* Removes inline spacing */
+        max-width: 100%; /* Ensures image responsiveness */
+    }
+  
+    .image-caption {
+        margin-top: 8px; /* Adds space between image and caption */
+        font-size: 0.85rem; /* Makes caption slightly smaller */
+        text-align: center; /* Centers text */
+        color: var(--text-color); /* Adjusts color based on theme */
+    }
+  
+    /* Define light and dark mode styles */
+    @media (prefers-color-scheme: dark) {
+        :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+    }
+    
+    @media (prefers-color-scheme: light) {
+        :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+    }
+  </style>
+  
+  <!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+  <div class="center-wrapper">
+    <div class="image-container">
+        <img src="https://wtd-1.github.io/web/Screenshot 2025-03-19 at 01.05.10.png" alt="Screenshot 2025-03-19 at 01.05.10.png" width="1600">
+    </div>
+    <p class="image-caption">
+        <a href="https://csci.williams.edu/people/faculty/aaron-williams/">Aaron Williams</a>,
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via Williams College
+    </p>
+  </div>
+
+  <h4>Another Splay Tree Operation: <code>join</code></h4>
+
+  <p>When merging two splay trees \( S \) and \( T \), where all elements in \( S \) are smaller than those in \( T \), we follow these steps:</p>
+  
+  <ul>
+      <li>Splay the largest element in \( S \), making it the root of \( S \) with a null right child.</li>
+      <li>Set the right child of the new root to \( T \), effectively merging both trees.</li>
+  </ul>
+  
+  <h4>Another Splay Tree Operation: <code>split</code></h4>
+  
+  <p>To split a splay tree around a given element \( x \), creating two separate trees—one with elements \( \leq x \) and the other with elements \( > x \)—follow this approach:</p>
+  
+  <ul>
+      <li>Splay \( x \), bringing it to the root.</li>
+      <li>The left subtree now contains all elements smaller than \( x \), and the right subtree contains elements greater than \( x \).</li>
+      <li>Detach the right subtree, separating it from the left subtree.</li>
+  </ul>
+  
+  <h4>Another Splay Tree Operation: <code>insertion</code></h4>
+  
+  <p>To insert a value \( x \) into a splay tree, use one of the following methods:</p>
+  
+  <ul>
+      <li>Insert \( x \) as in a standard binary search tree.</li>
+      <li>Splay \( x \) to move it to the root.</li>
+  </ul>
+  
+  <p>Alternatively, you can:</p>
+  
+  <ul>
+      <li>Use the split operation to divide the tree at \( x \), forming two subtrees \( S \) and \( T \).</li>
+      <li>Create a new tree where \( x \) becomes the root, with \( S \) as its left subtree and \( T \) as its right subtree.</li>
+  </ul>
+  
+  <h4>Another Splay Tree Operation: <code>deletion</code></h4>
+  
+  <p>To remove a node \( x \) from a splay tree, follow the standard deletion process of a binary search tree:</p>
+  
+  <ul>
+      <li>If \( x \) has two children:
+          <ul>
+              <li>Swap \( x \) with its in-order predecessor (rightmost node in the left subtree) or its in-order successor (leftmost node in the right subtree).</li>
+              <li>Remove that node instead.</li>
+          </ul>
+      </li>
+      <li>If \( x \) has 0 or 1 children, remove it directly.</li>
+      <li>Splay the parent of the removed node to bring it to the root.</li>
+  </ul>
+  
+  <p>Alternatively, you can:</p>
+  
+  <ul>
+      <li>Splay \( x \) first, bringing it to the root.</li>
+      <li>Delete \( x \), leaving the tree with two subtrees.</li>
+      <li>Join the two subtrees using the "join" operation.</li>
+  </ul>
+  
+
+  
+  <h2>Running Time of Splay Trees</h2>
+  <p>Recall that a <strong>splay tree</strong> is a type of binary search tree that dynamically adjusts its structure by performing a splay operation after each access (whether for search, insertion, or deletion). The deepest internal node accessed during the operation is splayed, meaning it is moved to the root through a sequence of rotations.</p>
+  
+  <p>Splaying has a worst-case cost of \( O(h) \), where \( h \) is the tree's height, which can be as large as \( O(n) \) in an unbalanced tree. However, each rotation performed during splaying takes \( O(1) \) time, and the total number of rotations per splay operation is \( O(h) \).</p>
+  
+  <h2>On the Performance of Splay Trees</h2>
+
+  <p>Analyzing the performance of splay trees is challenging due to their constantly changing structure. However, the amortized cost of any splay operation remains \( O(\log n) \), and this analysis holds for a wide range of definitions of rank(\( x \)). Moreover, splay trees can adapt dynamically to access patterns, allowing searches for frequently requested elements to complete in significantly less than \( O(\log n) \) time in some cases.</p>
+  
+  <p>This optimization, tying in the introduction, illustrates how small refinements in data structure design can lead to significant efficiency improvements. Many advancements in computer science emerge through incremental insights like these, refining existing methods to achieve better performance.</p>
+  
+  <h2>Splay Trees & Ordered Dictionaries</h2>
+  <p>The table below outlines which nodes are splayed after each operation in a splay tree:</p>
+
+
+  <table>
+      <tr>
+          <th><strong><u>Operation</u></strong></th>
+          <th><strong><u>Node Splayed</u></strong></th>
+      </tr>
+      <tr>
+          <td>Search for <em>k</em></td>
+          <td>
+              If key found, use that node.<br>
+              If key not found, use the parent of the ending external node.
+          </td>
+      </tr>
+      <tr>
+          <td>Insert (<em>k, v</em>)</td>
+          <td>
+              Use the new node containing the entry inserted.
+          </td>
+      </tr>
+      <tr>
+          <td>Remove item with key <em>k</em></td>
+          <td>
+              Use the parent of the internal node that was actually removed from the tree 
+              (the parent of the node that the removed item was swapped with).
+          </td>
+      </tr>
+  </table>
+  
+<h2>Implementing the Splay Tree</h2>
+In Java, the code can be written as follows. You can view it <a href="https://wtd-1.github.io/web/splaytree.txt"><kbd>here</kbd></a> or below. Credit for the code goes to the <a href="https://github.com/Bibeknam/algorithmtutorprograms/blob/master/data-structures/splay-trees/SplayTree.java">Algorithm Tutor</a>.
+<br><br>
+<embed src="https://wtd-1.github.io/web/splaytree.txt" width="100%" height="500">
+  <br>
+<h2>Tree Traversal</h2>
+<p>
+    Performing an <strong><u>in-order traversal</u></strong> on any binary search tree (BST) results in a list of all elements in sorted order. This traversal has a time complexity of \( O(N) \).  
+    A <strong><u>post-order traversal</u></strong> is useful for computing the height of the tree, as it processes child nodes before their parent. This traversal also runs in \( O(N) \) time.  
+    Similarly, a <strong><u>pre-order traversal</u></strong>, which is often used for tasks such as printing each node along with its depth, has a time complexity of \( O(N) \) as well.
+    </p>
+    
+<h4>In-order Traversal</h4>
+<pre>
+
+    // Print the tree's contents in sorted order
+    public void printTree( ) {
+        if( isEmpty( ) )
+            System.out.println( "Empty tree" );
+        else
+            printTree( root );
+    }
+
+    // This is an internatl method to print a subtree in sorted order.
+    private void printTree( BinaryNode&ltAnyType&gt t ) {
+        if( t != null ) {
+            printTree( t.left );
+            System.out.println( t.element );
+            printTree( t.right );
+        }
+    }
+
+</pre>
+
+<h4>Post-order Traversal</h4>
+<pre>
+
+    // Print the tree's contents in post-order
+    public void printPostOrder( ) {
+        if( isEmpty( ) )
+            System.out.println( "Empty tree" );
+        else
+            printPostOrder( root );
+    }
+
+    // This is an internatl method to print a subtree in post-order.
+    private void printPostOrder( BinaryNode&ltAnyType&gt t ) {
+        if( t != null ) {
+            printPostOrder( t.left );
+            printPostOrder( t.right );
+            System.out.println( t.element );
+        }
+    }
+
+</pre>
+
+<h4>Extra: Computing the height (Using Postorder Traversal)</h4>
+<pre>
+
+    private int height ( BinaryNode&ltAnyType&gt t ) {
+        if ( t == null ) {
+            return -1;
+        } else {
+            return 1 + Math.max( height( t.left ), height( t.right ) );
+        }
+    }
+
+</pre>
+
+<h4>Level Order Traversal</h4>
+
+<p>
+Level order traversal processes nodes in a tree by visiting all nodes at a given depth \( d \) before moving on to nodes at depth \( d+1 \).  
+Unlike in-order, pre-order, or post-order traversals, which can be implemented using recursion, level order traversal requires an iterative approach.  
+This is typically done using a queue to keep track of nodes at each level.
+</p>
+
+<p>
+The algorithm follows these steps:
+</p>
+
+<ul>
+    <li>Start by enqueuing the root node.</li>
+    <li>While the queue is not empty:
+        <ul>
+            <li>Dequeue the front node, process it (e.g., print its value).</li>
+            <li>Enqueue its left child if it exists.</li>
+            <li>Enqueue its right child if it exists.</li>
+        </ul>
+    </li>
+</ul>
+
+<p>
+For example, given a tree with the following structure:
+</p>
+
+<pre>
+
+        1
+       / \
+      2   3
+     / \
+    4   5
+
+</pre>
+
+<p>
+Performing level order traversal on this tree would output the nodes in the order:
+</p>
+
+<p>
+\[
+1, 2, 3, 4, 5
+\]
+</p>
+
+<p>
+This traversal ensures that all nodes at the same depth are processed together before moving to the next level.  
+Since each node is visited once and enqueued/dequeued at most once, the running time complexity of level order traversal is \( O(N) \), where \( N \) is the number of nodes in the binary tree. 
+Incidentally, does this sound familiar? It should: this is a breadth-first search (BFS) algorithm!
+</p>
+
+
+    </section><br>
+
+    <footer class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <small>© 2025 William T. Doan. All rights reserved.</small>
+      <small><kbd><a href="lec12_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Previous Lecture</a></kbd></small>
+      <small><kbd><a href="lec13_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Next Lecture</a></kbd></small>
+      <small><kbd><a href="index.html" style="color: #009dff; text-decoration: none;">Return to the homepage</a></kbd></small>
+    </footer>
+  </body>
+</html>

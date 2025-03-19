@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Lecture Twelve</title>
+    <meta name="description" content="Lecture transcript organized and formatted." />
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css"
+    />
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  </head>
+
+  <body>
+    <header class="container">
+      <hgroup>
+        <h1>Lecture Twelve</h1>
+        <h1>CS 3345: Data Structures and Introduction to Algorithmic Analysis</h1>
+      </hgroup>
+      <br>
+      <article id="article">
+        <h4>Content Overview</h4>
+        <p>
+            AVL trees! 
+        </p>
+        <small><kbd><a href="https://cometmail.sharepoint.com/sites/CS3345002CE3345002SE33450022252/Shared%20Documents/General/Recordings/View%20Only/3345.002%20Class-20250313_130133-Meeting%20Recording.mp4?web=1&referrer=Teams.TEAMS-ELECTRON&referrerScenario=MeetingChicletGetLink.view" style="color: #009dff; text-decoration: none;">Lecture Video</a></kbd></small>
+      </article>
+    </header>
+
+    <section class="container">
+<h2>Introduction</h2>
+        <p>
+            To recap, while the average runtime of BST operations is often stated as \( O(\log N) \), this is not always true in practice. 
+            </p>
+            
+            <p>
+            Deletions can introduce imbalance by making the left subtree deeper than the right. This typically occurs because the in-order predecessor (largest node in the left subtree) is frequently chosen to replace deleted nodes. Over time, this leads to a skewed tree structure, increasing the depth on the left side.
+            </p>
+            
+            <p>
+            As a result, frequent deletions can degrade the tree’s balance, causing operations to slow down beyond the expected \( O(\log N) \), potentially reaching \( O(N) \) in the worst case. To prevent this, self-balancing trees like AVL trees and Red-Black trees enforce strict balancing rules, ensuring operations remain efficient at \( O(\log N) \).
+            </p>
+        
+          <h2>The AVL Tree</h2>  
+            <p>AVL tree ("AVL" standing for "Adelson-Velsky and Landis" if you are inclined to know; they are the wonderful people who invented it in 1962) is a binary search tree with balance condition which ensures that the depth of the tree is \(O(logN)\).
+                An  AVL tree is identical to binary search tree, <mark>expect that for every node in the tree <strong><em><u>the height of the left and right subtree can differ by at most ONE</u></em></strong></mark>. Take a look at the image below. 
+              </p>
+
+              <style>
+                .center-wrapper {
+                    display: flex;
+                    flex-direction: column; /* Stacks image and caption vertically */
+                    justify-content: center; /* Centers horizontally */
+                    align-items: center; /* Centers vertically */
+                    width: 100%;
+                    margin-top: 20px; /* Adds spacing above */
+                }
+              
+                .image-container {
+                    display: inline-block; /* Ensures the container wraps tightly around the image */
+                    padding: 6px; /* Space between the image and border */
+                    border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+                    border-radius: 5px; /* Slightly rounded corners */
+                }
+              
+                img {
+                    display: block; /* Removes inline spacing */
+                    max-width: 100%; /* Ensures image responsiveness */
+                }
+              
+                .image-caption {
+                    margin-top: 8px; /* Adds space between image and caption */
+                    font-size: 0.85rem; /* Makes caption slightly smaller */
+                    text-align: center; /* Centers text */
+                    color: var(--text-color); /* Adjusts color based on theme */
+                }
+              
+                /* Define light and dark mode styles */
+                @media (prefers-color-scheme: dark) {
+                    :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+                }
+                
+                @media (prefers-color-scheme: light) {
+                    :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+                }
+              </style>
+              
+              <!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+              <div class="center-wrapper">
+                <div class="image-container">
+                    <img src="https://wtd-1.github.io/web/Lectures12_13_14_15_Trees.pptx (4).png" alt="Satpute_Lec_Notes" width="800">
+                </div>
+                <p class="image-caption">
+                    <a href="#">Meghana Navanth Satpute</a>,
+                    <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via The University of Texas at Dallas
+                </p>
+              </div>
+<p>The figure above is not lying that of the two binary search trees, only the left is actually an AVL. Do you see why? Take a look at the next figure below.</p>
+
+<style>
+    .center-wrapper {
+        display: flex;
+        flex-direction: column; /* Stacks image and caption vertically */
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        width: 100%;
+        margin-top: 20px; /* Adds spacing above */
+    }
+  
+    .image-container {
+        display: inline-block; /* Ensures the container wraps tightly around the image */
+        padding: 6px; /* Space between the image and border */
+        border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+        border-radius: 5px; /* Slightly rounded corners */
+    }
+  
+    img {
+        display: block; /* Removes inline spacing */
+        max-width: 100%; /* Ensures image responsiveness */
+    }
+  
+    .image-caption {
+        margin-top: 8px; /* Adds space between image and caption */
+        font-size: 0.85rem; /* Makes caption slightly smaller */
+        text-align: center; /* Centers text */
+        color: var(--text-color); /* Adjusts color based on theme */
+    }
+  
+    /* Define light and dark mode styles */
+    @media (prefers-color-scheme: dark) {
+        :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+    }
+    
+    @media (prefers-color-scheme: light) {
+        :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+    }
+  </style>
+  
+  <!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+  <div class="center-wrapper">
+    <div class="image-container">
+        <img src="https://wtd-1.github.io/web/Lectures12_13_14_15_Trees.pptx (5).png" alt="Satpute_Lec_Notes" width="800">
+    </div>
+    <p class="image-caption">
+        Image from <a href="#">Meghana Navanth Satpute</a>, edited by William T. Doan,
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via The University of Texas at Dallas
+    </p>
+  </div>
+
+  <p>Over each node, I wrote the difference between the heights of its left and right subtrees in red. According to the definition of an AVL tree, such differences can only be at most one. With that, presto! I have 
+    shown you the left binary search tree is an AVL. 
+  </p>
+
+  <h4>Properties of an AVL Tree</h4>
+<p>
+Once again, because it is <em>really</em> important, an AVL tree is a self-balancing binary search tree where the height difference between the left and right subtrees of any node is at most one. One fundamental property of an AVL tree is the minimum number of nodes required for a given height \( h \). This is defined recursively as:
+</p>
+<p>
+\[
+S(h) = S(h-1) + S(h-2) + 1
+\]
+</p>
+<p>
+For base cases, when \( h = 0 \), the minimum number of nodes is \( S(0) = 1 \), and when \( h = 1 \), the minimum number of nodes is \( S(1) = 2 \). This recurrence relation ensures that AVL trees remain balanced, leading to efficient operations.
+</p>
+<p>
+Due to their balanced nature, AVL trees guarantee that all fundamental operations, including search, deletion, and rotations, run in \( O(\log N) \) time. However, insertion requires additional balancing steps, making it an exception in terms of performance.
+</p>
+
+<h4>Rotation</h4>
+<p>
+After an insertion, the balance of an AVL tree must be restored to maintain its height-balanced property. The node that requires rebalancing is denoted as \( \alpha \). When an imbalance occurs, it falls into one of four possible cases, each corresponding to a specific type of rotation.
+</p>
+<ul>
+    <li>The <strong><u>first case</u></strong> occurs when an insertion takes place in the left subtree of the left child of \( \alpha \), leading to a right rotation.</li>
+    <li>The <strong><u>second case</u></strong> arises when an insertion happens in the right subtree of the left child of \( \alpha \), requiring a left-right rotation.</li>
+    <li>The <strong><u>third case</u></strong> involves an insertion in the left subtree of the right child of \( \alpha \), necessitating a right-left rotation.</li>
+    <li>The <strong><u>fourth case</u></strong> occurs when an insertion is made into the right subtree of the right child of \( \alpha \), which is resolved using a left rotation.</li>
+</ul>
+
+<p>
+These rotations ensure that the AVL tree remains balanced, preserving the \( O(\log N) \) time complexity for all fundamental operations. Cases 1 and 4 can be fixed using a single rotation, hence 
+why above you saw just a rotation in a single direction. Cases 2 and 3 can be fixed using two rotations; that's why you saw that I hyphenated the rotations. Luckily, 
+<a href="https://en.wikipedia.org/wiki/User:Mtanti">Marc Tanti</a> at the <a href="https://www.um.edu.mt/profile/marctanti">University of Malta</a> drew this wonderful table showing the four cases below.
+</p>
+
+<style>
+    .center-wrapper {
+        display: flex;
+        flex-direction: column; /* Stacks image and caption vertically */
+        justify-content: center; /* Centers horizontally */
+        align-items: center; /* Centers vertically */
+        width: 100%;
+        margin-top: 20px; /* Adds spacing above */
+    }
+  
+    .image-container {
+        display: inline-block; /* Ensures the container wraps tightly around the image */
+        padding: 6px; /* Space between the image and border */
+        border: 2px solid var(--border-color); /* Light/Dark adaptive border */
+        border-radius: 5px; /* Slightly rounded corners */
+    }
+  
+    img {
+        display: block; /* Removes inline spacing */
+        max-width: 100%; /* Ensures image responsiveness */
+    }
+  
+    .image-caption {
+        margin-top: 8px; /* Adds space between image and caption */
+        font-size: 0.85rem; /* Makes caption slightly smaller */
+        text-align: center; /* Centers text */
+        color: var(--text-color); /* Adjusts color based on theme */
+    }
+  
+    /* Define light and dark mode styles */
+    @media (prefers-color-scheme: dark) {
+        :root { --border-color: #888; --text-color: #ccc; } /* Lighter border and text in dark mode */
+    }
+    
+    @media (prefers-color-scheme: light) {
+        :root { --border-color: #333; --text-color: #555; } /* Darker border and text in light mode */
+    }
+  </style>
+  
+  <!-- Centered Image with Citation (IMPORT STYLE ABOVE)-->
+  <div class="center-wrapper">
+    <div class="image-container">
+        <img src="https://wtd-1.github.io/web/Tree_Rebalancing.gif" alt="Tree_Rebalancing.gif" width="1600">
+    </div>
+    <p class="image-caption">
+        <a href="https://en.wikipedia.org/wiki/User:Mtanti">Marc Tanti</a>,
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, via English Wikipedia
+    </p>
+  </div>
+<p>And in case you are still confused or want some more practice, Dr. <a href="https://www.cise.ufl.edu/~nemo/">Richard Newman</a> at the University of Florida hosts a tutorial on AVL trees written by 
+John Hargrove. Check it out <a href="https://wtd-1.github.io/web/AVL-Tree-Rotations.pdf"><kbd>here</kbd></a></p>
+
+<h4>AVL Trees Implementation</h4>
+<p>
+To insert a new node \( X \) into an AVL tree, we recursively insert \( X \) into the appropriate subtree, denoted as \( T_{LR} \). If the height of \( T_{LR} \) remains unchanged after the insertion, no further adjustments are needed, and the insertion process is complete. However, if the height of \( T_{LR} \) changes, a rotation must be performed to restore balance. Depending on the position of \( X \) in relation to its ancestor nodes, either a single or double rotation is applied.
+</p>
+<p>
+To efficiently maintain balance, each node in the AVL tree stores its height information. This eliminates the need for repeated balance factor calculations, ensuring that all insertions and rotations are performed efficiently.
+</p>
+<h4>Implementing AVL Trees: the AVL Node Class</h4>
+<pre>
+
+    private static class AvlNode&ltAnyType&gt {
+
+        AvlNode( AnyType theElement ) {
+
+            this( theElement, null, null );
+    
+        }
+    
+        AvlNode( AnyType theElement, AvlNode&ltAnyType&gt lt, AvlNode&ltAnyType&gt rt ) {
+    
+            element  = theElement;
+    
+            left     = lt;
+    
+            right    = rt;
+    
+            height   = 0;
+    
+        }
+    
+        Anytype element;
+        AvlNode&ltAnyType&gt left;
+        AvlNode&ltAnyType&gt right;
+        int height;
+
+    }
+
+</pre>
+
+<h4>Implementing AVL Trees: the <code>height</code></h4>
+<pre>
+
+    private int height( AvlNode&ltAnyType&gt t ) {
+
+        // -1 is for if the height is bad (i.e., null)
+        return t == null ? -1 : t.height; 
+
+    }
+
+</pre>
+
+<h4>Implementing AVL Trees: <code>insertion</code> and <code>balance</code></h4>
+<pre>
+
+    private AvlNode&ltAnyType&gt insert( AnyType x, AvlNode&ltAnyType&gt t ) {
+
+        if( t == null ) {
+
+            return new AvlNode&lt&gt( x, null, null );
+
+        }
+
+        int compareResult = x.compareTo( t.element );
+
+        if( compareResult &lt 0 ) {
+
+            t.left = insert( x, t.left );
+
+        } else if( compareResult &gt 0 ) {
+
+            t.right = insert( x, t.right );
+
+        } else {
+
+            // Duplicate; do nothing
+
+        }
+
+        return balance( t );
+
+    }
+</pre>
+<p>Now, we know from earlier that insertion and balance go hand-in-hand. So, as we insert, we must also make sure balance is maintained.</p>
+<pre>
+
+    private static final int ALLOWED_IMBALANCE = 1;
+
+    private AvlNode&ltAnyType&gt height-balanced( AvlNode&ltAnyType&gt t ) {
+
+        if( t == null ) {
+
+            return t;
+
+        }
+
+        if( height( t.left ) - height( t.right ) &gt ALLOWED_IMBALANCE ) {
+
+            if( height( t.left.left ) &gt= height( t.left.right ) ) {
+
+                t = rotateWithLeftChild( t );
+
+            } else {
+
+                t = doubleWithLeftChild( t );
+
+            }
+
+        } else if( height( t.right ) - height( t.left ) &gt ALLOWED_IMBALANCE ) {
+
+            if( height( t.right.right ) &gt= height( t.right.left ) ) {
+
+                t = rotateWithRightChild( t );
+
+            } else {
+
+                t = doubleWithRightChild( t );
+
+            }
+
+        }
+
+        t.height = Math.max( height( t.left ), height( t.right ) ) + 1;
+
+        return t;
+
+    }
+
+</pre>
+
+<h4>Implementing AVL Trees: Single Rotation</h4>
+<pre>
+
+    private AvlNode&ltAnyType&gt rotateWithLeftChild( AvlNode&ltAnyType&gt k2 ) {
+
+        AvlNode&ltAnyType&gt k1 = k2.left;
+
+        k2.left = k1.right;
+        k1.right = k2;
+
+        k2.height = Math.max( height( k2.left ), height( k2.right ) ) + 1;
+        k1.height = Math.max( height( k1.left ), height( k2 ) ) + 1;
+
+        return k1;
+
+    }
+
+</pre>
+
+<h4>Implementing AVL Trees: Double Rotation</h4>
+<pre>
+
+    private AvlNode&ltAnyType&gt doubleWithLeftChild( AvlNode&ltAnyType&gt k3 ) {
+
+        k3.left = rotateWithRightChild( k3.left );
+
+        return rotateWithLeftChild( k3 );
+
+    }
+
+</pre>
+
+<h4>Implenting AVL Trees: Deletion</h4>
+<pre>
+
+    private AvlNode&ltAnyType&gt remove( AnyType x, AvlNode&ltAnyType&gt t ) {
+
+        if( t == null ) {
+
+            return t;
+
+        }
+
+        if( x.compareTo( t.element ) &lt 0 ) {
+
+            t.left = remove( x, t.left );
+
+        } else if( x.compareTo( t.element ) &gt 0 ) {
+
+            t.right = remove( x, t.right );
+
+        } else if( t.left != null && t.right != null ) { 
+
+            t.element = findMin( t.right ).element;
+
+            t.right = remove( t.element, t.right );
+
+        } else {
+
+            t = ( t.left != null ) ? t.left : t.right;
+
+        }
+
+        return balance( t );
+
+    }
+
+</pre>
+
+    </section><br>
+
+    <footer class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <small>© 2025 William T. Doan. All rights reserved.</small>
+      <small><kbd><a href="lec11_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Previous Lecture</a></kbd></small>
+      <small><kbd><a href="lec13_cs3345_s25.html" style="color: #009dff; text-decoration: none;">Next Lecture</a></kbd></small>
+      <small><kbd><a href="index.html" style="color: #009dff; text-decoration: none;">Return to the homepage</a></kbd></small>
+    </footer>
+  </body>
+</html>
