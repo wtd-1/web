@@ -3,89 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <title> </title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet" />
 
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
-
     body {
       font-family: 'Inter', sans-serif;
       background-color: #f7f7f7;
       color: #111;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2em 1em;
-      text-align: center;
+      margin: 0;
+      padding: 2rem 1.5rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
       transition: background-color 0.3s, color 0.3s;
     }
 
     h1 {
-      font-size: 5rem;
+      font-size: 3.75rem;
       font-weight: 700;
-      margin: 0;
+      margin-bottom: 0.1rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      margin-top: 2rem;
     }
 
     p {
-      font-size: 1.25rem;
-      font-weight: 300;
-      margin: 0.5rem 0 2rem 0;
+      font-size: 1.15rem;
       color: #555;
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
     }
 
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 1rem;
-      margin-bottom: 2rem;
+    .pub {
+      margin-bottom: 2.5rem;
     }
 
-    @media (min-width: 601px) {
-      .buttons {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
+    .pub-title {
+      font-style: italic;
+      font-weight: 500;
+      font-size: 1.25rem;
+      margin-bottom: 0.4rem;
     }
 
-    .btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      max-width: 250px;
-      padding: 0.75rem 1.25rem;
+    .pub-authors {
       font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      background-color: #333;
-      color: white;
-      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+
+    .pub-authors a {
+      font-size: inherit;
+      font-weight: inherit;
       text-decoration: none;
-      transition: background 0.3s;
-      word-wrap: break-word;
-      white-space: normal;
-      text-align: center;
+      color: #0066cc;
     }
 
-    .btn i {
-      margin-right: 0.5rem;
+    .pub-authors a:hover {
+      text-decoration: underline;
     }
 
-    .btn:hover {
-      background-color: #555;
+    .pub-venue {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+
+    .pub a {
+      font-size: 1rem;
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .pub a:hover {
+      text-decoration: underline;
+    }
+
+    .toggle-dark {
+      background: none;
+      border: none;
+      font-size: 1.15rem;
+      font-family: 'Inter', sans-serif;
+      color: #0066cc;
+      cursor: pointer;
+      padding: 0;
+      margin: 0 0.25rem;
+    }
+
+    .toggle-dark:hover {
+      text-decoration: underline;
     }
 
     .dark-mode {
@@ -93,65 +102,70 @@
       color: #eee;
     }
 
-    .dark-mode p {
+    .dark-mode p,
+    .dark-mode .pub-authors,
+    .dark-mode .pub-venue {
       color: #aaa;
     }
 
-    .dark-mode .btn {
-      background-color: #eee;
-      color: #121212;
-    }
-
-    .dark-mode .btn:hover {
-      background-color: #ccc;
-    }
-
-    .toggle-dark {
-      margin-top: 2rem;
-      background: none;
-      border: none;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: inherit;
-    }
-
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2.5rem;
-      }
-
-      p {
-        font-size: 1rem;
-      }
-
-      .toggle-dark {
-        font-size: 1rem;
-      }
+    .dark-mode a,
+    .dark-mode .toggle-dark {
+      color: #80bfff;
     }
   </style>
 </head>
+
 <body>
   <h1>William T. Doan</h1>
-  <p>I study theoretical computer science.</p>
+  <p>
+    [ <a href="https://www.overleaf.com/read/grqwhgkxjnjn#f6ff83">CV</a> ]
+    [ <a href="https://www.overleaf.com/read/pfbyrtjfywnr#dd01de">Resume</a> ]
+    [ <a href="https://github.com/wtd-1">GitHub</a> ]
+    [ <a href="https://www.linkedin.com/in/wt3/">LinkedIn</a> ]
+    [<button id="modeToggle" class="toggle-dark">Toggle Dark Mode</button>]
+  </p>
 
-  <div class="buttons">
-    <a class="btn" href="https://www.overleaf.com/read/grqwhgkxjnjn#f6ff83"><i class="fas fa-file-alt"></i>CV</a>
-    <a class="btn" href="https://www.overleaf.com/read/pfbyrtjfywnr#dd01de"><i class="fas fa-file"></i>Resume</a>
-    <a class="btn" href="pub.html"><i class="fas fa-book"></i>Publications</a>
-    <a class="btn" href="https://github.com/wtd-1"><i class="fab fa-github"></i>GitHub</a>
-    <a class="btn" href="https://www.linkedin.com/in/wt3/"><i class="fab fa-linkedin"></i>LinkedIn</a>
+  <hr>
+
+  <h2>Overview</h2>
+  <p>I am advised by Dr. Daniel Gibney; I study graph theory and algorithms in the contexts of strings, quantum computing, and data streams.</p>
+
+  <hr>
+
+  <h2>Publications</h2>
+  <p>The list herewith might not be up-to-date. For my most recent work, see <a href="https://dblp.org/pid/381/4112.html">dblp</a>.</p>
+
+  <div class="pub">
+    <div class="pub-title">Aeros(CASP): Advancing Certification and Safety Through Commonsense Reasoning-Based Constraint Answer Set Programming</div>
+    <div class="pub-authors"><u>William T. Doan</u></div>
+    <div class="pub-venue">AIAA Region IV Conference</div>
+    [<a href="https://github.com/wtd-1/web/raw/main/Aeros(CASP)_%20Advancing%20Certification%20and%20Safety%20Through%20Commonsense%20Reasoning-Based%20Constraint%20Answer%20Set%20Programming.pptx.pdf">Slides</a>]
   </div>
 
-  <button id="modeToggle" class="toggle-dark" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+  <div class="pub">
+    <div class="pub-title">Hear Me, See Me, Understand Me: Audio-Visual Autism Behavior Recognition</div>
+    <div class="pub-authors">
+      <a href="https://ieeexplore.ieee.org/author/37086461848">Shijian Deng</a>,
+      <a href="https://scholar.google.com/citations?user=hXRrprgAAAAJ&hl=en">Erin E. Kosloski</a>,
+      <a href="https://www.linkedin.com/in/siddhi-patel-a41076256/">Siddhi Patel</a>,
+      <a href="https://zeke13.com/">Zeke A. Barnett</a>,
+      <a href="https://nanyyyyyy.github.io/">Yiyang Nan</a>,
+      <a href="https://www.linkedin.com/in/alexanderkaplan25/">Alexander Kaplan</a>,
+      Sisira Aarukapalli, <u>William T. Doan</u>, Matthew Wang,
+      <a href="https://www.linkedin.com/in/harshln/">Harsh Singh</a>,
+      <a href="https://profiles.utdallas.edu/rollins">Pamela R. Rollins</a>,
+      <a href="https://www.yapengtian.com/">Yapeng Tian</a>
+    </div>
+    <div class="pub-venue">IEEE Transactions on Multimedia</div>
+    [<a href="https://ieeexplore.ieee.org/document/10812841">Paper</a>]
+  </div>
 
   <script>
     const body = document.body;
     const toggleButton = document.getElementById("modeToggle");
 
     function updateToggleText(isDark) {
-      if (toggleButton) {
-        toggleButton.innerText = isDark ? "☀️ Toggle Light Mode" : "🌙 Toggle Dark Mode";
-      }
+      toggleButton.innerText = isDark ? "Toggle Light Mode" : "Toggle Dark Mode";
     }
 
     function toggleDarkMode() {
@@ -167,6 +181,9 @@
       }
       updateToggleText(darkModeEnabled);
     };
+
+    toggleButton.addEventListener("click", toggleDarkMode);
   </script>
 </body>
+<br><br>
 </html>
