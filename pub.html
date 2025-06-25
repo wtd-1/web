@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Publications</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f7f7f7;
+      color: #111;
+      margin: 0;
+      padding: 2em;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: background-color 0.3s, color 0.3s;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.25rem;
+      font-weight: 300;
+      margin: 0.5rem 0 2rem 0;
+      color: #777676;
+    }
+
+    .pub {
+      margin-bottom: 2.5rem;
+      text-align: left;
+    }
+
+    .pub-title {
+      font-style: italic;
+      font-weight: 525;
+      font-size: 1.25rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .pub-authors {
+      font-weight: 300;
+      font-size: 1rem;
+      margin-bottom: 0.5rem; /* Updated spacing */
+    }
+
+    .pub-authors a {
+      font-size: inherit;
+      font-weight: inherit;
+    }
+
+    .pub-venue {
+      font-weight: 300;
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+
+    .pub a {
+      font-size: 1rem;
+      display: inline-block;
+      margin-top: 0.25rem;
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .pub a:hover {
+      text-decoration: underline;
+    }
+
+    .nav {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    
+    .nav a {
+       font-size: 1.1rem;
+       font-weight: 600;
+    }
+
+
+    a {
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .dark-mode {
+      background-color: #121212;
+      color: #eee;
+    }
+
+    .dark-mode p {
+      color: #aaa;
+    }
+
+    .dark-mode .pub-authors,
+    .dark-mode .pub-venue {
+      color: #aaa;
+    }
+
+    .dark-mode a {
+      color: #80bfff;
+    }
+  </style>
+</head>
+<body>
+  <h1>Selected Publications</h1>
+  <p>The list herewith might not be up to date. For a most recent list, see <a href="https://dblp.org/pid/381/4112.html">dblp</a>.</p>
+
+  <br>
+
+  <div class="pub">
+    <div class="pub-title">Aeros(CASP): Advancing Certification and Safety Through Commonsense Reasoning-Based Constraint Answer Set Programming</div>
+    <div class="pub-authors"><u>William T. Doan</u></div>
+    <div class="pub-venue">AIAA Region IV Conference</div>
+    <a href="https://github.com/wtd-1/web/raw/main/Aeros(CASP)_%20Advancing%20Certification%20and%20Safety%20Through%20Commonsense%20Reasoning-Based%20Constraint%20Answer%20Set%20Programming.pptx.pdf">Slides</a>
+  </div>
+
+  <div class="pub">
+    <div class="pub-title">Hear Me, See Me, Understand Me: Audio-Visual Autism Behavior Recognition</div>
+    <div class="pub-authors">
+      <a href="https://ieeexplore.ieee.org/author/37086461848">Shijian Deng</a>, 
+      <a href="https://scholar.google.com/citations?user=hXRrprgAAAAJ&hl=en">Erin E. Kosloski</a>, 
+      <a href="https://www.linkedin.com/in/siddhi-patel-a41076256/">Siddhi Patel</a>, 
+      <a href="https://zeke13.com/">Zeke A. Barnett</a>, 
+      <a href="https://nanyyyyyy.github.io/">Yiyang Nan</a>, 
+      <a href="https://www.linkedin.com/in/alexanderkaplan25/">Alexander Kaplan</a>, 
+      Sisira Aarukapalli, <u>William T. Doan</u>, 
+      Matthew Wang, 
+      <a href="https://www.linkedin.com/in/harshln/">Harsh Singh</a>, 
+      <a href="https://profiles.utdallas.edu/rollins">Pamela R. Rollins</a>, 
+      <a href="https://www.yapengtian.com/">Yapeng Tian</a>
+    </div>
+    <div class="pub-venue">IEEE Transactions on Multimedia</div>
+    <a href="https://ieeexplore.ieee.org/document/10812841">Paper</a>
+  </div>
+
+  <div class="nav">
+    <strong><a href="index.html">&larr; Back to Home</a></strong>
+  </div>
+
+  <script>
+    // Apply stored dark mode preference
+    window.onload = function () {
+      const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
+      if (darkModeEnabled) {
+        document.body.classList.add('dark-mode');
+      }
+    };
+  </script>
+</body>
+</html>
