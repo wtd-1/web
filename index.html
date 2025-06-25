@@ -99,7 +99,10 @@
       color: inherit;
     }
 
-    /* Responsive layout for small screens */
+    #invalid {
+      display: none;
+    }
+
     @media (max-width: 600px) {
       .buttons {
         flex-direction: column;
@@ -111,11 +114,36 @@
         max-width: 250px;
       }
     }
+
+    @media screen and (max-width: 768px) {
+      #invalid {
+        display: block;
+        width: 90%;
+        margin: 16px auto;
+        padding: 16px;
+        border: 2px solid red;
+        border-radius: 4px;
+        text-align: center;
+        box-sizing: border-box;
+        position: relative;
+      }
+    }
   </style>
 </head>
 <body>
   <h1>William T. Doan</h1>
   <p>I study theoretical computer science.</p>
+
+  <div id="invalid" role="alert" aria-invalid="true">
+    <span style="display: block; text-align: justify; line-height: 1.6; margin: 0px 0;">
+      It seems you are viewing this webpage on a smaller screen size. 
+      This content is viewed best on larger screens. Although this does 
+      not impede the functionality of the website, it may hinder the
+      experience through which the information is conveyed.
+    </span>
+    <span style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font-size: 1.5em; color: red;"> 
+    </span>
+  </div>
 
   <div class="buttons">
     <a class="btn" href="https://www.overleaf.com/read/grqwhgkxjnjn#f6ff83"><i class="fas fa-file-alt"></i>CV</a>
