@@ -22,41 +22,35 @@
     }
 
     /* ---- Dark mode that works via class on <html> or <body> ---- */
-    /* Base text/bg */
     html.dark-mode body,
     body.dark-mode {
       background-color:#121212;
       color:#eee;
     }
-    /* Paragraph + notes */
     html.dark-mode p,
     body.dark-mode p,
     html.dark-mode .note,
     body.dark-mode .note { color:#aaa; }
-    /* Links */
     html.dark-mode a,
     body.dark-mode a { color:#80bfff; }
-    /* Lead paragraph */
     html.dark-mode p.lead,
     body.dark-mode p.lead { color:#aaa; }
-    /* HR in dark mode */
     html.dark-mode hr,
     body.dark-mode hr { border-top: 1.25px solid #444; }
-    /* Hover highlight in dark */
     html.dark-mode .entry:hover,
     body.dark-mode .entry:hover { background: rgba(255,255,255,0.05); }
-    /* Footer color in dark */
     html.dark-mode footer,
     body.dark-mode footer { color:#aaa; }
 
+    /* Ticker */
     .ticker{
       position:relative;
       height:clamp(340px, 70vh, 820px);
       overflow:hidden;
-      border-radius:0;          /* match flat look */
-      background:transparent;   /* no card */
-      box-shadow:none;          /* remove shadows */
-      padding:0;                /* align with index spacing */
+      border-radius:0;
+      background:transparent;
+      box-shadow:none;
+      padding:0;
       mask-image: linear-gradient(to bottom, transparent 0px, black 24px, black calc(100% - 24px), transparent 100%);
       -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 24px, black calc(100% - 24px), transparent 100%);
     }
@@ -66,34 +60,81 @@
       gap: 1rem;
       animation: scroll 80s linear infinite;
     }
-    .ticker:hover .track { animation-play-state: paused; }
+
+    /* Pause when hovered or focused within */
+    .ticker:hover .track,
+    .track:hover,
+    .ticker:focus-within .track {
+      animation-play-state: paused;
+    }
+
     @keyframes scroll {
       from { transform: translateY(0); }
       to { transform: translateY(-50%); }
     }
+
+    /* Respect reduced-motion by default, but allow opt-in via .allow-motion */
     @media (prefers-reduced-motion: reduce) {
       .track { animation: none; }
       .ticker { overflow: auto; }
+      html.allow-motion .track { animation: scroll 80s linear infinite !important; }
     }
+
     .entry {
       padding: 0.35rem 0.5rem;
       border-radius: 12px;
       transition: background-color 0.2s ease-in-out;
+      cursor: default;
     }
     .entry:hover{ background: rgba(0,0,0,0.03); }
     .name { font-weight: 700; font-size: 1.12rem; }
     .note { color: #555; font-weight: 500; }
     .number { font-weight: 500; }
     footer { text-align: center; color: #555; font-size: 0.95rem; margin-top: 1rem; }
+
+    /* Link-like button for motion toggle */
+    .linklike {
+      background: none; border: 0; padding: 0; margin: 0;
+      font: inherit; cursor: pointer; color: #0066cc; text-decoration: none;
+    }
+    .linklike:hover { text-decoration: underline; }
+    .linklike:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+    html.dark-mode .linklike, body.dark-mode .linklike { color:#80bfff; }
   </style>
 
-  <!-- Apply saved theme before first paint to avoid white flash -->
+  <!-- Apply saved theme + motion preference before first paint -->
   <script>
     (function () {
       try {
+        // Dark mode persistence
         if (localStorage.getItem('darkMode') === 'true') {
           document.documentElement.classList.add('dark-mode');
         }
+        // Motion preference persistence
+        if (localStorage.getItem('allowMotion') === 'true') {
+          document.documentElement.classList.add('allow-motion');
+        }
+
+        // Wire up the motion toggle once DOM is ready
+        document.addEventListener('DOMContentLoaded', function () {
+          const btn = document.getElementById('motion-toggle');
+          if (!btn) return;
+
+          function refreshUI() {
+            const on = document.documentElement.classList.contains('allow-motion');
+            btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            btn.textContent = on ? 'Turn off motion' : 'Turn on motion';
+          }
+
+          btn.addEventListener('click', function () {
+            document.documentElement.classList.toggle('allow-motion');
+            const on = document.documentElement.classList.contains('allow-motion');
+            localStorage.setItem('allowMotion', on ? 'true' : 'false');
+            refreshUI();
+          });
+
+          refreshUI();
+        });
       } catch (e) {}
     })();
   </script>
@@ -102,10 +143,13 @@
 <body>
   <header>
     <h1>Collaboration Distances</h1>
-    <p class="lead">A continuously scrolling list of notable scientists and my collaboration distances. Hover to pause; respects reduced‑motion.</p>
+    <p class="lead">A continuously scrolling list of notable scientists and my collaboration distances. Hover to pause; respects reduced‑motion.
+    </p>
     <nav>
-      [ <a href="./index.html">Back to Home</a> ]
-    </nav>
+  [ <a href="./index.html">Back to Home</a> ] 
+  [ <button id="motion-toggle" aria-pressed="false" class="linklike">Turn on motion</button> ]
+</nav>
+
   </header>
 
   <hr>
