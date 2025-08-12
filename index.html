@@ -8,6 +8,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet" />
 
   <style>
+
+    /* smooth anchor scrolling */
+    html { scroll-behavior: smooth; }
+
+    .toggle-dark:hover { text-decoration: underline; }
+
+    /* centered row for the section links */
+    .section-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0 1rem;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background-color: #f7f7f7;
@@ -33,7 +48,7 @@
     }
 
     p {
-      font-size: 1rem;
+      font-size: 1.20rem;
       color: #555;
       margin-top: 0.5rem;
       margin-bottom: 1.5rem;
@@ -110,7 +125,7 @@
   William T. Doan
   <sup>
     <a href="https://orcid.org/0009-0005-3135-6346" target="_blank" aria-label="ORCID Profile">
-      <img src="ORCID_iD.svg" alt="ORCID iD icon" style="width: 20px; height: 20px; vertical-align: middle; margin-left: 0.005em;">
+      <img src="ORCID_iD.svg" alt="" style="width: 20px; height: 20px; vertical-align: middle; margin-left: 0.005em;">
     </a>
   </sup>
 </h1>
@@ -132,9 +147,19 @@
     quantum computing, and data streams under him at the <a href="https://www.utdallas.edu/">University of Texas at Dallas</a>. 
     Tangentially, I am also interested in computer vision and multimodal computing, logic programming, number theory, and cryptography.</p>
 
+    <p>My Erdős number is <tt>5</tt>. My Einstein number is also <tt>5</tt>. My Heisenberg number is <tt>6</tt>. For a more extensive list of my collaboration distances 
+    from famous scientists, you may view it <a href="collab_dist_list.html">here</a>.</p>
+    <br>
+  <hr>
+  <br>
+  <center>
+    [ <a class="toggle-dark" href="#publications">Publications</a> ]
+    [ <a class="toggle-dark" href="#projects">Projects</a> ]
+  </center>
+  <br>
   <hr>
 
-  <h2>Publications</h2>
+  <h2 id="publications">Publications</h2>
   <p>The list herewith might not be up-to-date. For my most recent work, see <a href="https://dblp.org/pid/381/4112.html">dblp</a>
      and <a href="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en">Google Scholar</a>.</p>
 
@@ -185,7 +210,7 @@
     [ <a href="https://sightsound.org/papers/2024/Audio-Visual_Autism_Behavior_Recognition_with_Multimodal_Large_Language_Models_Audio-Visual_Autism_Behavior_Recognition_with_Multimodal_Large_Language_Models.pdf">Paper</a> ]</div>
 
 <hr>
-<h2>Projects</h2>
+<h2 id="projects">Projects</h2>
 
     <div class="pub">
     <div class="pub-title">MediCASP</div>
@@ -226,5 +251,12 @@
     toggleButton.addEventListener("click", toggleDarkMode);
   </script>
 </body>
-<br><br>
+  <hr>
+  <br>
+  <center>
+    [ <a class="toggle-dark" href="#top">Return to the top</a> ]
+  </center>
+  <br>
+  <hr>
+<br><br><br>
 </html>

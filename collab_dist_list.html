@@ -1,0 +1,248 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>William T. Doan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap" rel="stylesheet" />
+  <style>
+    html { scroll-behavior: smooth; }
+    body{
+      margin:0; padding:2rem 1.5rem; 
+      background-color:#f7f7f7; color:#111;
+      font-family:'Inter', sans-serif; line-height:1.6;
+      max-width:800px; margin-left:auto; margin-right:auto;
+    }
+    h1{ font-size:2.25rem; margin:0 0 .1rem 0; }
+    p.lead{ font-size:1.20rem; color:#555; margin:.25rem 0 1rem; }
+    a{ color:#0066cc; text-decoration:none; font-weight:500; }
+    a:hover{ text-decoration:underline; color:#0066cc; }
+    hr {
+      border: none;
+      border-top: 1.25px solid #bdbbbb; /* match index.html darker tone */
+      margin: 1.25rem 0;
+    }
+
+    /* ---- Dark mode that works via class on <html> or <body> ---- */
+    /* Base text/bg */
+    html.dark-mode body,
+    body.dark-mode {
+      background-color:#121212;
+      color:#eee;
+    }
+    /* Paragraph + notes */
+    html.dark-mode p,
+    body.dark-mode p,
+    html.dark-mode .note,
+    body.dark-mode .note { color:#aaa; }
+    /* Links */
+    html.dark-mode a,
+    body.dark-mode a { color:#80bfff; }
+    /* Lead paragraph */
+    html.dark-mode p.lead,
+    body.dark-mode p.lead { color:#aaa; }
+    /* HR in dark mode */
+    html.dark-mode hr,
+    body.dark-mode hr { border-top: 1.25px solid #444; }
+    /* Hover highlight in dark */
+    html.dark-mode .entry:hover,
+    body.dark-mode .entry:hover { background: rgba(255,255,255,0.05); }
+    /* Footer color in dark */
+    html.dark-mode footer,
+    body.dark-mode footer { color:#aaa; }
+
+    .ticker{
+      position:relative;
+      height:clamp(340px, 70vh, 820px);
+      overflow:hidden;
+      border-radius:0;          /* match flat look */
+      background:transparent;   /* no card */
+      box-shadow:none;          /* remove shadows */
+      padding:0;                /* align with index spacing */
+      mask-image: linear-gradient(to bottom, transparent 0px, black 24px, black calc(100% - 24px), transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 24px, black calc(100% - 24px), transparent 100%);
+    }
+    .track {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      animation: scroll 80s linear infinite;
+    }
+    .ticker:hover .track { animation-play-state: paused; }
+    @keyframes scroll {
+      from { transform: translateY(0); }
+      to { transform: translateY(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .track { animation: none; }
+      .ticker { overflow: auto; }
+    }
+    .entry {
+      padding: 0.35rem 0.5rem;
+      border-radius: 12px;
+      transition: background-color 0.2s ease-in-out;
+    }
+    .entry:hover{ background: rgba(0,0,0,0.03); }
+    .name { font-weight: 700; font-size: 1.12rem; }
+    .note { color: #555; font-weight: 500; }
+    .number { font-weight: 500; }
+    footer { text-align: center; color: #555; font-size: 0.95rem; margin-top: 1rem; }
+  </style>
+
+  <!-- Apply saved theme before first paint to avoid white flash -->
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('darkMode') === 'true') {
+          document.documentElement.classList.add('dark-mode');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>Collaboration Distances</h1>
+    <p class="lead">A continuously scrolling list of notable scientists and my collaboration distances. Hover to pause; respects reduced‑motion.</p>
+    <nav>
+      [ <a href="./index.html">Back to Home</a> ]
+    </nav>
+  </header>
+
+  <hr>
+
+  <!-- Pleasant vertical scroller between two <hr>s -->
+  <section class="ticker" aria-label="Scrolling list of collaboration distances">
+    <div class="track" id="track">
+      <!-- Block A (original content) -->
+      <div class="list">
+        <div class="entry"><div class="name">Albert Einstein <span class="note">(Nobel Prize 1921):</span></div><div class="number">My Einstein number is 5.</div></div>
+        <div class="entry"><div class="name">Barry Barish <span class="note">(Nobel Prize 2017):</span></div><div class="number">My Barish number is 5.</div></div>
+        <div class="entry"><div class="name">Hans Bethe <span class="note">(Nobel Prize 1967):</span></div><div class="number">My Bethe number is 6.</div></div>
+        <div class="entry"><div class="name">Max Born <span class="note">(Nobel Prize 1954):</span></div><div class="number">My Born number is 7.</div></div>
+        <div class="entry"><div class="name">Enrico Fermi <span class="note">(Nobel Prize 1938):</span></div><div class="number">My Fermi number is 5.</div></div>
+        <div class="entry"><div class="name">William Fowler <span class="note">(Nobel Prize 1983):</span></div><div class="number">My Fowler number is 8.</div></div>
+        <div class="entry"><div class="name">Murray Gell-Mann <span class="note">(Nobel Prize 1969):</span></div><div class="number">My Gell-Mann number is 5.</div></div>
+        <div class="entry"><div class="name">Werner Heisenberg <span class="note">(Nobel Prize 1932):</span></div><div class="number">My Heisenberg number is 6.</div></div>
+        <div class="entry"><div class="name">Makoto Kobayashi <span class="note">(Nobel Prize 2008):</span></div><div class="number">My Kobayashi number is 7.</div></div>
+        <div class="entry"><div class="name">Leon Lederman <span class="note">(Nobel Prize 1988, Wolf Prize 1982):</span></div><div class="number">My Lederman number is 7.</div></div>
+        <div class="entry"><div class="name">Yôichirô Nambu [南部 陽一郎] <span class="note">(Nobel Prize 2008, Wolf Prize 1994/1995):</span></div><div class="number">My Nambu number is 7.</div></div>
+        <div class="entry"><div class="name">Erwin Schrödinger <span class="note">(Nobel Prize 1933):</span></div><div class="number">My Schrödinger number is 7.</div></div>
+        <div class="entry"><div class="name">Julian Schwinger <span class="note">(Nobel Prize 1965):</span></div><div class="number">My Schwinger number is 7.</div></div>
+        <div class="entry"><div class="name">Manjul Bhargava <span class="note">(Fields Medal 2014):</span></div><div class="number">My Bhargava number is 5.</div></div>
+        <div class="entry"><div class="name">Terence Tao <span class="note">(Fields Medal 2006):</span></div><div class="number">My Tao number is 5.</div></div>
+        <div class="entry"><div class="name">Cédric Villani <span class="note">(Fields Medal 2010):</span></div><div class="number">My Villani number is 6.</div></div>
+        <div class="entry"><div class="name">Michael Berry <span class="note">(Wolf Prize 1998):</span></div><div class="number">My Berry number is 6.</div></div>
+        <div class="entry"><div class="name">Robert Brout <span class="note">(Wolf Prize 2004):</span></div><div class="number">My Brout number is 6.</div></div>
+        <div class="entry"><div class="name">Freeman Dyson <span class="note">(Wolf Prize 1981; Templeton Prize 2000):</span></div><div class="number">My Dyson number is 6.</div></div>
+        <div class="entry"><div class="name">Peter Sarnak <span class="note">(Wolf Prize 2014):</span></div><div class="number">My Sarnak number is 5.</div></div>
+        <div class="entry"><div class="name">Dennis Sullivan <span class="note">(Wolf Prize 2010):</span></div><div class="number">My Sullivan number is 6.</div></div>
+        <div class="entry"><div class="name">Jacques Tits <span class="note">(Wolf Prize 1993):</span></div><div class="number">My Tits number is 6.</div></div>
+        <div class="entry"><div class="name">George Uhlenbeck <span class="note">(Wolf Prize 1979):</span></div><div class="number">My Uhlenbeck number is 6.</div></div>
+        <div class="entry"><div class="name">Simon Donaldson <span class="note">(Wolf Prize 2020):</span></div><div class="number">My Donaldson number is 6.</div></div>
+        <div class="entry"><div class="name">Bernard d'Espagnat <span class="note">(Templeton Prize 2009):</span></div><div class="number">My d'Espagnat number is 8.</div></div>
+        <div class="entry"><div class="name">Subrahmanyan Chandrasekhar <span class="note">(Nobel Prize 1983):</span></div><div class="number">My Chandrasekhar number is 6.</div></div>
+        <div class="entry"><div class="name">Paul Dirac <span class="note">(Nobel Prize 1933):</span></div><div class="number">My Dirac number is 8.</div></div>
+        <div class="entry"><div class="name">François Englert <span class="note">(Nobel Prize 2013, Wolf Prize 2004):</span></div><div class="number">My Englert number is 6.</div></div>
+        <div class="entry"><div class="name">Richard Feynman <span class="note">(Nobel Prize 1965):</span></div><div class="number">My Feynman number is 7.</div></div>
+        <div class="entry"><div class="name">Sheldon Glashow <span class="note">(Nobel Prize 1979):</span></div><div class="number">My Glashow number is 6.</div></div>
+        <div class="entry"><div class="name">David Gross <span class="note">(Nobel Prize 2004):</span></div><div class="number">My Gross number is 6.</div></div>
+        <div class="entry"><div class="name">Giorgio Parisi <span class="note">(Nobel Prize 2021):</span></div><div class="number">My Parisi number is 5.</div></div>
+        <div class="entry"><div class="name">Abdus Salam <span class="note">(Nobel Prize 1979):</span></div><div class="number">My Salam number is 7.</div></div>
+        <div class="entry"><div class="name">Kip Thorne <span class="note">(Nobel Prize 2017):</span></div><div class="number">My Thorne number is 7.</div></div>
+        <div class="entry"><div class="name">Steven Weinberg <span class="note">(Nobel Prize 1979):</span></div><div class="number">My Weinberg number is 6.</div></div>
+        <div class="entry"><div class="name">Eugene Wigner <span class="note">(Nobel Prize 1963):</span></div><div class="number">My Wigner number is 6.</div></div>
+        <div class="entry"><div class="name">Frank Wilczek <span class="note">(Nobel Prize 2004; Templeton Prize 2022):</span></div><div class="number">My Wilczek number is 6.</div></div>
+        <div class="entry"><div class="name">Chen Ning Yang <span class="note">(Nobel Prize 1957):</span></div><div class="number">My Yang number is 6.</div></div>
+        <div class="entry"><div class="name">Michael Atiyah <span class="note">(Fields Medal 1966):</span></div><div class="number">My Atiyah number is 6.</div></div>
+        <div class="entry"><div class="name">Efim Isaakovich Zel'manov [Ефи́м Исаа́кович Зе́льманов] <span class="note">(Fields Medal 1994):</span></div><div class="number">My Zel'manov number is 5.</div></div>
+        <div class="entry"><div class="name">Ed Witten <span class="note">(Fields Medal 1990):</span></div><div class="number">My Witten number is 5.</div></div>
+        <div class="entry"><div class="name">Michael Aschbacher <span class="note">(Wolf Prize 2012):</span></div><div class="number">My Aschbacher number is 4.</div></div>
+        <div class="entry"><div class="name">Izrail' Gel'fand [Изра́иль Гельфа́нд] <span class="note">(Wolf Prize 1978):</span></div><div class="number">My Gel'fand number is 6.</div></div>
+        <div class="entry"><div class="name">Paul Erdős <span class="note">(Wolf Prize 1983/1984):</span></div><div class="number">My Erdős number is 5.</div></div>
+        <div class="entry"><div class="name">Richard Schoen <span class="note">(Wolf Prize 2017):</span></div><div class="number">My Schoen number is 5.</div></div>
+        <div class="entry"><div class="name">Jacob Bekenstein <span class="note">(Wolf Prize 2012):</span></div><div class="number">My Bekenstein number is 6.</div></div>
+        <div class="entry"><div class="name">Shing-Tung Yau [丘成桐] <span class="note">(Wolf Prize 2010):</span></div><div class="number">My Yau number is 5.</div></div>
+        <div class="entry"><div class="name">John Polkinghorne <span class="note">(Templeton Prize 2002):</span></div><div class="number">My Polkinghorne number is 6.</div></div>
+        <div class="entry"><div class="name">Marcelo Gleiser <span class="note">(Templeton Prize 2019):</span></div><div class="number">My Gleiser number is 6.</div></div>
+        <div class="entry"><div class="name">Roger Penrose <span class="note">(Nobel Prize 2020, Wolf Prize 1988):</span></div><div class="number">My Penrose number is 6.</div></div>
+        <div class="entry"><div class="name">Martinus Veltman <span class="note">(Nobel Prize 1999):</span></div><div class="number">My Veltman number is 8.</div></div>
+        <div class="entry"><div class="name">Stephen Hawking <span class="note">(Wolf Prize 1988):</span></div><div class="number">My Hawking number is 6.</div></div>
+        <div class="entry"><div class="name">John Wheeler <span class="note">(Wolf Prize 1997):</span></div><div class="number">My Wheeler number is 6.</div></div>
+        <div class="entry"><div class="name">John Barrow <span class="note">(Templeton Prize 2006):</span></div><div class="number">My Barrow number is 7.</div></div>
+        <div class="entry"><div class="name">Paul Davies <span class="note">(Templeton Prize 1995):</span></div><div class="number">My Davies number is 7.</div></div>
+        <div class="entry"><div class="name">George Ellis <span class="note">(Templeton Prize 2004):</span></div><div class="number">My Ellis number is 7.</div></div>
+        <div class="entry"><div class="name">Gerard 't Hooft <span class="note">(Nobel Prize 1999, Wolf Prize 1981):</span></div><div class="number">My 't Hooft number is 7.</div></div>
+      </div>
+
+      <!-- Block B (duplicate once for seamless infinite scroll) -->
+      <div class="list" aria-hidden="true">
+        <div class="entry"><div class="name">Albert Einstein <span class="note">(Nobel Prize 1921):</span></div><div class="number">My Einstein number is 5.</div></div>
+        <div class="entry"><div class="name">Barry Barish <span class="note">(Nobel Prize 2017):</span></div><div class="number">My Barish number is 5.</div></div>
+        <div class="entry"><div class="name">Hans Bethe <span class="note">(Nobel Prize 1967):</span></div><div class="number">My Bethe number is 6.</div></div>
+        <div class="entry"><div class="name">Max Born <span class="note">(Nobel Prize 1954):</span></div><div class="number">My Born number is 7.</div></div>
+        <div class="entry"><div class="name">Enrico Fermi <span class="note">(Nobel Prize 1938):</span></div><div class="number">My Fermi number is 5.</div></div>
+        <div class="entry"><div class="name">William Fowler <span class="note">(Nobel Prize 1983):</span></div><div class="number">My Fowler number is 8.</div></div>
+        <div class="entry"><div class="name">Murray Gell-Mann <span class="note">(Nobel Prize 1969):</span></div><div class="number">My Gell-Mann number is 5.</div></div>
+        <div class="entry"><div class="name">Werner Heisenberg <span class="note">(Nobel Prize 1932):</span></div><div class="number">My Heisenberg number is 6.</div></div>
+        <div class="entry"><div class="name">Makoto Kobayashi <span class="note">(Nobel Prize 2008):</span></div><div class="number">My Kobayashi number is 7.</div></div>
+        <div class="entry"><div class="name">Leon Lederman <span class="note">(Nobel Prize 1988, Wolf Prize 1982):</span></div><div class="number">My Lederman number is 7.</div></div>
+        <div class="entry"><div class="name">Yôichirô Nambu [南部 陽一郎] <span class="note">(Nobel Prize 2008, Wolf Prize 1994/1995):</span></div><div class="number">My Nambu number is 7.</div></div>
+        <div class="entry"><div class="name">Erwin Schrödinger <span class="note">(Nobel Prize 1933):</span></div><div class="number">My Schrödinger number is 7.</div></div>
+        <div class="entry"><div class="name">Julian Schwinger <span class="note">(Nobel Prize 1965):</span></div><div class="number">My Schwinger number is 7.</div></div>
+        <div class="entry"><div class="name">Manjul Bhargava <span class="note">(Fields Medal 2014):</span></div><div class="number">My Bhargava number is 5.</div></div>
+        <div class="entry"><div class="name">Terence Tao <span class="note">(Fields Medal 2006):</span></div><div class="number">My Tao number is 5.</div></div>
+        <div class="entry"><div class="name">Cédric Villani <span class="note">(Fields Medal 2010):</span></div><div class="number">My Villani number is 6.</div></div>
+        <div class="entry"><div class="name">Michael Berry <span class="note">(Wolf Prize 1998):</span></div><div class="number">My Berry number is 6.</div></div>
+        <div class="entry"><div class="name">Robert Brout <span class="note">(Wolf Prize 2004):</span></div><div class="number">My Brout number is 6.</div></div>
+        <div class="entry"><div class="name">Freeman Dyson <span class="note">(Wolf Prize 1981; Templeton Prize 2000):</span></div><div class="number">My Dyson number is 6.</div></div>
+        <div class="entry"><div class="name">Peter Sarnak <span class="note">(Wolf Prize 2014):</span></div><div class="number">My Sarnak number is 5.</div></div>
+        <div class="entry"><div class="name">Dennis Sullivan <span class="note">(Wolf Prize 2010):</span></div><div class="number">My Sullivan number is 6.</div></div>
+        <div class="entry"><div class="name">Jacques Tits <span class="note">(Wolf Prize 1993):</span></div><div class="number">My Tits number is 6.</div></div>
+        <div class="entry"><div class="name">George Uhlenbeck <span class="note">(Wolf Prize 1979):</span></div><div class="number">My Uhlenbeck number is 6.</div></div>
+        <div class="entry"><div class="name">Simon Donaldson <span class="note">(Wolf Prize 2020):</span></div><div class="number">My Donaldson number is 6.</div></div>
+        <div class="entry"><div class="name">Bernard d'Espagnat <span class="note">(Templeton Prize 2009):</span></div><div class="number">My d'Espagnat number is 8.</div></div>
+        <div class="entry"><div class="name">Subrahmanyan Chandrasekhar <span class="note">(Nobel Prize 1983):</span></div><div class="number">My Chandrasekhar number is 6.</div></div>
+        <div class="entry"><div class="name">Paul Dirac <span class="note">(Nobel Prize 1933):</span></div><div class="number">My Dirac number is 8.</div></div>
+        <div class="entry"><div class="name">François Englert <span class="note">(Nobel Prize 2013, Wolf Prize 2004):</span></div><div class="number">My Englert number is 6.</div></div>
+        <div class="entry"><div class="name">Richard Feynman <span class="note">(Nobel Prize 1965):</span></div><div class="number">My Feynman number is 7.</div></div>
+        <div class="entry"><div class="name">Sheldon Glashow <span class="note">(Nobel Prize 1979):</span></div><div class="number">My Glashow number is 6.</div></div>
+        <div class="entry"><div class="name">David Gross <span class="note">(Nobel Prize 2004):</span></div><div class="number">My Gross number is 6.</div></div>
+        <div class="entry"><div class="name">Giorgio Parisi <span class="note">(Nobel Prize 2021):</span></div><div class="number">My Parisi number is 5.</div></div>
+        <div class="entry"><div class="name">Abdus Salam <span class="note">(Nobel Prize 1979):</span></div><div class="number">My Salam number is 7.</div></div>
+        <div class="entry"><div class="name">Kip Thorne <span class="note">(Nobel Prize 2017):</span></div><div class="number">My Thorne number is 7.</div></div>
+        <div class="entry"><div class="name">Steven Weinberg <span class="note">(Nobel Prize 1979):</span></div><div class="number">My Weinberg number is 6.</div></div>
+        <div class="entry"><div class="name">Eugene Wigner <span class="note">(Nobel Prize 1963):</span></div><div class="number">My Wigner number is 6.</div></div>
+        <div class="entry"><div class="name">Frank Wilczek <span class="note">(Nobel Prize 2004; Templeton Prize 2022):</span></div><div class="number">My Wilczek number is 6.</div></div>
+        <div class="entry"><div class="name">Chen Ning Yang <span class="note">(Nobel Prize 1957):</span></div><div class="number">My Yang number is 6.</div></div>
+        <div class="entry"><div class="name">Michael Atiyah <span class="note">(Fields Medal 1966):</span></div><div class="number">My Atiyah number is 6.</div></div>
+        <div class="entry"><div class="name">Efim Isaakovich Zel'manov [Ефи́м Исаа́кович Зе́льманов] <span class="note">(Fields Medal 1994):</span></div><div class="number">My Zel'manov number is 5.</div></div>
+        <div class="entry"><div class="name">Ed Witten <span class="note">(Fields Medal 1990):</span></div><div class="number">My Witten number is 5.</div></div>
+        <div class="entry"><div class="name">Michael Aschbacher <span class="note">(Wolf Prize 2012):</span></div><div class="number">My Aschbacher number is 4.</div></div>
+        <div class="entry"><div class="name">Izrail' Gel'fand [Изра́иль Гельфа́нд] <span class="note">(Wolf Prize 1978):</span></div><div class="number">My Gel'fand number is 6.</div></div>
+        <div class="entry"><div class="name">Paul Erdős <span class="note">(Wolf Prize 1983/1984):</span></div><div class="number">My Erdős number is 5.</div></div>
+        <div class="entry"><div class="name">Richard Schoen <span class="note">(Wolf Prize 2017):</span></div><div class="number">My Schoen number is 5.</div></div>
+        <div class="entry"><div class="name">Jacob Bekenstein <span class="note">(Wolf Prize 2012):</span></div><div class="number">My Bekenstein number is 6.</div></div>
+        <div class="entry"><div class="name">Shing-Tung Yau [丘成桐] <span class="note">(Wolf Prize 2010):</span></div><div class="number">My Yau number is 5.</div></div>
+        <div class="entry"><div class="name">John Polkinghorne <span class="note">(Templeton Prize 2002):</span></div><div class="number">My Polkinghorne number is 6.</div></div>
+        <div class="entry"><div class="name">Marcelo Gleiser <span class="note">(Templeton Prize 2019):</span></div><div class="number">My Gleiser number is 6.</div></div>
+        <div class="entry"><div class="name">Roger Penrose <span class="note">(Nobel Prize 2020, Wolf Prize 1988):</span></div><div class="number">My Penrose number is 6.</div></div>
+        <div class="entry"><div class="name">Martinus Veltman <span class="note">(Nobel Prize 1999):</span></div><div class="number">My Veltman number is 8.</div></div>
+        <div class="entry"><div class="name">Stephen Hawking <span class="note">(Wolf Prize 1988):</span></div><div class="number">My Hawking number is 6.</div></div>
+        <div class="entry"><div class="name">John Wheeler <span class="note">(Wolf Prize 1997):</span></div><div class="number">My Wheeler number is 6.</div></div>
+        <div class="entry"><div class="name">John Barrow <span class="note">(Templeton Prize 2006):</span></div><div class="number">My Barrow number is 7.</div></div>
+        <div class="entry"><div class="name">Paul Davies <span class="note">(Templeton Prize 1995):</span></div><div class="number">My Davies number is 7.</div></div>
+        <div class="entry"><div class="name">George Ellis <span class="note">(Templeton Prize 2004):</span></div><div class="number">My Ellis number is 7.</div></div>
+        <div class="entry"><div class="name">Gerard 't Hooft <span class="note">(Nobel Prize 1999, Wolf Prize 1981):</span></div><div class="number">My 't Hooft number is 7.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+<br><br>
+
+  <script>
+    // If the index page toggles `.dark-mode` on <body>, reflect that here too when embedded or navigated.
+    // (No-op by default; this just keeps parity if you later share the class across pages.)
+  </script>
+</body>
+</html>
