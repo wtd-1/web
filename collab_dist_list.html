@@ -1,3 +1,5 @@
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -6,7 +8,7 @@
   <style>
     html { scroll-behavior: smooth; }
     body{
-      margin:0; padding:2rem 1.5rem; 
+      margin:0; padding:2rem 1.5rem;
       background-color:#f7f7f7; color:#111;
       font-family:'Inter', sans-serif; line-height:1.6;
       max-width:800px; margin-left:auto; margin-right:auto;
@@ -17,16 +19,13 @@
     a:hover{ text-decoration:underline; color:#0066cc; }
     hr {
       border: none;
-      border-top: 1.25px solid #bdbbbb; /* match index.html darker tone */
+      border-top: 2px solid #9a9999;
       margin: 1.25rem 0;
     }
 
-    /* ---- Dark mode that works via class on <html> or <body> ---- */
+    /* ---- Dark mode via class on <html> or <body> ---- */
     html.dark-mode body,
-    body.dark-mode {
-      background-color:#121212;
-      color:#eee;
-    }
+    body.dark-mode { background-color:#121212; color:#eee; }
     html.dark-mode p,
     body.dark-mode p,
     html.dark-mode .note,
@@ -34,9 +33,9 @@
     html.dark-mode a,
     body.dark-mode a { color:#80bfff; }
     html.dark-mode p.lead,
-    body.dark-mode p.lead { color:#aaa; }
+    body.dark-mode p.lead { color:#898989; }
     html.dark-mode hr,
-    body.dark-mode hr { border-top: 1.25px solid #444; }
+    body.dark-mode hr { border-top: 1.25px solid #8b8b8b; }
     html.dark-mode .entry:hover,
     body.dark-mode .entry:hover { background: rgba(255,255,255,0.05); }
     html.dark-mode footer,
@@ -46,7 +45,7 @@
     .ticker{
       position:relative;
       height:clamp(340px, 70vh, 820px);
-      overflow:hidden;
+      overflow:auto;
       border-radius:0;
       background:transparent;
       box-shadow:none;
@@ -54,31 +53,34 @@
       mask-image: linear-gradient(to bottom, transparent 0px, black 24px, black calc(100% - 24px), transparent 100%);
       -webkit-mask-image: linear-gradient(to bottom, transparent 0px, black 24px, black calc(100% - 24px), transparent 100%);
     }
+    html.allow-motion .ticker { overflow: hidden; }
     .track {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      animation: scroll 80s linear infinite;
+      will-change: transform;
+      /* No animation by default; the toggle enables it */
+      animation: none;
     }
 
     /* Pause when hovered or focused within */
     .ticker:hover .track,
     .track:hover,
-    .ticker:focus-within .track {
-      animation-play-state: paused;
-    }
+    .ticker:focus-within .track { animation-play-state: paused; }
 
+    /* Seamless loop; JS sets --scroll-distance to one list height and --duration to match speed */
     @keyframes scroll {
       from { transform: translateY(0); }
-      to { transform: translateY(-50%); }
+      to   { transform: translateY(calc(var(--scroll-distance, 0px) * -1)); }
     }
 
     /* Respect reduced-motion by default, but allow opt-in via .allow-motion */
     @media (prefers-reduced-motion: reduce) {
-      .track { animation: none; }
-      .ticker { overflow: auto; }
-      html.allow-motion .track { animation: scroll 80s linear infinite !important; }
+      .track { animation: none !important; }
+      html.allow-motion .track { animation: scroll var(--duration, 80s) linear infinite !important; }
     }
+    /* When user explicitly enables motion */
+    html.allow-motion .track { animation: scroll var(--duration, 80s) linear infinite; }
 
     .entry {
       padding: 0.35rem 0.5rem;
@@ -143,13 +145,11 @@
 <body>
   <header>
     <h1>Collaboration Distances</h1>
-    <p class="lead">A continuously scrolling list of notable scientists and my collaboration distances. Hover to pause; respects reduced‑motion.
-    </p>
+    <p class="lead">A continuously scrolling list of notable scientists and my collaboration distances. Hover to pause; respects reduced‑motion.</p>
     <nav>
-  [ <a href="./index.html">Back to Home</a> ] 
-  [ <button id="motion-toggle" aria-pressed="false" class="linklike">Turn on motion</button> ]
-</nav>
-
+      [ <a href="./index.html">Back to Home</a> ]
+      [ <button id="motion-toggle" aria-pressed="false" class="linklike">Turn on motion</button> ]
+    </nav>
   </header>
 
   <hr>
@@ -157,69 +157,8 @@
   <!-- Pleasant vertical scroller between two <hr>s -->
   <section class="ticker" aria-label="Scrolling list of collaboration distances">
     <div class="track" id="track">
-      <!-- Block A (original content) -->
+      <!-- Single source list (we'll clone this once in JS for seamless looping) -->
       <div class="list">
-        <div class="entry"><div class="name">Albert Einstein <span class="note">(Nobel Prize 1921):</span></div><div class="number">My Einstein number is 5.</div></div>
-        <div class="entry"><div class="name">Barry Barish <span class="note">(Nobel Prize 2017):</span></div><div class="number">My Barish number is 5.</div></div>
-        <div class="entry"><div class="name">Hans Bethe <span class="note">(Nobel Prize 1967):</span></div><div class="number">My Bethe number is 6.</div></div>
-        <div class="entry"><div class="name">Max Born <span class="note">(Nobel Prize 1954):</span></div><div class="number">My Born number is 7.</div></div>
-        <div class="entry"><div class="name">Enrico Fermi <span class="note">(Nobel Prize 1938):</span></div><div class="number">My Fermi number is 5.</div></div>
-        <div class="entry"><div class="name">William Fowler <span class="note">(Nobel Prize 1983):</span></div><div class="number">My Fowler number is 8.</div></div>
-        <div class="entry"><div class="name">Murray Gell-Mann <span class="note">(Nobel Prize 1969):</span></div><div class="number">My Gell-Mann number is 5.</div></div>
-        <div class="entry"><div class="name">Werner Heisenberg <span class="note">(Nobel Prize 1932):</span></div><div class="number">My Heisenberg number is 6.</div></div>
-        <div class="entry"><div class="name">Makoto Kobayashi <span class="note">(Nobel Prize 2008):</span></div><div class="number">My Kobayashi number is 7.</div></div>
-        <div class="entry"><div class="name">Leon Lederman <span class="note">(Nobel Prize 1988, Wolf Prize 1982):</span></div><div class="number">My Lederman number is 7.</div></div>
-        <div class="entry"><div class="name">Yôichirô Nambu [南部 陽一郎] <span class="note">(Nobel Prize 2008, Wolf Prize 1994/1995):</span></div><div class="number">My Nambu number is 7.</div></div>
-        <div class="entry"><div class="name">Erwin Schrödinger <span class="note">(Nobel Prize 1933):</span></div><div class="number">My Schrödinger number is 7.</div></div>
-        <div class="entry"><div class="name">Julian Schwinger <span class="note">(Nobel Prize 1965):</span></div><div class="number">My Schwinger number is 7.</div></div>
-        <div class="entry"><div class="name">Manjul Bhargava <span class="note">(Fields Medal 2014):</span></div><div class="number">My Bhargava number is 5.</div></div>
-        <div class="entry"><div class="name">Terence Tao <span class="note">(Fields Medal 2006):</span></div><div class="number">My Tao number is 5.</div></div>
-        <div class="entry"><div class="name">Cédric Villani <span class="note">(Fields Medal 2010):</span></div><div class="number">My Villani number is 6.</div></div>
-        <div class="entry"><div class="name">Michael Berry <span class="note">(Wolf Prize 1998):</span></div><div class="number">My Berry number is 6.</div></div>
-        <div class="entry"><div class="name">Robert Brout <span class="note">(Wolf Prize 2004):</span></div><div class="number">My Brout number is 6.</div></div>
-        <div class="entry"><div class="name">Freeman Dyson <span class="note">(Wolf Prize 1981; Templeton Prize 2000):</span></div><div class="number">My Dyson number is 6.</div></div>
-        <div class="entry"><div class="name">Peter Sarnak <span class="note">(Wolf Prize 2014):</span></div><div class="number">My Sarnak number is 5.</div></div>
-        <div class="entry"><div class="name">Dennis Sullivan <span class="note">(Wolf Prize 2010):</span></div><div class="number">My Sullivan number is 6.</div></div>
-        <div class="entry"><div class="name">Jacques Tits <span class="note">(Wolf Prize 1993):</span></div><div class="number">My Tits number is 6.</div></div>
-        <div class="entry"><div class="name">George Uhlenbeck <span class="note">(Wolf Prize 1979):</span></div><div class="number">My Uhlenbeck number is 6.</div></div>
-        <div class="entry"><div class="name">Simon Donaldson <span class="note">(Wolf Prize 2020):</span></div><div class="number">My Donaldson number is 6.</div></div>
-        <div class="entry"><div class="name">Bernard d'Espagnat <span class="note">(Templeton Prize 2009):</span></div><div class="number">My d'Espagnat number is 8.</div></div>
-        <div class="entry"><div class="name">Subrahmanyan Chandrasekhar <span class="note">(Nobel Prize 1983):</span></div><div class="number">My Chandrasekhar number is 6.</div></div>
-        <div class="entry"><div class="name">Paul Dirac <span class="note">(Nobel Prize 1933):</span></div><div class="number">My Dirac number is 8.</div></div>
-        <div class="entry"><div class="name">François Englert <span class="note">(Nobel Prize 2013, Wolf Prize 2004):</span></div><div class="number">My Englert number is 6.</div></div>
-        <div class="entry"><div class="name">Richard Feynman <span class="note">(Nobel Prize 1965):</span></div><div class="number">My Feynman number is 7.</div></div>
-        <div class="entry"><div class="name">Sheldon Glashow <span class="note">(Nobel Prize 1979):</span></div><div class="number">My Glashow number is 6.</div></div>
-        <div class="entry"><div class="name">David Gross <span class="note">(Nobel Prize 2004):</span></div><div class="number">My Gross number is 6.</div></div>
-        <div class="entry"><div class="name">Giorgio Parisi <span class="note">(Nobel Prize 2021):</span></div><div class="number">My Parisi number is 5.</div></div>
-        <div class="entry"><div class="name">Abdus Salam <span class="note">(Nobel Prize 1979):</span></div><div class="number">My Salam number is 7.</div></div>
-        <div class="entry"><div class="name">Kip Thorne <span class="note">(Nobel Prize 2017):</span></div><div class="number">My Thorne number is 7.</div></div>
-        <div class="entry"><div class="name">Steven Weinberg <span class="note">(Nobel Prize 1979):</span></div><div class="number">My Weinberg number is 6.</div></div>
-        <div class="entry"><div class="name">Eugene Wigner <span class="note">(Nobel Prize 1963):</span></div><div class="number">My Wigner number is 6.</div></div>
-        <div class="entry"><div class="name">Frank Wilczek <span class="note">(Nobel Prize 2004; Templeton Prize 2022):</span></div><div class="number">My Wilczek number is 6.</div></div>
-        <div class="entry"><div class="name">Chen Ning Yang <span class="note">(Nobel Prize 1957):</span></div><div class="number">My Yang number is 6.</div></div>
-        <div class="entry"><div class="name">Michael Atiyah <span class="note">(Fields Medal 1966):</span></div><div class="number">My Atiyah number is 6.</div></div>
-        <div class="entry"><div class="name">Efim Isaakovich Zel'manov [Ефи́м Исаа́кович Зе́льманов] <span class="note">(Fields Medal 1994):</span></div><div class="number">My Zel'manov number is 5.</div></div>
-        <div class="entry"><div class="name">Ed Witten <span class="note">(Fields Medal 1990):</span></div><div class="number">My Witten number is 5.</div></div>
-        <div class="entry"><div class="name">Michael Aschbacher <span class="note">(Wolf Prize 2012):</span></div><div class="number">My Aschbacher number is 4.</div></div>
-        <div class="entry"><div class="name">Izrail' Gel'fand [Изра́иль Гельфа́нд] <span class="note">(Wolf Prize 1978):</span></div><div class="number">My Gel'fand number is 6.</div></div>
-        <div class="entry"><div class="name">Paul Erdős <span class="note">(Wolf Prize 1983/1984):</span></div><div class="number">My Erdős number is 5.</div></div>
-        <div class="entry"><div class="name">Richard Schoen <span class="note">(Wolf Prize 2017):</span></div><div class="number">My Schoen number is 5.</div></div>
-        <div class="entry"><div class="name">Jacob Bekenstein <span class="note">(Wolf Prize 2012):</span></div><div class="number">My Bekenstein number is 6.</div></div>
-        <div class="entry"><div class="name">Shing-Tung Yau [丘成桐] <span class="note">(Wolf Prize 2010):</span></div><div class="number">My Yau number is 5.</div></div>
-        <div class="entry"><div class="name">John Polkinghorne <span class="note">(Templeton Prize 2002):</span></div><div class="number">My Polkinghorne number is 6.</div></div>
-        <div class="entry"><div class="name">Marcelo Gleiser <span class="note">(Templeton Prize 2019):</span></div><div class="number">My Gleiser number is 6.</div></div>
-        <div class="entry"><div class="name">Roger Penrose <span class="note">(Nobel Prize 2020, Wolf Prize 1988):</span></div><div class="number">My Penrose number is 6.</div></div>
-        <div class="entry"><div class="name">Martinus Veltman <span class="note">(Nobel Prize 1999):</span></div><div class="number">My Veltman number is 8.</div></div>
-        <div class="entry"><div class="name">Stephen Hawking <span class="note">(Wolf Prize 1988):</span></div><div class="number">My Hawking number is 6.</div></div>
-        <div class="entry"><div class="name">John Wheeler <span class="note">(Wolf Prize 1997):</span></div><div class="number">My Wheeler number is 6.</div></div>
-        <div class="entry"><div class="name">John Barrow <span class="note">(Templeton Prize 2006):</span></div><div class="number">My Barrow number is 7.</div></div>
-        <div class="entry"><div class="name">Paul Davies <span class="note">(Templeton Prize 1995):</span></div><div class="number">My Davies number is 7.</div></div>
-        <div class="entry"><div class="name">George Ellis <span class="note">(Templeton Prize 2004):</span></div><div class="number">My Ellis number is 7.</div></div>
-        <div class="entry"><div class="name">Gerard 't Hooft <span class="note">(Nobel Prize 1999, Wolf Prize 1981):</span></div><div class="number">My 't Hooft number is 7.</div></div>
-      </div>
-
-      <!-- Block B (duplicate once for seamless infinite scroll) -->
-      <div class="list" aria-hidden="true">
         <div class="entry"><div class="name">Albert Einstein <span class="note">(Nobel Prize 1921):</span></div><div class="number">My Einstein number is 5.</div></div>
         <div class="entry"><div class="name">Barry Barish <span class="note">(Nobel Prize 2017):</span></div><div class="number">My Barish number is 5.</div></div>
         <div class="entry"><div class="name">Hans Bethe <span class="note">(Nobel Prize 1967):</span></div><div class="number">My Bethe number is 6.</div></div>
@@ -282,11 +221,75 @@
   </section>
 
   <hr>
-<br><br>
+  <br><br>
 
   <script>
-    // If the index page toggles `.dark-mode` on <body>, reflect that here too when embedded or navigated.
-    // (No-op by default; this just keeps parity if you later share the class across pages.)
+    // Seamless circular scroll with manual scrolling when motion is off
+    (function() {
+      const track = document.getElementById('track');
+      if (!track) return;
+
+      function hasMotion() {
+        return document.documentElement.classList.contains('allow-motion');
+      }
+
+      function ensureClone() {
+        const lists = track.querySelectorAll('.list');
+        if (lists.length < 2) {
+          const clone = lists[0].cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          track.appendChild(clone);
+        }
+      }
+
+      function removeClones() {
+        const lists = track.querySelectorAll('.list');
+        for (let i = 1; i < lists.length; i++) lists[i].remove();
+      }
+
+      function updateMetrics() {
+        const firstList = track.querySelector('.list');
+        if (!firstList) return;
+        const listHeight = firstList.scrollHeight;
+        track.style.setProperty('--scroll-distance', listHeight + 'px');
+        const PIXELS_PER_SECOND = 30;
+        const minDuration = 12;
+        const duration = Math.max(minDuration, listHeight / PIXELS_PER_SECOND);
+        track.style.setProperty('--duration', duration + 's');
+      }
+
+      function applyMode() {
+        if (hasMotion()) {
+          ensureClone();
+          updateMetrics();
+        } else {
+          removeClones();
+          // Clear transform-related custom properties when motion is off
+          track.style.removeProperty('--scroll-distance');
+          track.style.removeProperty('--duration');
+        }
+      }
+
+      function setup() {
+        // Wait for fonts for accurate measurements, then apply mode
+        const ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+        ready.then(applyMode);
+      }
+
+      setup();
+
+      // Recompute on resize (debounced)
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        if (!hasMotion()) return; // only matters when animating
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateMetrics, 150);
+      });
+
+      // React to class changes on <html> (toggle button updates the class)
+      const mo = new MutationObserver(applyMode);
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    })();
   </script>
 </body>
 </html>
