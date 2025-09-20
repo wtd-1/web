@@ -5,22 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>William T. Doan</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap" rel="stylesheet">
-  <style>
-    #screen-warning {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: #ffcc00;
-      color: #000;
-      text-align: center;
-      padding: 0.75rem;
-      font-size: 1rem;
-      font-weight: bold;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
+ 
+ <style>
+  /* Responsive adjustments */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+  }
+  header h1 {
+    font-size: 1.25rem; /* smaller on mobile */
+    margin-bottom: 0.5rem;
+    word-break: break-word; /* prevents cutoff */
+  }
+  header nav {
+    flex-wrap: wrap; /* allow links to flow onto multiple lines */
+    gap: 0.5rem;
+  }
+  header nav a, 
+  header nav button {
+    font-size: 0.9rem;
+  }
+  .dropdown-menu {
+    position: static; /* prevent cutoff on small screens */
+    box-shadow: none;
+    min-width: 100%;
+  }
+}
+
+/* Even smaller phones */
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1rem;
+  }
+  main {
+    padding: 0 0.5rem;
+  }
+}
+    
     :root {
       --bg: #fafafa;
       --fg: #111;
@@ -158,27 +181,6 @@
 </head>
 
 <body>
-
-<div id="screen-warning">
-  This content is best viewed on a larger screen (tablet or desktop).
-</div>
-
-<script>
-  function checkScreenSize() {
-    const warning = document.getElementById('screen-warning');
-    if (window.innerWidth < 768) {
-      warning.style.display = 'block';
-    } else {
-      warning.style.display = 'none';
-    }
-  }
-
-  // Run on load
-  checkScreenSize();
-
-  // Run when window is resized
-  window.addEventListener('resize', checkScreenSize);
-</script>
   <header>
     <h1>
       William T. Doan

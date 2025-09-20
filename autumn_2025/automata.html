@@ -40,7 +40,7 @@
       box-shadow: 2px 0 6px rgba(0,0,0,0.1);
       padding: 1rem;
       overflow-y: auto;
-      transition: background 0.4s ease;
+      transition: background 0.4s ease, width 0.4s ease, padding 0.4s ease;
     }
     .sidebar h2 {
       font-size: 1rem;
@@ -62,6 +62,16 @@
     }
     body.dark .sidebar a:hover {
       background: rgba(255,255,255,0.1);
+    }
+
+    /* Collapsed sidebar */
+    .sidebar.collapsed {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    body.sidebar-collapsed main {
+      margin-left: 40px;
     }
 
     /* Header */
@@ -101,14 +111,28 @@
       padding: 0;
     }
 
+    /* Collapse button */
+    .collapse-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: var(--accent);
+      font-family: inherit;
+      transition: color 0.3s ease;
+    }
+    .collapse-btn:hover {
+      text-decoration: underline;
+    }
+
     /* Main content */
     main {
       margin-left: 260px;   /* offset for sidebar */
       margin-top: 100px;    /* offset for header */
       padding: 2rem;
-      max-width: 1600px;     /* limit content width */
-      margin-right: 10px;   /* center horizontally */
-      margin-left: 260px;   /* still leave space for sidebar */
+      max-width: 1600px;
+      margin-right: 10px;
+      transition: margin-left 0.4s ease;
     }
 
     section {
@@ -134,50 +158,17 @@
       color: var(--muted);
       transition: color 0.4s ease;
     }
-
     a { 
       color: var(--accent); 
       transition: color 0.4s ease;
     }
     a:hover { text-decoration: underline; }
-      #screen-warning {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #ffcc00;
-    color: #000;
-    text-align: center;
-    padding: 0.75rem;
-    font-size: 0.9rem;
-    font-weight: bold;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  }
+
   </style>
 </head>
 <body>
-  <div id="screen-warning">
-  This content is best viewed on a larger screen (tablet or desktop).
-</div>
 
-<script>
-  function checkScreenSize() {
-    const warning = document.getElementById('screen-warning');
-    if (window.innerWidth < 768) {
-      warning.style.display = 'block';
-    } else {
-      warning.style.display = 'none';
-    }
-  }
 
-  // Run on load
-  checkScreenSize();
-
-  // Run when window is resized
-  window.addEventListener('resize', checkScreenSize);
-</script>
   <!-- Sidebar -->
   <aside class="sidebar">
     <h2>Chapters</h2>
@@ -197,6 +188,7 @@
     <header>
       <h1>Automata Theory Notes</h1>
       <nav>
+        <button id="collapse" class="collapse-btn">Hide Sidebar</button>
         <a href="../index.html">Back to Main Page</a>
         <a href="../classes.html">Back to Classes Page</a>
         <button id="toggle">Dark Mode</button>
@@ -254,6 +246,8 @@
   <script>
     const body = document.body;
     const toggle = document.getElementById('toggle');
+    const collapseBtn = document.getElementById('collapse');
+    const sidebar = document.querySelector('.sidebar');
 
     function setMode(dark) {
       if (dark) {
@@ -271,6 +265,30 @@
       setMode(true);
     } else {
       setMode(false);
+    }
+
+    function setSidebar(collapsed) {
+      if (collapsed) {
+        sidebar.classList.add('collapsed');
+        body.classList.add('sidebar-collapsed');
+        collapseBtn.innerText = "Show Sidebar";
+      } else {
+        sidebar.classList.remove('collapsed');
+        body.classList.remove('sidebar-collapsed');
+        collapseBtn.innerText = "Hide Sidebar";
+      }
+      localStorage.setItem('sidebarCollapsed', collapsed);
+    }
+
+    collapseBtn.addEventListener('click', () => {
+      setSidebar(!sidebar.classList.contains('collapsed'));
+    });
+
+    // Load saved state
+    if (localStorage.getItem('sidebarCollapsed') === 'true') {
+      setSidebar(true);
+    } else {
+      setSidebar(false);
     }
   </script>
 </body>
