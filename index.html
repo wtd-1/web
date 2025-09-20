@@ -27,10 +27,18 @@
   header nav button {
     font-size: 0.9rem;
   }
+    .dropdown {
+    width: 100%; /* make each dropdown take full width */
+  }
   .dropdown-menu {
-    position: static; /* prevent cutoff on small screens */
+    position: static; /* no absolute positioning */
+    min-width: 100%;  /* expand to full width */
     box-shadow: none;
-    min-width: 100%;
+    border-radius: 0;
+  }
+  .dropdown-menu a {
+    padding: 0.75rem 1rem;
+    display: block;
   }
 }
 
@@ -191,10 +199,10 @@
       </sup>
     </h1>
     <nav>
-      <a href="#overview">Overview</a>
+      <a href="#top">Overview</a>
       <a href="#publications">Publications</a>
       <a href="#projects">Projects</a>
-            <div class="dropdown" id="resourcesDropdown">
+            <div class="dropdown" id="teachDropdown">
         <button href="#pedagogy">Pedagogy ▾</button>
         <div class="dropdown-menu">
           <a href="#pedagogy">Home</a>
@@ -202,7 +210,7 @@
           <a href="classes.html#s25">Spring of 2025</a>
         </div>
       </div>
-      <div class="dropdown" id="resourcesDropdown">
+      <div class="dropdown" id="linkDropdown">
         <button>Links ▾</button>
         <div class="dropdown-menu">
           <a href="https://www.overleaf.com/read/grqwhgkxjnjn#f6ff83">CV</a>
@@ -290,39 +298,55 @@
   <br><br><br>
 
   <script>
-    const body = document.body;
-    const toggle = document.getElementById('toggle');
-    const dropdown = document.getElementById('resourcesDropdown');
+  const body = document.body;
+  const toggle = document.getElementById('toggle');
 
-    function setMode(dark) {
-      if (dark) {
-        body.classList.add('dark');
-        toggle.innerText = "Light Mode";
-      } else {
-        body.classList.remove('dark');
-        toggle.innerText = "Dark Mode";
-      }
-      localStorage.setItem('dark', dark);
-    }
-
-    toggle.addEventListener('click', () => setMode(!body.classList.contains('dark')));
-    if (localStorage.getItem('dark') === 'true') {
-      setMode(true);
+  function setMode(dark) {
+    if (dark) {
+      body.classList.add('dark');
+      toggle.innerText = "Light Mode";
     } else {
-      setMode(false);
+      body.classList.remove('dark');
+      toggle.innerText = "Dark Mode";
     }
+    localStorage.setItem('dark', dark);
+  }
 
-    // Dropdown toggle
-    dropdown.querySelector("button").addEventListener("click", () => {
+  // Dark mode toggle
+  toggle.addEventListener('click', () => setMode(!body.classList.contains('dark')));
+  if (localStorage.getItem('dark') === 'true') {
+    setMode(true);
+  } else {
+    setMode(false);
+  }
+
+  // Dropdown toggle (only one open at a time)
+  const dropdowns = document.querySelectorAll(".dropdown");
+
+  dropdowns.forEach(dropdown => {
+    const button = dropdown.querySelector("button");
+
+    button.addEventListener("click", (e) => {
+      e.stopPropagation(); // stop bubbling so it doesn’t instantly close
+
+      // Close all other dropdowns
+      dropdowns.forEach(d => {
+        if (d !== dropdown) d.classList.remove("open");
+      });
+
+      // Toggle the clicked one
       dropdown.classList.toggle("open");
     });
+  });
 
-    // Close dropdown when clicking outside
-    document.addEventListener("click", (e) => {
-      if (!dropdown.contains(e.target)) {
-        dropdown.classList.remove("open");
-      }
+  // Close all dropdowns when clicking outside
+  document.addEventListener("click", (e) => {
+    dropdowns.forEach(d => {
+      if (!d.contains(e.target)) d.classList.remove("open");
     });
-  </script>
+  });
+</script>
+
+  
 </body>
 </html>
