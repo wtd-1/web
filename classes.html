@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WTD: Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+      #screen-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ffcc00;
+    color: #000;
+    text-align: center;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+    :root {
+      --bg: #fafafa;
+      --fg: #111;
+      --accent: #0055cc;
+      --muted: #555;
+      --card: #fff;
+    }
+    body.dark {
+      --bg: #111;
+      --fg: #eee;
+      --accent: #66aaff;
+      --muted: #aaa;
+      --card: #1a1a1a;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      z-index: 100;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+    }
+    header nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header nav a, header nav button {
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 0.95rem;
+      transition: color 0.4s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0;
+    }
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 120%;
+      right: 0;
+      background: var(--card);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      padding: 0.5rem 0;
+      min-width: 180px;
+      z-index: 200;
+      transition: background 0.4s ease;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+      color: var(--fg);
+      transition: background 0.2s ease, color 0.4s ease;
+    }
+    .dropdown-menu a:hover {
+      background: rgba(0,0,0,0.05);
+    }
+    body.dark .dropdown-menu a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .dropdown.open .dropdown-menu {
+      display: block;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    section {
+      background: var(--card);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: 'Roboto Mono', monospace;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      transition: color 0.4s ease;
+    }
+    .item {
+      margin-bottom: 1.5rem;
+    }
+    .title {
+      font-style: italic;
+      margin-bottom: 0.2rem;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+      transition: color 0.4s ease;
+    }
+    a { 
+      color: var(--accent); 
+      transition: color 0.4s ease;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="screen-warning">
+  This content is best viewed on a larger screen (tablet or desktop).
+</div>
+
+<script>
+  function checkScreenSize() {
+    const warning = document.getElementById('screen-warning');
+    if (window.innerWidth < 768) {
+      warning.style.display = 'block';
+    } else {
+      warning.style.display = 'none';
+    }
+  }
+
+  // Run on load
+  checkScreenSize();
+
+  // Run when window is resized
+  window.addEventListener('resize', checkScreenSize);
+</script>
+  <header>
+    <h1>
+      Notes
+    </h1>
+    <nav>
+      <a href="index.html">Back to Main Page</a>
+      <button id="toggle">Dark Mode</button>
+    </nav>
+  </header>
+  <br><br>
+
+  <main>
+    <h1>Autumn of 2025</h1>
+
+    <section>
+      <h2><a href="autumn_2025/automata.html">Automata Theory</a></h2>
+        <p> A review of the abstract notions encountered in machine computation. 
+          Deterministic and nondeterministic finite automata; regular expressions, 
+          regular sets, context-free grammars, pushdown automata, context-free 
+          languages. Selected topics from Turing Machines and undecidability. </p>
+    </section>
+
+    <section>
+      <h2><a href="autumn_2025/algos.html">Advanced Algorithm Design and Analysis</a></h2>
+        <p>Asymptomatic analysis, recurrences, and graph algorithms. Algorithm design 
+          techniques such as greedy method, dynamic programming, and divide-and-conquer. 
+          Issues from computational complexity. Course emphasizes a theoretical approach.</p>
+    </section>    
+
+    <section>
+      <h2><a href="autumn_2025/db.html">Database Systems</a></h2>
+        <p>This course emphasizes the concepts and structures necessary for the design 
+          and implementation of database management systems. Topics include data models, 
+          data normalization, data description languages, query facilities, 
+          file organization, index organization, file security, data integrity, and reliability.</p>
+    </section>        
+
+    <section>
+      <h2><a href="autumn_2025/os.html">Operating Systems Concepts</a></h2>
+        <p>An introduction to fundamental concepts in operating systems: 
+          their design, implementation, and usage. Topics include process 
+          management, main memory management, virtual memory, I/O and device 
+          drivers, file systems, secondary storage management, and an 
+          introduction to critical sections and deadlocks. </p>
+    </section>   
+    
+    <section>
+      <h2><a href="autumn_2025/neuro.html">Introduction to Neuroscience</a></h2>
+        <p>Introductory course that explores the nature of the 
+          brain processes underlying behavior, including consideration of 
+          basic neurophysiology and the physiology of sensation, learning, 
+          and emotion.</p>
+    </section>     
+    <h1>Spring of 2025</h1>
+    <section>
+      <h2><a href="spring_2025/ethics.html">Professional Responsibility in Computer Science and Software Engineering</a></h2>
+        <p> Professional and ethical responsibilities of computer 
+        scientists and software engineers as influenced by growth in computer use and 
+        networks. Costs and benefits of computer technology. Risks and liabilities of 
+        safety-critical systems. Social implications of the Internet. Interaction between 
+        human values and technical decisions involving computing. Intellectual Property. 
+        Global impact of computing.</p>
+    </section>
+  </main>
+
+  <br><br><br>
+
+  <script>
+    const body = document.body;
+    const toggle = document.getElementById('toggle');
+    const dropdown = document.getElementById('resourcesDropdown');
+
+    function setMode(dark) {
+      if (dark) {
+        body.classList.add('dark');
+        toggle.innerText = "Light Mode";
+      } else {
+        body.classList.remove('dark');
+        toggle.innerText = "Dark Mode";
+      }
+      localStorage.setItem('dark', dark);
+    }
+
+    toggle.addEventListener('click', () => setMode(!body.classList.contains('dark')));
+    if (localStorage.getItem('dark') === 'true') {
+      setMode(true);
+    } else {
+      setMode(false);
+    }
+
+    // Dropdown toggle
+    dropdown.querySelector("button").addEventListener("click", () => {
+      dropdown.classList.toggle("open");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove("open");
+      }
+    });
+  </script>
+</body>
+</html>

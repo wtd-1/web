@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WTD: Course Schedule</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafafa;
+      --fg: #111;
+      --accent: #0055cc;
+      --muted: #555;
+      --card: #fff;
+    }
+    body.dark {
+      --bg: #111;
+      --fg: #eee;
+      --accent: #66aaff;
+      --muted: #aaa;
+      --card: #1a1a1a;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      transition: background 0.4s ease, color 0.4s ease;
+      display: flex;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 65px;
+      left: 0;
+      height: calc(100vh - 64px);
+      width: 260px;
+      background: var(--card);
+      box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+      padding: 1rem;
+      overflow-y: auto;
+      transition: background 0.4s ease;
+    }
+    .sidebar h2 {
+      font-size: 1rem;
+      font-family: 'Roboto Mono', monospace;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    .sidebar a {
+      display: block;
+      padding: 0.4rem 0;
+      text-decoration: none;
+      font-size: 0.95rem;
+      color: var(--fg);
+      transition: color 0.3s ease, background 0.3s ease, padding-left 0.3s ease;
+    }
+    .sidebar a:hover {
+      background: rgba(0,0,0,0.05);
+      padding-left: 0.25rem;
+    }
+    body.dark .sidebar a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      z-index: 1000;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+    }
+    header nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header nav a, header nav button {
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 0.95rem;
+      transition: color 0.4s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0;
+    }
+      #screen-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ffcc00;
+    color: #000;
+    text-align: center;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+    main {
+      margin-left: 300px;
+      margin-top: 100px;
+      padding: 2rem;
+      max-width: 1600px;
+      margin-right: 10px;
+    }
+
+    section {
+      background: var(--card);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: 'Roboto Mono', monospace;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      transition: color 0.4s ease;
+    }
+    a { 
+      color: var(--accent); 
+      transition: color 0.4s ease;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div id="screen-warning">
+  This content is best viewed on a larger screen (tablet or desktop).
+</div>
+
+<script>
+  function checkScreenSize() {
+    const warning = document.getElementById('screen-warning');
+    if (window.innerWidth < 768) {
+      warning.style.display = 'block';
+    } else {
+      warning.style.display = 'none';
+    }
+  }
+
+  // Run on load
+  checkScreenSize();
+
+  // Run when window is resized
+  window.addEventListener('resize', checkScreenSize);
+</script>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Topics</h2>
+    <a href="#intro">The Rapid Pace of Change</a>
+    <a href="#joy">Bill Joy and Privacy</a>
+    <a href="#scenarios">Scenarios</a>
+    <a href="#lonely">Only the Lonely</a>
+    <a href="#speech">Freedom of Speech</a>
+    <a href="#ip">Intellectual Property</a>
+    <a href="#crime">Crime and Security</a>
+    <a href="#work">Work</a>
+    <a href="#eval">Evaluating &amp; Controlling Technology</a>
+    <a href="#errors">Errors, Failures, and Risk</a>
+    <a href="#transhumanism">Transhumanism</a>
+    <a href="#ethics">ACM &amp; IEEE Codes of Ethics</a>
+  </aside>
+
+  <!-- Main -->
+  <div style="flex:1">
+    <header>
+      <h1>Course Schedule</h1>
+      <nav>
+        <a href="../index.html">Back to Main Page</a>
+        <a href="../classes.html">Back to Classes Page</a>
+        <button id="toggle">Dark Mode</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="intro">
+        <h2>The Rapid Pace of Change</h2>
+        <p>Aug 26 — The Rapid Pace of Change</p>
+      </section>
+
+      <section id="joy">
+        <h2>Bill Joy and Privacy</h2>
+        <p>Aug 28 — Bill Joy &amp; Privacy — <em>Homework 1</em></p>
+      </section>
+
+      <section id="scenarios">
+        <h2>Scenarios</h2>
+        <p>Sep 2 — Scenarios</p>
+      </section>
+
+      <section id="lonely">
+        <h2>Only the Lonely</h2>
+        <p>Sep 4 — Only the Lonely — <em>Homework 3</em></p>
+      </section>
+
+      <section id="speech">
+        <h2>Freedom of Speech</h2>
+        <p>Sep 9 — Freedom of Speech</p>
+      </section>
+
+      <section id="ip">
+        <h2>Intellectual Property</h2>
+        <p>Sep 11 — Intellectual Property — <em>Homework 4</em></p>
+      </section>
+
+      <section id="crime">
+        <h2>Crime and Security</h2>
+        <p>Sep 16 — Crime and Security</p>
+      </section>
+
+      <section id="work">
+        <h2>Work</h2>
+        <p>Sep 18 — Work — <em>Homework 5</em></p>
+      </section>
+
+      <section id="eval">
+        <h2>Evaluating &amp; Controlling Technology</h2>
+        <p>Sep 23 — Evaluating &amp; Controlling Technology</p>
+      </section>
+
+      <section id="errors">
+        <h2>Errors, Failures, and Risk</h2>
+        <p>Sep 25 — Errors, Failures, and Risk — <em>Homework 6</em></p>
+      </section>
+
+      <section id="transhumanism">
+        <h2>Transhumanism</h2>
+        <p>Sep 30 — Paper by Nick Bostrom</p>
+      </section>
+
+      <section id="ethics">
+        <h2>ACM &amp; IEEE Codes of Ethics</h2>
+        <p>Oct 2 — ACM &amp; IEEE Codes of Ethics</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const body = document.body;
+    const toggle = document.getElementById('toggle');
+
+    function setMode(dark) {
+      if (dark) {
+        body.classList.add('dark');
+        toggle.innerText = "Light Mode";
+      } else {
+        body.classList.remove('dark');
+        toggle.innerText = "Dark Mode";
+      }
+      localStorage.setItem('dark', dark);
+    }
+
+    toggle.addEventListener('click', () => setMode(!body.classList.contains('dark')));
+    if (localStorage.getItem('dark') === 'true') {
+      setMode(true);
+    } else {
+      setMode(false);
+    }
+  </script>
+</body>
+</html>

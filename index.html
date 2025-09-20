@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>William T. Doan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    #screen-warning {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #ffcc00;
+      color: #000;
+      text-align: center;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-weight: bold;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    :root {
+      --bg: #fafafa;
+      --fg: #111;
+      --accent: #0055cc;
+      --muted: #555;
+      --card: #fff;
+    }
+    body.dark {
+      --bg: #111;
+      --fg: #eee;
+      --accent: #66aaff;
+      --muted: #aaa;
+      --card: #1a1a1a;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      z-index: 100;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+    }
+    header nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header nav a, header nav button {
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 0.95rem;
+      transition: color 0.4s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0;
+    }
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 120%;
+      right: 0;
+      background: var(--card);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      border-radius: 6px;
+      padding: 0.5rem 0;
+      min-width: 180px;
+      z-index: 200;
+      transition: background 0.4s ease;
+    }
+    .dropdown-menu a {
+      display: block;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+      color: var(--fg);
+      transition: background 0.2s ease, color 0.4s ease;
+    }
+    .dropdown-menu a:hover {
+      background: rgba(0,0,0,0.05);
+    }
+    body.dark .dropdown-menu a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .dropdown.open .dropdown-menu {
+      display: block;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    section {
+      background: var(--card);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: 'Roboto Mono', monospace;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      transition: color 0.4s ease;
+    }
+    .item {
+      margin-bottom: 1.5rem;
+    }
+    .title {
+      font-style: italic;
+      margin-bottom: 0.2rem;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+      transition: color 0.4s ease;
+    }
+    a { 
+      color: var(--accent); 
+      transition: color 0.4s ease;
+    }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+
+<div id="screen-warning">
+  This content is best viewed on a larger screen (tablet or desktop).
+</div>
+
+<script>
+  function checkScreenSize() {
+    const warning = document.getElementById('screen-warning');
+    if (window.innerWidth < 768) {
+      warning.style.display = 'block';
+    } else {
+      warning.style.display = 'none';
+    }
+  }
+
+  // Run on load
+  checkScreenSize();
+
+  // Run when window is resized
+  window.addEventListener('resize', checkScreenSize);
+</script>
+  <header>
+    <h1>
+      William T. Doan
+      <sup>
+        <a href="https://orcid.org/0009-0005-3135-6346">
+          <img src="ORCID_iD.svg" alt="ORCID" style="width:16px;height:16px;vertical-align:middle;">
+        </a>
+      </sup>
+    </h1>
+    <nav>
+      <a href="#overview">Overview</a>
+      <a href="#publications">Publications</a>
+      <a href="#projects">Projects</a>
+      <a href="#pedagogy">Pedagogy</a>
+
+      <div class="dropdown" id="resourcesDropdown">
+        <button>Links ▾</button>
+        <div class="dropdown-menu">
+          <a href="https://www.overleaf.com/read/grqwhgkxjnjn#f6ff83">CV</a>
+          <a href="https://www.overleaf.com/read/pfbyrtjfywnr#dd01de">Resume</a>
+          <a href="https://www.linkedin.com/in/wt3/">LinkedIn</a>
+          <a href="https://github.com/wtd-1">GitHub</a>
+          <a href="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en">Google Scholar</a>
+        </div>
+      </div>
+
+      <button id="toggle">Dark Mode</button>
+    </nav>
+  </header>
+  <br><br>
+
+  <main>
+    
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>I am advised by Dr. <a href="https://personal.utdallas.edu/~djg230002/">Daniel Gibney</a> at the 
+         <a href="https://www.utdallas.edu/">University of Texas at Dallas</a>, where I study graph theory and algorithms 
+         in strings, quantum computing, and data streams. 
+         Other interests include computer vision, multimodal computing, logic programming, number theory, and cryptography.</p>
+      <p>My Erdős number: <tt>5</tt>.</p>
+    </section>
+ <section id="publications">
+      <h2>Publications</h2>
+      <p>For my most recent work, see <a href="https://dblp.org/pid/381/4112.html">dblp</a> or 
+         <a href="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en">Google Scholar</a>.</p>
+
+      <div class="item">
+        <div class="title">Aeros(CASP): Advancing Certification and Safety Through Commonsense Reasoning-Based Constraint Answer Set Programming</div>
+        <div class="meta"><strong>William T. Doan</strong> · AIAA Region IV Conference</div>
+        <a href="https://arc.aiaa.org/doi/10.2514/6.2025-98357">Paper</a> · 
+        <a href="https://github.com/wtd-1/web/raw/main/Aeros(CASP)_%20Advancing%20Certification%20and%20Safety%20Through%20Commonsense%20Reasoning-Based%20Constraint%20Answer%20Set%20Programming.pptx.pdf">Slides</a>
+      </div>
+
+      <div class="item">
+        <div class="title">Hear Me, See Me, Understand Me: Audio-Visual Autism Behavior Recognition</div>
+        <div class="meta">Shijian Deng, Erin E. Kosloski, Siddhi Patel, Zeke A. Barnett, Yiyang Nan, Alexander Kaplan, Sisira Aarukapalli, <strong>William T. Doan</strong>, Matthew Wang, Harsh Singh, Pamela R. Rollins, Yapeng Tian · IEEE Transactions on Multimedia</div>
+        <a href="https://ieeexplore.ieee.org/document/10812841">Paper</a>
+      </div>
+
+      <div class="item">
+        <div class="title">Audio-Visual Autism Behavior Recognition with MMLMs</div>
+        <div class="meta">Shijian Deng, Erin E. Kosloski, Siddhi Patel, Zeke A. Barnett, Yiyang Nan, Alexander Kaplan, Sisira Aarukapalli, <strong>William T. Doan</strong>, Matthew Wang, Harsh Singh, Pamela R. Rollins, Yapeng Tian · CVPRW'24</div>
+        <a href="https://sightsound.org/papers/2024/Audio-Visual_Autism_Behavior_Recognition_with_Multimodal_Large_Language_Models_Audio-Visual_Autism_Behavior_Recognition_with_Multimodal_Large_Language_Models.pdf">Paper</a>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="item">
+        <div class="title">MediCASP</div>
+        <div class="meta"><strong>William T. Doan</strong>, Ashraful Islam, Mahd Malik · Axxess Hackathon</div>
+        <a href="https://github.com/MahdMalik/MediCASP">GitHub</a> · 
+        <a href="https://devpost.com/software/medicasp">DevPost</a> · 
+        <a href="https://hack-reason.vercel.app/">Product</a>
+      </div>
+
+      <div class="item">
+        <div class="title">Autis(CASP)</div>
+        <div class="meta"><strong>William T. Doan</strong>, Ashraful Islam, Mahd Malik · HackReason 2025 (First Prize)</div>
+        <a href="https://github.com/MahdMalik/HackReason">GitHub</a> · 
+        <a href="https://devpost.com/software/autis-casp">DevPost</a> · 
+        <a href="https://medi-casp.vercel.app/">Product</a>
+      </div>
+    </section>
+
+    <section id="pedagogy">
+      <h2>Pedagogy</h2>
+        <p>To date, I have been fortunate to serve as the undergraduate teaching assistant for three courses
+        whilst at the University of Texas at Dallas: Programming Fundamentals, Introduction to Data Structures 
+        and Algorithmic Analysis, and Professional Responsibility in Computer Science and Software Engineering
+        (ordered chronologically).
+        </p>
+        <p>I have written notes for all three courses, as well as for the other courses I have taken at UTD and for
+          courses that I have undergone extracurricularly. These notes are always a work in progress, but it is 
+          my hope that they are of some modicum of help.
+        </p>
+        <p>Click <a href="classes.html">here</a> to get started.</p>
+  </main>
+
+  <br><br><br>
+
+  <script>
+    const body = document.body;
+    const toggle = document.getElementById('toggle');
+    const dropdown = document.getElementById('resourcesDropdown');
+
+    function setMode(dark) {
+      if (dark) {
+        body.classList.add('dark');
+        toggle.innerText = "Light Mode";
+      } else {
+        body.classList.remove('dark');
+        toggle.innerText = "Dark Mode";
+      }
+      localStorage.setItem('dark', dark);
+    }
+
+    toggle.addEventListener('click', () => setMode(!body.classList.contains('dark')));
+    if (localStorage.getItem('dark') === 'true') {
+      setMode(true);
+    } else {
+      setMode(false);
+    }
+
+    // Dropdown toggle
+    dropdown.querySelector("button").addEventListener("click", () => {
+      dropdown.classList.toggle("open");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove("open");
+      }
+    });
+  </script>
+</body>
+</html>
