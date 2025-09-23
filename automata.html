@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WTD: Automata Theory Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafafa;
+      --fg: #111;
+      --accent: #0055cc;
+      --muted: #555;
+      --card: #fff;
+    }
+    body.dark {
+      --bg: #111;
+      --fg: #eee;
+      --accent: #66aaff;
+      --muted: #aaa;
+      --card: #1a1a1a;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      transition: background 0.4s ease, color 0.4s ease;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 65px;
+      left: 0;
+      height: calc(100vh - 64px);
+      width: 240px;
+      background: var(--card);
+      box-shadow: 2px 0 6px rgba(0,0,0,0.1);
+      padding: 1rem;
+      overflow-y: auto;
+      transition: background 0.4s ease, width 0.4s ease, padding 0.4s ease;
+    }
+    .sidebar h2 {
+      font-size: 1rem;
+      font-family: 'Roboto Mono', monospace;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    .sidebar a {
+      display: block;
+      padding: 0.4rem 0;
+      text-decoration: none;
+      font-size: 0.95rem;
+      color: var(--fg);
+      transition: color 0.3s ease, background 0.3s ease, padding-left 0.3s ease;
+    }
+    .sidebar a:hover {
+      background: rgba(0,0,0,0.05);
+      padding-left: 0.25rem;
+    }
+    body.dark .sidebar a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* Collapsed sidebar */
+    .sidebar.collapsed {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    body.sidebar-collapsed main {
+      margin-left: 40px;
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      z-index: 1000;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+    }
+    header nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header nav a, header nav button {
+      text-decoration: none;
+      color: var(--accent);
+      font-size: 0.95rem;
+      transition: color 0.4s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0;
+    }
+
+    /* Collapse button */
+    .collapse-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      color: var(--accent);
+      font-family: inherit;
+      transition: color 0.3s ease;
+    }
+    .collapse-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Main content */
+    main {
+      margin-left: 260px;   /* offset for sidebar */
+      margin-top: 100px;    /* offset for header */
+      padding: 2rem;
+      max-width: 1600px;
+      margin-right: 10px;
+      transition: margin-left 0.4s ease;
+    }
+
+    section {
+      background: var(--card);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: 'Roboto Mono', monospace;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--muted);
+      transition: color 0.4s ease;
+    }
+    a { 
+      color: var(--accent); 
+      transition: color 0.4s ease;
+    }
+    a:hover { text-decoration: underline; }
+    ul, ol, li {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<body>
+
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Chapters</h2>
+    <a href="#chapter0">Mathematical Background</a>
+    <a href="#chapter1">Finite Automata & Regular Expressions</a>
+    <a href="#chapter2">Properties of Regular Sets</a>
+    <a href="#chapter3">Context-Free Grammars & Languages</a>
+    <a href="#chapter4">Simplified & Normal Forms</a>
+    <a href="#chapter5">Pushdown Automata</a>
+    <a href="#chapter6">Properties of Context-Free Languages</a>
+    <a href="#chapter7">Turing Machines</a>
+    <a href="#chapter8">Undecidability</a>
+  </aside>
+
+  <!-- Main -->
+  <div style="flex:1">
+    <header>
+      <h1>Automata Theory Notes</h1>
+      <nav>
+        <button id="collapse" class="collapse-btn">Hide Sidebar</button>
+        <a href="../index.html">Back to Main Page</a>
+        <a href="../classes.html">Back to Classes Page</a>
+        <button id="toggle">Dark Mode</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="chapter0">
+        <h2>Mathematical Background</h2>
+        <p>Strings, languages, relations, digraphs, inductive definitions, types of proof.</p>
+      </section>
+
+      <section id="chapter1">
+        <h2>Finite Automata & Regular Expressions</h2>
+        <p>DFA, NFA, regular expressions, Kleene’s Theorem.</p>
+      </section>
+
+      <section id="chapter2">
+        <h2>Properties of Regular Sets</h2>
+        <p>Pumping Lemma, closure properties, decision algorithms.</p>
+      </section>
+
+      <section id="chapter3">
+        <h2>Context-Free Grammars & Languages</h2>
+        <p>CFGs, regular grammars.</p>
+      </section>
+
+      <section id="chapter4">
+        <h2>Simplified & Normal Forms</h2>
+        <p>Useful symbols, unit productions, Chomsky normal form.</p>
+      </section>
+
+      <section id="chapter5">
+        <h2>Pushdown Automata</h2>
+        <p>PDA definition, equivalence of PDA and CFG.</p>
+      </section>
+
+      <section id="chapter6">
+        <h2>Properties of Context-Free Languages</h2>
+        <p>Pumping Lemma, closure properties, CYK algorithm.</p>
+      </section>
+
+      <section id="chapter7">
+        <h2>Turing Machines</h2>
+        <p>TMs, variants, undecidability of halting problem.</p>
+      </section>
+
+      <section id="chapter8">
+        <h2>Undecidability</h2>
+        <p>Decidability, undecidability proofs, reductions.</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const body = document.body;
+    const toggle = document.getElementById('toggle');
+    const collapseBtn = document.getElementById('collapse');
+    const sidebar = document.querySelector('.sidebar');
+
+    function setMode(dark) {
+      if (dark) {
+        body.classList.add('dark');
+        toggle.innerText = "Light Mode";
+      } else {
+        body.classList.remove('dark');
+        toggle.innerText = "Dark Mode";
+      }
+      localStorage.setItem('dark', dark);
+    }
+
+    toggle.addEventListener('click', () => setMode(!body.classList.contains('dark')));
+    if (localStorage.getItem('dark') === 'true') {
+      setMode(true);
+    } else {
+      setMode(false);
+    }
+
+    function setSidebar(collapsed) {
+      if (collapsed) {
+        sidebar.classList.add('collapsed');
+        body.classList.add('sidebar-collapsed');
+        collapseBtn.innerText = "Show Sidebar";
+      } else {
+        sidebar.classList.remove('collapsed');
+        body.classList.remove('sidebar-collapsed');
+        collapseBtn.innerText = "Hide Sidebar";
+      }
+      localStorage.setItem('sidebarCollapsed', collapsed);
+    }
+
+    collapseBtn.addEventListener('click', () => {
+      setSidebar(!sidebar.classList.contains('collapsed'));
+    });
+
+    // Load saved state
+    if (localStorage.getItem('sidebarCollapsed') === 'true') {
+      setSidebar(true);
+    } else {
+      setSidebar(false);
+    }
+  </script>
+</body>
+</html>
