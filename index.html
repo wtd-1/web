@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WTD Publications</title>
+
+  <style>
+    :root {
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+              "Liberation Mono", "Courier New", monospace;
+    }
+
+    html { font-size: 14px; }              /* was 14x → 14px */
+
+    body {
+      font-family: var(--mono);
+      line-height: 1.6;
+      margin: 0 auto;
+      max-width: 70ch;
+      padding: 2rem 1rem;
+      text-align: justify;                 /* justify all text */
+      text-justify: inter-word;            /* hint for some engines */
+    }
+
+    h1, h2, h3, h4, h5, h6 { 
+      font-weight: 900;                    /* 1000 → clamp to 900 */
+      margin: 1.5rem 0 .5rem; 
+      /* headings will justify if they wrap */
+    }
+
+    p {
+      margin: .75rem 0;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      hyphens: auto;                       /* better word breaks */
+      overflow-wrap: anywhere;             /* prevents overflow */
+    }
+
+    /* Keep code/pre in the same font (explicitly) */
+    code, pre, kbd, samp { font-family: inherit; }
+
+    hr { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #0b0b0c; color: #eaeaea; }
+      a { color: #9ccaff; }
+      hr { border-top-color: #333; }
+    }
+  </style>
+
+  <!-- MathJax v3 (TeX input, SVG output) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<center>  <h1>WILLIAM T. DOAN</h1></center> 
+<hr>
+<center> [ <a href="pub.html"><b>PUBLICATIONS</b></a> ] [ <a href="teach.html"><b>TEACHING</b></a> ] [ <a href="proj.html"><b>PROJECTS</b></a> ] [ <a href="link.html"><b>LINKS</b></a> ]
+</center>  <hr>
+<h2>Biography</h2>
+  <p>I am a Ph.D. student at the University of Texas at Dallas. 
+    My advisor is Dr. Daniel Gibney. Presently, my research 
+    interests are in combinatorial optimisation using LLMs, 
+    algorithms in strings, quantum computing, and computer vision,
+     logic programming multimodal computing. 
+  </p>
+  <p>Yes, I enjoy using the British convention sometimes in my spelling. </p>
+</body>
+</html>

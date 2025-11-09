@@ -1,0 +1,1081 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WTD Neuro</title>
+
+  <style>
+    :root {
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+              "Liberation Mono", "Courier New", monospace;
+    }
+
+    html { font-size: 14px; }              /* was 14x → 14px */
+
+    body {
+      font-family: var(--mono);
+      line-height: 1.6;
+      margin: 0 auto;
+      max-width: 70ch;
+      padding: 2rem 1rem;
+      text-align: none;                 /* justify all text */
+      text-justify: inter-word;            /* hint for some engines */
+    }
+
+    h1, h2, h3, h4, h5, h6 { 
+      font-weight: 900;                    /* 1000 → clamp to 900 */
+      margin: 1.5rem 0 .5rem; 
+      /* headings will justify if they wrap */
+    }
+
+    p {
+      margin: .75rem 0;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      hyphens: auto;                       /* better word breaks */
+      overflow-wrap: anywhere;             /* prevents overflow */
+    }
+
+    /* Keep code/pre in the same font (explicitly) */
+    code, pre, kbd, samp { font-family: inherit; }
+
+    hr { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #0b0b0c; color: #eaeaea; }
+      a { color: #9ccaff; }
+      hr { border-top-color: #333; }
+    }
+
+    /* Basic table look */
+    .pub-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    }
+    .pub-table th, .pub-table td {
+    padding: .5rem .6rem;
+    border-bottom: 1px solid #ccc;
+    vertical-align: top;
+    }
+    .pub-table thead th { text-align: left; }
+
+/* Optional: make the year column subtle on narrow screens */
+@media (max-width: 640px) {
+  .pub-table .year { opacity: .7; width: 5ch; }
+}
+
+  </style>
+
+  <!-- MathJax v3 (TeX input, SVG output) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+
+<h1>Introduction to Neuroscience</h1>
+<center><p>[ <a href="teach.html"><b>BACK TO TEACHING PAGE</b></a> ] [ <a href="index.html"><b>BACK TO HOME</b></a> ]</p>
+</center><br>
+
+<p>
+          The brain has always been understood to be vital to life. Neuroscience draws its origins to
+          prehistoric life, when our ancestors recognized the brain’s importance and even performed skull
+          surgeries such as trepanation. Evidence shows that many of these early patients survived, as their
+          skulls reveal signs of healing. Later, in ancient Egypt, people believed the heart was the seat of
+          the soul and memory rather than the brain. During mummification, the lungs, stomach, liver, and
+          intestines were preserved, while the brain was removed and discarded. However, the Egyptians still
+          noted the brain’s role in health, as seen in the Edwin Smith Papyrus, the oldest known surgical
+          document, which describes the treatment of traumatic brain injuries and their consequences.
+        </p>
+      </section>
+
+      <section id="chapter2"><h2>Neuroanatomy</h2>
+        <p>The nervous system can be divided in two: the peripheral nervous system (nerves and
+          ganglia) and the central nervous system (tracts and nuclei). These divisions can be further subdivided:
+          the former into the somatic (voluntary) nervous system and the latter into the autonomic nervous system 
+          (which itself is further split into the sympathetic, fight or flight, and the parasympathetic, 
+          rest and digest, nervous systems).
+        </p>
+        <p><em>Figure (verbal): Envision a simple block diagram with two large boxes labeled “Central Nervous System (brain and spinal cord)” and “Peripheral Nervous System (nerves and ganglia).” From the Peripheral Nervous System box, two branches extend: “Somatic (voluntary)” and “Autonomic (involuntary).” From the Autonomic branch, two thinner branches extend side by side: “Sympathetic (fight or flight)” and “Parasympathetic (rest and digest).” The layout emphasizes that somatic control is largely conscious, while autonomic control is mostly unconscious.</em></p>
+        <p>The nervous system is the body's information system—it gathers input, processes, and produces output.
+          The spinal and cranial nerves take in sensory information and mediate output in the periphery—that is, not 
+          in the central nervous system. Incidentally, the spinal cord and brain stem are what relay information between
+          the periphery to the brain; they also have some processing and output capacity. The brain is the hub of such 
+          information; it is a major site of processing and (initiating) output.
+        </p>
+        <p><em>Figure (verbal): Imagine a flow diagram with arrows showing sensory information traveling from skin, joints, and organs into spinal nerves and cranial nerves, then ascending through the spinal cord and brain stem to the brain. A second set of arrows shows motor commands leaving the brain, descending via the brain stem and spinal cord, and exiting through ventral roots and peripheral nerves to muscles and glands.</em></p>
+        <p><strong>Recall.</strong> The peripheral nervous system (PNS) is divided in two: the somatic and 
+        autonomic nervous systems. </p>
+        <h3>The Somatic Nervous System</h3>
+        <p>
+          The processes of the somatic nervous system are more strongly associated with conscious awareness and control 
+          whereas the autonomic nervous system (ANS) is not (e.g., blood pressure, pupil dilation/contriction).
+        </p>
+        <p>There are anatomical anchor points to determine where you are in the nervous system. These are: 
+          <ul>
+            <li>the ganglia, groups of neurons in the periphery</li>
+            <li>dorsal root ganglia, those groups of neurons which are closer to the back and relate sensory 
+              information to the spine
+            </li>
+            <li>ventral roots, which lie close to the stomach and sent motor commands to the muscles. </li>
+          </ul>
+        </p>
+        <p><strong>Remark.</strong> Dorsal root ganglia contain the sensory neuron cell bodies that send 
+          signals from the body to the spinal cord, while ventral roots carry motor commands from the 
+          spinal cord to the skeletal muscles, forming the core of the somatic nervous system for voluntary 
+          movement and sensation. The somatic nervous system, via these roots, connects the central nervous 
+          system to sensory receptors and muscles, allowing conscious control and perception.  </p>
+        <p><em>Figure (verbal): Picture a cross-section of the spinal cord shaped like a butterfly. On the posterior (dorsal) side, a bulge represents the dorsal root ganglion containing sensory neuron cell bodies, with fibers entering the spinal cord. On the anterior (ventral) side, a bundle of fibers exits as the ventral root to innervate skeletal muscle. The two roots join to form a mixed spinal nerve.</em></p>
+        <p>The sympathetic chain contains the nerves of the autonomic system that innervates organs.</p>
+        <p><em>Figure (verbal): Visualize a vertical chain of bead-like ganglia on either side of the vertebral column. Short preganglionic fibers exit the spinal cord to enter this chain; long postganglionic fibers leave to reach the heart, lungs, sweat glands, and blood vessels. Small communicating branches connect the chain to the spinal nerves at each level.</em></p>
+        <h3>Cranial Nerves</h3>
+          <p>Cranial Nerves are those which emerge directly from the brain. They are for the body parts which 
+            are above and include the neck. The cranial nerves are numbered <tt>1</tt> through <tt>12</tt>; three
+            are for sensory only, five are motor only, and four contain both sensory and motor neurons. 
+          </p>
+          <p>The rule stated above about how cranial nerves are for those body parts which lie above and include
+            the neck has an exception: the vagus nerve, which is a cranial nerve that sends information to and
+            from the organs of the body.
+          </p>
+          <h3>The Autonomic Nervous System</h3>
+          <p>There are two divisions of the ANS, a latter third arises if one squints: 
+            <ul>
+              <li>The sympathetic nervous system </li>
+              <li>The autonomic nervous system </li>
+              <li>The enteric nervous system (guts/digestive)</li>
+            </ul>
+          </p>
+          <p>The sympathetic nervous system is known for the fight, flight or freeze response. Think: "emergency! 
+            I must live!" 
+            The sympathetic chain is innervated by preganglionic neurons in the spinal cord and runs along each side
+            of the spinal column. 
+          </p>
+          <p>On the other hand, the parasympathetic nervous system is the system of rest and digest and is often 
+            in opposition to sympathetic activity. It is concerned with long term survival. Consider: a sympathetic nervous response elevates 
+            the heart's rate; it will slow by parasympathetic activity. 
+          </p>
+          <p><em>Figure (verbal): Consider a two-column table of organ effects. In the sympathetic column: pupils dilate, heart rate and contractility increase, bronchi dilate, liver releases glucose, gastrointestinal motility decreases, blood is shunted to skeletal muscle, and the skin shows sweating and piloerection. In the parasympathetic column: pupils constrict, heart rate decreases, bronchi constrict, digestion and peristalsis increase, glands secrete, and urinary bladder contracts to promote voiding.</em></p>
+          <p>The enteric nervous system consists of a local network of neurons that governs the function of the
+            gut; it is innervated by both the sympathetic and parasympathetic divisions of the nervous system.
+          </p>
+          <h3>The Central Nervous System (CNS)</h3>
+          <p>The brain and spinal cord live in a controlled, privileged environment encased in bone and 
+          a protective covering called meninges. The central nervous system has certain privileges of note:
+            <ul>
+              <li>Metabolic, first dibs on oxygen and glucose</li>
+              <li>Immune, isolated from the ebbs and errs of the immune response in the periphery (i.e., anything not 
+                in the CNS).
+              </li>
+            </ul>
+          </p>
+          <p><strong><u>Definition</u>.</strong> Meninges are the three protective soft tissue layers surrounding
+          the entire central nervous system, both the brain and spinal cord. </p>
+          <p>There are three layers to the meninges (IN TOP-DOWN, bone to brain, ORDER): 
+            <ul>
+              <li>the tough outside, the Dura Mater</li>
+              <li>the blood-brain barrier, the arachnoid (think: spidery, webby)</li>
+              <li>the brain surface, the Pia Mater</li>
+            </ul>
+          </p>
+          <p><strong><u>Definition</u>.</strong> The blood-brain barrier (BBB) is a system of protection
+          involving capillary endothelial cells and astrocytes that form a highly selective semipermeable
+          border between the circulatory and central nervous systems (i.e., from bloodstream to brain). It
+          regulates the transfer of solutes and chemicals.  </p>    
+          
+          <h3>On the Brain</h3>
+          <p>The brain is dominated by two cerebral hemispheres, a left side and a right side, separated 
+            by the median longitudinal fissure (the gap betwixt the two) and connected
+            by the corpus callosum. These hemispheres are lateralised, meaning they have specialised functions. 
+          In particular, the left is generally dominatnt for language and logical tasks and the right for processing 
+        spacial information, emotions and creativity. </p>
+        <p>There is an outermost layer of the cerebral hemispheres, the cerebral cortex. Cortex (n.) is derived from 
+          Latin <i>cortex</i>, meaning "bark, rind, outer shell."</p>
+          <h3>Memories and Sensation</h3>
+          <p>The idea of memories, sensation and the brain find their origins in the propositions of 
+            Galen in the second century CE. Galen believed the brain had different parts suited to different
+            tasks. The cerebrum, being relatively soft, seemed designed to receive impressions from the sensations
+            and the cerebellu, being firmer, seemed better suited to movement command. It was also thought
+            by Galen that there were special fluids, "animal spirits," contained in the ventricles that flowed through
+            hollow nerves to communicate movement and sensation throughout the body. Taken together, Galen
+            advanced an early understanding of localisation of function, that is: sensation in the cerebrum, 
+            motor control in the cerebellum, and fluid-mediated communication via the ventricles. 
+          </p>
+          <p>In Galen's framework, the ventricles were not only empty spaces; rather they were the engine room. 
+            He imagined the fluids inside them carried signals. This "ventricular theory" was later expanded by
+            medieval scholars, assigning mental faculties to specific chambers: 
+            <ul>
+              <li>the anterior ventricle being for immagination and common sense</li>
+              <li>the middle ventricle for reasoning</li>
+              <li>the posterior ventricle for memory</li>
+            </ul>
+          </p>
+          <p><em>Figure (verbal): First, picture a stylized medieval sketch that labels three chambers within the head: a front chamber for imagination, a middle chamber for reasoning, and a rear chamber for memory. Next, replace that with a modern anatomical description of four connected ventricles: two lateral ventricles (one in each hemisphere) draining through the interventricular foramina into the third ventricle, then passing via the cerebral aqueduct into the fourth ventricle, with cerebrospinal fluid circulating around the brain and spinal cord and returning to the venous system through arachnoid granulations.</em></p>
+
+          <p>In this age of modernity, we understand the ventricles differently, as four connected, fluid-filled
+            spaces that circulate cerebrospinal fluid which cushions the brain, helps maintain chemical stability, 
+            and supports waste clearance. Fluid theory is replaced with neural circuits, locating sensation in the 
+            cortical sensory areas and memory in the hippocampus (formation) and distributed cortex (storage).
+          </p>
+          <h3>Some Anatomical Vocabulary</h3>
+          <p>We have the frontal lobe, which is the most anterior region; the parietal lobe, which lies
+            between the fontal and occipital lobes; the occipital, posterior, lobe; and the temporal, lateral, 
+            lobe.
+            <ul>
+            <li>The frontal lobe is for planning, decision-making and voluntary movement</li>  
+            <li>The parietal lobe is for sensory processing—touch and spatial orientation</li>
+            <li>The temporal lobe is for auditory processiong, memory and language comprehension</li>
+            <li>The occipital lobe is for visual processing</li>
+            </ul>
+            
+          </p>
+          <p>In addition to knowing the four lobes of the cerebrum, we also must know more about how 
+            the brain can be further described. With regard to the surface of the brain, the <strong>gyrus</strong>
+             is a ridged or raised portion of the convoluted brain surface and the <strong>sulcus</strong>
+             is a furrow of such surface. 
+          </p>
+          <p><em>Figure (verbal): Imagine a lateral view of the left hemisphere with boundaries drawn: the central sulcus separating frontal and parietal lobes, the lateral sulcus (Sylvian fissure) marking the superior boundary of the temporal lobe, and the occipital lobe at the posterior end. The frontal lobe lies anterior to the central sulcus, while the parietal lobe lies posterior to it and superior to the lateral sulcus.</em></p>
+          <p>Sulci and gyri can be used to describe the brain, this we know, which means there are certain 
+            landmarks which are of note: 
+            <ul>
+              <li>the lateral sulcus, the Sylvian Fissure, formes the boundary of the temporal lobe</li>
+              <li>the central sulcus divides the frontal from the pariental lobe</li>
+              <li>the postcentral sulcus is a strip of sulcus behind the central cortex that is 
+                critical for touch
+              </li>
+              <li>the precentral gyrus, which is in the frontal lobe and is important for motor control</li>
+            </ul>
+          </p>
+          <p><em>Figure (verbal): Visualize a labeled map where the precentral gyrus (primary motor cortex) sits immediately anterior to the central sulcus, and the postcentral gyrus (primary somatosensory cortex) sits immediately posterior to it. The lateral sulcus forms a deep horizontal groove separating the temporal lobe from the frontal and parietal lobes.</em></p>
+          <h3>Localisation: the 19th-century Debate and Now
+          </h3>
+          <p>In the 1800s, scientists argued about whether the mind was spread uniformly across the brain
+            or whether specific mental faculties were located in different areas. Franz Joseph Gall's 
+            phrenology pushed a strong, perhaps even too strong, perspective of localisation. To him, the brain 
+            is an organ of the mind that is itself constituted by multiple "organs" for distinct mental abilities. 
+            The argument was that such organs were topogrpahically localised and that, all other things being equal, 
+            the size of an organ determines it's strength. Furthermore, Gall argued phrenology, the idea that the 
+            external contours of the skull, which can be felt, revealed much about a person's mental traints. 
+          </p>
+          <p>Indeed, Gall's phrenological thesis is flawed—there is no correlation between a skull's shape
+            and the brains topology. However, the idea of localisation was popularised on Gall's account, which 
+            propelled neuroscience further into investigating structure-function relationships in the brain. 
+          </p>
+          <p>And Gall's making of the brain to be localised was not wrong either—just taken too far. Phineas Gage
+            survived an explosion in which a tamping iron impaled his left frontal lobe: rendering him more 
+            impulsive, unreliable, and socially inappropriate. This gives strong evidence of the frontal lobes 
+            being linked to executive control, decision making and social behaviour. 
+          </p>
+          <p>Another example of localisation is in the discovery of Broca's Area. A patient "Tan" could understand
+            language but could only speak one syllable: "Tan." Following Tan's death, it was later found that
+            a lesion in the left inferior frontal gyrus, now Broca's Area, the area responsible for expressive 
+            (motor) communication. 
+          </p>
+          <h3>The Functions of Each Lobe (in depth)</h3>
+          <p>
+            The frontal lobe is the motor cortex on the precentral gyrus and controls voluntary movement. 
+            It houses Broca's Area, where speech production occurs, as well as the prefontal cortex, where 
+            planning, impulse control, and decision-making occurs. 
+          </p>
+          <p>The parietal lobe is important for body sensations, attention, perception, and spatial
+            localisation. It is the primary somatosensory cortex on the postcentral gyrus and 
+            processes skin senses, body position and movement. Parietal association areas integrate information 
+            from different sensory modalities. 
+          </p>
+          <p>The temporal lobe is delinated by the sylvian fissure and contains the primary auditory cortex. 
+            It also contains Wernicke's Area, where language comprehension and production is found. The 
+            temporal lobe also has inferior temporal cortex visual indentification. 
+          </p>
+          <p>The occipital lobe is primarily a visual cortex that contains a map of visual space. It 
+            also contains secondary visual areas that process individual components of a scene. 
+          </p>
+          <h3>Orientations of the Brain</h3>
+          <p>To discuss the orientation of the brain, we must examine its planes. 
+            <ul>
+              <li>The sagittal plane bisects the brain into left and right regions</li>
+              <li>The coronal plane divides the brain into front (anterior) and back (posterior) regions</li>
+              <li>The horizontal plane divides the brain into an upper and lower part</li>
+            </ul>
+          </p>
+          <p>There are some more vocabulary words to know. Namely, 
+            we use <strong>medial</strong> to mean “toward the middle,” while <strong>lateral</strong> means “toward the side.” 
+            If something is on the <strong>ipsilateral</strong> side, it is on the same side of the body, whereas <strong>contralateral</strong> means it is on the opposite side. 
+            We say <strong>anterior</strong> (or <strong>rostral</strong>) when referring to the head end, and <strong>posterior</strong> (or <strong>caudal</strong>) for the tail end. 
+            When a structure is <strong>proximal</strong>, it is closer to the center, and when it is <strong>distal</strong>, it is farther out toward the periphery. 
+            Finally, <strong>dorsal</strong> means “toward the back,” while <strong>ventral</strong> means “toward the belly or front.”
+          </p>
+          <h3>About the Brain</h3>
+          <p>White matter consists mostly of axons with white myelin sheaths; hence the "white" in the name. 
+            On the other hand, gray matter contains more cell bodies and dendrites, both of which lack myelin. 
+          </p>
+          <p><strong>Recall.</strong> The corpus callosum connects the left and right hemispheres of the brain. It is 
+          a fat body; a tract of axons.</p>
+          <p>The thalamus is responsible for sensory processing and arousal. The Hypothalamus is the master
+            hormone regulator and is responsible for emotions and motivations. The Midbrain plays secondary roles
+            in vision, audition and movement. The Hindbrain is subdivided into parts:
+            <ul>
+              <li>The Medulla and Pons, which regulates vital and unconscious processes including breathing, 
+                swallowing, and etc. 
+              </li>
+              <li>
+                The cerebellum, which is involved in motor coordination. 
+              </li>
+            </ul>
+          </p>
+          <p>There are certain brain structures which are unseen from the outside or midsaggital views.
+            The are: 
+            <ul>
+              <li>The Basal Ganglia, which plays a secondary role in motor coordination and motor learning</li>
+              <li>The Limbic System, which is the emotional system of the brain that mediates emotional 
+                responses and is important for emotional learning. 
+              </li>
+            </ul>
+          </p>
+        </section>
+
+      <section id="chapter3"><h2>Neurons & Membrane Potentials</h2>
+        <p>To understand how the nervous system works, it helps to start with the basic building blocks. We will first look at the parts of a neuron and its overall morphology, which shape how it functions. Next, we will trace the flow of information both within a single neuron and between neurons through their connections. Finally, we will consider the non-neuronal cells of the nervous system, which provide essential support, protection, and regulation for neural activity.</p>
+        <h3>The Eukaryotic Cell</h3>
+        <p>Recall that eukaryotic cells carry a nucleus. It is critical for us to furthermore 
+          recollect the organelles that are not only important for cellular life but also for 
+        neuroscience.  </p>
+        <p><em>Figure (verbal): Imagine a labeled cell showing the nucleus with a nucleolus, rough endoplasmic reticulum studded with ribosomes, smooth endoplasmic reticulum, a stack-like Golgi apparatus, numerous mitochondria, a web of cytoskeletal filaments, and the plasma membrane embedded with ion channels, pumps, and receptors.</em></p>
+        <p>The plasma membrane is the most critical structure for membrane potentials. It contains
+          the ion channels, pumps, and receptors that regulate the flow of sodium(Na<sup>+</sup>), 
+          potassium (K<sup>+</sup>), cloride (Cl<sup>-</sup>) and calcium (Ca<sup>2+</sup>). 
+          The Na<sup>+</sup>/K<sup>+</sup> ATPase pump, or more simply the sodium-potassium pump, is embedded
+          in this membrane and maintains the resting potential by transporting sodium out and potassium in.
+        </p>
+        <p><strong><u>Remark.</u></strong> At rest, neuronal membranes are more permeable to K<sup>+</sup>
+        than to Na<sup>+</sup>. That is why the resting membrane potential is around -65 to -70 mV, which happens
+      to be close to the Nernst equilibrium potential for K<sup>+</sup> (around -90 mV). 
+    Put differently, potassium "dominates" the resting potential since it leaks through K<sup>+</sup>
+  leak channels. This efflux sets up a negative relative to the outside. But even at rest, a small
+amount of Na<sup>+</sup> leaks in, since sodium's equilibrium potential is around +60 mV and the 
+plasma membrane, hereafter "the membrane," is not perfectly impermeable. Without correction, sodium will 
+gradually depolarise the cell (i.e., make it less negative) and disrupt the potassium gradient.
+<br><br>
+<strong><u>Note:</u></strong> The inside of a neuronal cell is low in Na<sup>+</sup> and high in K<sup>+</sup> and vice versa for 
+the outside. The higher concentration of an ion is called as the "gradient." The reason why sodium 
+keeps wanting to enter the membrane is simple: it is positive (and the inside is more negative at an
+approximate -65 mV resting potential) and there are less sodiums inside and a surplus of them outside. 
+<br><br>
+<strong><u>Remark (cont'd).</u></strong> This is bad, because as sodium accumulates inside, the 
+concentration gradient that favours potassium leaving—which incidentally is what keeps the
+resting potential stable—is diminished. Without the corrective actions of the sodium-potassium pump, which 
+contantly pushes sodium out and sucks potassium in, then the cell can maintain its resting potential no longer. 
+So, while the sodium-potassium pump does not actually set the -65 mV resting potntial directly, it preserves
+the conditions requisite of allowing the K<sup>+</sup> leak channels to do that work. 
+<br><br>
+<strong><u>Note:</u></strong> The sodium-potassium pump maintains the gradients by pumping out three 
+sodiums and sucking two potassiums. It does that by being activated by adenosine triphosphate (ATP). Remember:
+the membrane is passively K<sup>+</sup> permeable.</p>
+<p>The mitochondria is the "powerhouse of the cell." It produces the ATP that powers ion pumps, like those
+  Na<sup>+</sup>/K<sup>+</sup> ATPase pumps and Ca<sup>2+</sup> transporters. The crux of the matter here 
+  is that without mitochondria, there will not be any ATP production, which means cells cannot 
+  maintain their electrical gradients; that is bad because it can lead to cell disfunction or death. 
+</p>
+<p>The endoplasmic reticulum (ER) has two variants:
+  <ul>
+    <li>the rough variant studded with ribosoes synthesises proteins—especially receptors and ion channels that
+      are inserted into the neuronal membrane
+    </li>
+    <li>
+      the smooth ER, which helps regulate intracellular calcium storage and release; critical for 
+      neurotransmitter release at the synapses.
+    </li>
+  </ul>
+</p>
+    <p>
+      The Golgi apparatus packages and modifies the proteins made in the ER (specifically the rough one!). 
+      In neurons, the Golgi apparatus is essential for sorting ion channels, neurotransmitter receptors, and
+      transport proteins to their correct destinations (e.g., to axon vs. to dendrite).
+    </p>
+    <p>The cytoskeleton provides the cell its structure and support but, in neurons, also guides the 
+      transport of vesicles, receptors, and transport proteins to their correct destinations (e.g., to axon vs. to dendrite). 
+    </p>
+    <p>The nucleus controls gene expression, including the production of proteins needed for ion channels
+      and synaptic function. The nucleolus produces ribosomes, which are vital for protein synthesis (which
+      requires ATP).<br><br>
+      <strong><u>Note:</u></strong> Gene expression changes underlie long-term plasticity in neurons.
+    </p>
+    <h3>So, What Makes a Neuron Different than a Eukaryotic Cell?</h3>
+    <p>Neurons share the same basic organelles as a typical eukaryotic cell: a nucleus, nucleolus, 
+      rough and smooth ER, Golgi apparatus, mitochondria, ribosomes, cytoskeleton, and plasma membrane. 
+    </p>
+    <p>But, neurons are not just the life support machinery eukaryotic cells are—they are highly 
+      specialised communication machines optimised for rapid, long-distance electrical and chemical 
+      signaling. In particular, some special features of neurons include: 
+      <ol>
+        <li>
+          <strong>Extreme polarisation</strong>. Neurons have distinct domains:
+          <ul>
+            <li>the soma (cell body) which serves as the metabolic center that houses the nucleus</li>
+            <li>dendrites, which are the input structures that receive synaptic signals</li>
+            <li>axons, the output structures that can be extremely long, carrying action potentials (APs)
+              to target destinations
+            </li>
+          </ul>
+          with a clear division of labour unlike most eukaryotic cells.
+        </li><br>
+        <li><strong>Information Flow.</strong> Signals flow in a directional pathway key to neural networks: <br>
+        <center>dendrite $\rightarrow$ soma $\rightarrow$ axon $\rightarrow$ synaptic terminals.</center>
+        </li><br>
+        <li><strong>A Specialised Plama Membrane</strong>. The neuronal variant of
+          plasma membranes come packed with ion channels, pumps, and receptors that generate 
+        and propagate electrical signals called membrane potentials. Furthermore, these have a 
+          unique ability to fire APs and communicate rapidly across long distances.</li><br>
+          <li><strong>Synaptic Specialisations.</strong> Neurons form synapses, specialised contact points 
+          with other neurons or muscles. They contain synaptic vesicles, neurotransmiter release machinery, 
+        and postsynaptic receptor clustering.</li><br>
+          <li><strong>Cytoskeletal Adaptations.</strong> Neurons rely on a dynamic cytoskeleton to transport 
+        proteins, mitochondries and vesicles across vast distances along dendrites and axons. This sort 
+      sort of long distnace trafficking is rate in most other cells. </li><br>
+          <li><strong>High Energy Demand. </strong>Mitochondria are especially abundant in axon terminals
+          and dendrites to meet enormous energy requirements for maintiang ion gradients and neurotransmission
+        (a lot of ATP is produced).</li>
+      </ol>
+    </p>
+    <p><em>Figure (verbal): Picture an intricate black-and-white drawing by Santiago Ramón y Cajal, with many neuron types layered in cortex: tall pyramidal neurons with a single apical dendrite rising toward the surface, elaborate cerebellar Purkinje cells with dense, planar dendritic trees, tiny granular cells packed densely, and star-shaped stellate and basket cells spreading laterally. The diversity of shapes visually conveys the diversity of computations.</em></p>
+    <br>
+    <center><p>     <strong>Figure. </strong>One of Santiago Ramón y Cajal’s Classic 19th-century Drawings of Neurons
+</p> </center>
+
+     <p>Cajal used Golgi's staining method to visualise neurons and revealed them as distinct cells, 
+      the "neuron doctrine," as opposed to a previous framework. The drawing shows many different 
+      neuronal morphologies: 
+      <ul>
+        <li>pyramidal cells with long apical dendrites</li>
+        <li>purkinje cells with elaborate, tree-like dendritic arbours</li>
+        <li>granule cells that are tiny and densely packed</li>
+        <li>stellate and basket cells with wide-spreading dendrite</li>
+      </ul> 
+     </p>
+     <p>Each morphology is adapted for a specific computational role within the brain. Speaking of 
+      form, form supports function. Large, branching dendritic trees (e.g., purkinje cells) integrate 
+      thousands of inputs for complex processing; long axons enable communication spanning distant 
+      brain regions; small, compact neurons for fast, local processing. All of these give rise to the 
+      concept of functional specialisation of different brain circuits. 
+     </p>
+     <h3>(Nervous System) Cells at Work!</h3>
+     <p>Neurons are electrically active cells that store and transmit information. They are supported
+      by glial cells provide support for such neurons; they are:
+      <ul>
+        <li>astrocytes</li>
+        <li>microglia</li>
+        <li>oligodendrocytes and Schwann cells</li>
+      </ul>
+     </p>
+     <h3>Neurons</h3>
+     <p><em>Figure (verbal): Visualize a canonical neuron with many short, branching dendrites receiving inputs, a rounded soma integrating those signals, a cone-shaped axon hillock where action potentials are initiated, a long axon conducting the signal, and many terminal boutons forming synapses with downstream cells. A directional arrow runs from dendrites to soma to axon to terminals.</em></p>
+     <p>Notice the form of the neuron: it illustrates the direction of information flow. Dendrites
+      receive information; the cell body/soma integrates; axons and axon terminals conduct and output 
+      information
+     </p>
+     <p>
+      Information generally flows in a single direction. Pre-synaptic flow concerns the axon sending 
+      information. The axon generates an AP which arrives at the pre-synaptic terminal, which introduces
+      an influx of calcium ions through voltage-gated calcium channels that cause neurotransmitter release. 
+     </p>
+     <p>Post-synaptic concerns the dendrites mostly, receiving information. The neurotransmitter activates
+      the postsynaptic terminal on dendrites, which transmit a signal to the cell body. 
+     </p>
+     <h3>Classifying Neurons</h3>
+     <p><u><strong>Definition.</strong></u> A process is said to be primary, or called as a neurite, if it 
+      originates directly from the cell body.</p>
+      <ul><strong>Corollary. </strong> All neurons have one and only one primary axon.</ul>
+      <p>Neurons may be classified by the number of primary dendrites.</p>
+      <p><em>Figure (verbal): Consider three side-by-side silhouettes. The multipolar neuron shows one axon and multiple dendrites emanating from the soma. The bipolar neuron shows one axon and one primary dendrite on opposite poles of the soma. The unipolar neuron shows a single process splitting into two branches, one leading to peripheral sensory endings and the other to the central nervous system.</em></p>
+      <br><p>In the figure above, we see the following: <ol>
+        <li>Multipolar, where there are more than one primary dendrite. Many dendrites extend 
+          from the cell body; only one axon is present. Very common in the central and peripheral 
+          nervous system.
+        </li>
+        <li>Bipolar, where there is only one primary dendrite. The single dendrite extends from the cell
+          body and there is a single axon. Very common in the central and peripheral 
+          nervous system.
+        </li>
+        <li>Unipolar, where there is one process consistin of a fused dendrite and axon. This 
+          single branch that extends in two directions from the cell body. Its unipolarity comes from the fact 
+          that the single branch serves as both a dendrite and an axon. These are often 
+          sensory neurons.
+        </li>
+      </ol></p>
+      <p>All neurons have the same four functional zones, as can be seen in the figure—
+        <ol>
+          <li>input</li>
+          <li>integration</li>
+          <li>conduction</li>
+          <li>output</li>
+        </ol>
+      </p>
+      <p>—although they are organised in different ways. </p>
+      <h3>Synapses</h3>
+      <p>Synapses are where two neurons exchange information,. They require closely apposed 
+        membranes: 
+        <ul>
+          <li>presynaptic membrane, which is on the axon terminal of the presynaptic neuron.</li>
+          <li>postsynaptic membrane, which is on the dendrite or cell body of the postsynaptic neuron.</li>
+          <li>the synaptic cleft, a gap which separates the membranes</li>
+        </ul>
+      </p>
+      <p>Like all structures, synapses have certain key features. <i>Synaptic vesicles</i> contain 
+          neurotransmitters, which are released in response to electrical activity in the axon. 
+        <i>Receptors</i> in the postsynaptic membrane are specialised proteins that react to a neurotransmitter.</p>
+      <p><em>Figure (verbal): Picture a magnified junction: on the presynaptic side are numerous round synaptic vesicles clustered near an active zone. A very narrow synaptic cleft separates this from the postsynaptic membrane, which displays a dense band of receptors and scaffolding proteins called the postsynaptic density.</em></p>
+     <h3>Axons; Dendrites</h3>
+     <p>Axons are different from dendrites! The former transmits the information that the latter receives. 
+      They have distinct morphology/subcellular structures. 
+     </p>
+     <p>Dendritic spines are specialised protrusions on dendrites that contain postsynaptic density 
+      for receiving signals. It increases surface area for synapses. They are said to be <i>plastic</i>, that is, 
+      they can change in size or shape and in number; such changes occur in response to neural activity
+      or experience.
+     </p>
+     <p>We have already discussed some features of the axon—see the aforementioned discussions on dendrites, 
+      synapses, cell body, and polarity—but there are some that deserve to be further clarified. The <i>axon hillock</i>
+       is a cone-shaped area of the cell body that gives rise to the axon. The <i>axon collateral</i> is a branch of an aon that also
+       ends in terminals and innervates other cells. 
+     </p>
+     <p>
+<center>
+<table class="neuro-table">
+  <caption>
+<u>    Axon vs. Dendrite
+</u>  </caption>
+  <thead>
+    <tr>
+      <th><center><u>Property</u></center></th>
+      <th><center><u>Axons</u></center></th>
+      <th><center><u>Dendrites</u></center></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><center>Number</center></td>
+      <td>Usually one per neuron, with many terminal branches</td>
+      <td>Usually many per neuron</td>
+    </tr>
+    <tr>
+      <td><center>Diameter</center></td>
+      <td>Uniform until the start of terminal branching</td>
+      <td>Tapers progressively towards ending</td>
+    </tr>
+    <tr>
+      <td><center>Axon Hillock</center></td>
+      <td>Present</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td><center>Sheathing</center></td>
+      <td>Has myelin sheathing</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td><center>Length</center></td>
+      <td>Can be practically nonexistent to several metres long</td>
+      <td>Oftentimes much shorter than axons</td>
+    </tr>
+  </tbody>
+</table>
+</center>
+     </p>
+     <h3>Myelination of Axons</h3>
+     <p>Recall the two classifications of nervous system cells: neurons and glia—the latter of which can be further 
+      subdivided into astrocytes (for metabolic and other support), microglia (the immune cells), and oligodencrocytes/
+      Schwann cells (responsible for the myelination of axons).
+    That lattermost part, the Schwann cells/oligodendrocytes, is the focus of this section. This is the part where information 
+      get's transmitted over great distances, the conduction zone, starting from the axon hillock (the integration zone, where the 
+      decision to produce a neural signal is made) all the way to the head of the axon terminals, the output zone.
+     </p>
+     <p>Oligodendrocytes are a part of the CNS and Schwann cells the PNS; they insulate axons so the electric signals can propogate. 
+      Along the myelination, the fatty insulation, there are certain gaps called the <i>Nodes of Ranvier</i> where the axolemma is 
+      exposed to the extracellular space. These domains are high in sodium and potassium ion channels that are complexed with cell adhesion
+      molecules. This results in an exchange of ions that regenerates the action potential (AP). 
+     </p>
+     <p><strong><u>Note:</u></strong> myelination is not universal among vertebrate, with primitive groups lacking it. The reason
+    for that is there are two ways one can preserve the action potention as it travels across the axon: <ol>
+      <li>have an axon of huge diameter which reduces resistance and allows the AP to travel faster</li>
+      <li>mylinate the axon and take advantage of <i>saltatory conduction</i>, where the APs "jump" between nodes of Ranvier</li>
+    </ol></p>
+     <h3>On Astrocytes</h3>
+     <p>Astrocytes provide structural, metabolic and trophic (nutritional) support for neurons. They help form the blood-brain barrier
+      (BBB) and play important roles in plasticity and in modifying/supporting synaptic activity. They are star-shaped and detect
+      neural activity; they also regulate adjacent capillaries for blood flow, supplying neurons with more energy when they 
+      are active. 
+     </p>
+     <p>Astrocytes can also aid in neurotransmitter removal from the extracellular space. Consider a case in which which a 
+      neurotransmitter is released into the synaptic cleft. It will bind to receptors in the postsynaptic neuron and trigger a response.
+      However, the neurotransmitter must be cleared away swiftly, lest it overstimulates the neuron. And so, we remove the 
+      neurotransmitter by:
+      <ol>
+        <li>reuptake into presynaptic neurons via specific transporters</li>
+        <li>uptake by glial cells, where astrocytes takes up the excess using Excitatory Amino Acid Transporters (EAATs) or GABA
+          Transporters (GATs)
+        </li>
+        <li>ezymatic brackdown, where something such as acetylcholine is broken down into choline and 
+          acetate by acetylcholinesterase (AChE) and the choline is transported back into the presynaptic terminal and 
+          reused to make new ACh. 
+        </li>
+      </ol>
+     </p>
+     <h3>On Microglia</h3>
+     <p>Microglia are the immune cells of the central nervous system; they can be thought of as special immune cells, since
+      the regular ones cannot enter the brain. They are macrophage-like, in that they scavenge the brain for debris. 
+     </p>
+     <p><em>Figure (verbal): Imagine two microglia states. The “ramified” resting state has a small soma with long, thin processes constantly surveying the environment. The “amoeboid” activated state retracts processes, enlarges the soma, and migrates toward injury to phagocytose debris and secrete signaling molecules.</em></p>
+      <br>
+      <h3>Electric Potentials in Neurons</h3>
+      <p>
+        A critical question of this section is as follows:</p>
+        <center><p>        <i>How are neurons electrically active?</i></p></center>
+      <p>        At rest (i.e., equilibrium), there is an electric potential across a neuron's plasma membrane. The basis
+        for electrical potential across the neuron's membrane lies inside the neuron proper, where we know its interior 
+        is negative with respect to the extracellular space outside (and this can be 
+        shown by inserting a microelectrode). Neurons actively establish a differential distribution of
+        ions across the plasma membrane. Changes in the membrane potential $V_m$ are the electrical signals neurons produce.
+      The resting membrane potential is $-50$ to $-80$ mV with respect to the extracellular solution. The convention 
+    of this class, and perhaps of the industry, is to assume $V_m = -65$ mV.</p>
+      <p><em>Figure (verbal): Picture a voltage trace from an intracellular microelectrode in a resting neuron, hovering near negative sixty-five millivolts relative to the outside, illustrating the stable resting potential.</em></p>
+        <br>
+        <p>
+          That said,
+        </p>
+                <center><p>        <i>How does the neuron establish the resting membrane potential?</i></p></center>
+        <p>To answer this question, let us consider how solutes (i.e., ions) behave in a solution. We do this by
+          beginning to recall the behaviour of solutes: that they will "run down" their chemical gradient. This is a formal way to 
+          say, "solutes will diffuse from areas of high concentration to areas of low concentration to achieve equilibrium."
+        </p> 
+        <p><em>Figure (verbal): Imagine a box divided by a permeable partition. Dye molecules are initially concentrated on the left and, over time, spread evenly across both sides, showing diffusion down a concentration gradient.</em></p>
+        <p>To cross a membrane, one of two things must be true: 
+          <ol>
+            <li>the solute must be small and hydrophobic</li>
+            <li>there is a channel, a door, specific to the solute (remember the talk of channels earlier?)</li>
+          </ol>
+        </p><p>This is because of the biological property that membranes are semipermeable.</p>
+        <p><em>Figure (verbal): Visualize a lipid bilayer that blocks ions and polar molecules, with specialized protein channels acting like gates that selectively allow sodium, potassium, chloride, or calcium to pass.</em></p>
+        <p><strong><u>Note:</u></strong> electrostatic forces also play a role in the distribution of ions. Recall the principle
+        of opposites attract. This means ions will run down their electrical gradient to equalise charge. So, what we are doing
+      is speaking to the fact ions run down their <strong>electrochemical gradient</strong>, the distribution of both concenctration AND charge. </p>
+        <p><em>Figure (verbal): Imagine a potassium ion inside a negatively charged cell. The chemical gradient pushes potassium outward, while the electrical gradient pulls it inward. The balance between these two forces defines the ion’s equilibrium potential.</em></p>
+          
+      <h3>The Membrane Potential of Neurons</h3>
+      <p><em>Figure (verbal): Consider three conceptual panels. Panel one depicts separate batteries representing the Nernst equilibrium potentials of sodium, potassium, and chloride. Panel two shows variable “conductance sliders” indicating which ion channels are more open at rest (potassium high, sodium and chloride lower). Panel three illustrates the Goldman–Hodgkin–Katz idea that the membrane potential is a weighted average of ion equilibrium potentials determined by relative permeabilities.</em></p>
+      <br>
+     <p>Having said all these facts, we can now explain how neurons are electrically active. They are so because a
+constant voltage difference across their membrane (the membrane potential, V<sub>m</sub>) is maintained and can be rapidly
+changed in response to stimuli. This potential is created by the unequal distribution of ions—mainly
+Na<sup>+</sup>, K<sup>+</sup>, and Cl<sup>–</sup>—across the plasma membrane, the selective permeability of ion
+channels, and the continuous action of the sodium–potassium pump.</p>
+
+<p>The sodium–potassium pump is fundamental: it uses ATP to move 3 Na<sup>+</sup> ions out of the neuron and 2 K<sup>+</sup> ions
+into the neuron with each cycle. This action not only maintains the steep concentration gradients for sodium and potassium
+but also directly contributes to the inside of the cell being more negative, since more positive charge leaves than enters.</p>
+
+<p>At rest, the inside of the neuron is negative relative to the extracellular space. However, the resting membrane is not
+equally permeable to all ions. Instead, it is much more permeable to K<sup>+</sup>, because of the abundance of open
+K<sup>+</sup> “leak” channels. As a result, the resting membrane potential lies much closer to the equilibrium potential for K<sup>+</sup>
+(≈ −90 mV) than to that of Na<sup>+</sup> (+60 mV). The sodium–potassium pump and the small sodium influx through resting channels
+stabilize this potential near −65 mV.</p>
+
+<p>When ion channels open, ions move according to their <em>electrochemical</em> gradients (the combination of concentration and electrical
+forces). Potassium, being more concentrated inside the neuron, tends to leave the cell through K<sup>+</sup> channels; this efflux is
+opposed by the negative interior, so net K<sup>+</sup> movement is outward but moderated by electrical pull. Sodium, which is more
+concentrated outside, rushes into the cell through Na<sup>+</sup> channels because both its concentration gradient and the negative
+interior drive it inward. For Cl<sup>–</sup>, the concentration gradient often favors inward movement while the electrical gradient
+(negative inside) favors outward movement; its equilibrium potential (E<sub>Cl</sub>) usually lies near the resting potential, so opening
+Cl<sup>–</sup> channels tends to stabilize or slightly hyperpolarize the membrane.</p>
+
+<p>Each ion has its own equilibrium potential (E<sub>ion</sub>), the voltage at which the outward and inward forces on that ion are balanced.
+For K<sup>+</sup>, this is around −90 mV; for Na<sup>+</sup>, about +60 mV; and for Cl<sup>–</sup>, near −65 mV in many neurons. The actual resting
+membrane potential represents a weighted average of these equilibrium potentials, determined by the relative permeability of the
+membrane to each ion, as described by the Goldman–Hodgkin–Katz equation.</p>
+
+<p>Importantly, because the resting potential lies much closer to E<sub>K</sub> than to E<sub>Na</sub>, there is a large “stored” driving force for Na<sup>+</sup>
+entry. When voltage-gated Na<sup>+</sup> channels open, Na<sup>+</sup> rushes inward, causing the rapid depolarization that defines an
+<strong>action potential</strong>. Action potentials propagate along axons and enable neurons to communicate with one another and with target
+tissues (e.g., muscles). Thus, the interplay of ion pumps, leak channels, selective permeability, and voltage-gated ion channels
+explains how neurons are electrically active and why dynamic control of the membrane potential underlies excitability and the
+brain’s ability to process and transmit information.</p>
+
+      <p><em>Equation cue:</em> Ions drive the membrane toward their own equilibrium potentials.</p>
+
+              $$
+              I_{\text{ion}} \;=\; g_{\text{ion}}\bigl(V_m - E_{\text{ion}}\bigr)
+              $$
+
+              <p>
+              where \(g_{\text{ion}}\) is the ion’s conductance (proportional to the number of open channels),
+              \(V_m\) is the membrane potential, and \(E_{\text{ion}}\) is the Nernst (equilibrium) potential for that ion.
+              </p>
+
+              <p style="font-size:0.9em;color:#555;">
+              Convention note: some texts write \(I_{\text{ion}} = g_{\text{ion}}(E_{\text{ion}} - V_m)\).
+              Both are equivalent as long as you keep a consistent sign convention for inward/outward current.
+              </p> <br>
+
+
+      <table style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+  <thead>
+    <tr>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Ion</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Typical Distribution</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Net Electrochemical Drive (at ~–65 mV)</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">E<sub>ion</sub> (≈, mV)</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Effect when Channel Opens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:6px;"><strong>Na<sup>+</sup></strong></td>
+      <td style="padding:6px;">High outside &rarr; low inside</td>
+      <td style="padding:6px;">Strongly <em>inward</em> (both chemical and electrical)</td>
+      <td style="padding:6px;">≈ +60</td>
+      <td style="padding:6px;">Depolarizes (V<sub>m</sub> moves toward +60 mV)</td>
+    </tr>
+    <tr>
+      <td style="padding:6px;"><strong>K<sup>+</sup></strong></td>
+      <td style="padding:6px;">High inside &rarr; low outside</td>
+      <td style="padding:6px;"><em>Outward</em> (chemical out, electrical in; chemical dominates at rest)</td>
+      <td style="padding:6px;">≈ −90</td>
+      <td style="padding:6px;">Hyperpolarizes/stabilizes (V<sub>m</sub> moves toward −90 mV)</td>
+    </tr>
+    <tr>
+      <td style="padding:6px;"><strong>Cl<sup>−</sup></strong></td>
+      <td style="padding:6px;">Higher outside than inside (mature neurons)</td>
+      <td style="padding:6px;">Chemical <em>inward</em>, electrical <em>outward</em> (often balance near rest)</td>
+      <td style="padding:6px;">≈ −65 (varies by cell/type)</td>
+      <td style="padding:6px;">Stabilizes or slight hyperpolarization (tracks V<sub>m</sub>)</td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:0.9rem; color:#555; margin-top:6px;">
+Notes: Values are typical for mammalian neurons at ~37&nbsp;°C; exact numbers vary with 
+ionic concentrations and temperature. E<sub>ion</sub> is from the Nernst equation; 
+V<sub>m</sub> is set by the weighted contributions of permeant ions (Goldman–Hodgkin–Hatz).
+</p>
+        
+    </section>
+
+      <section id="chapter4"><h2>Synaptic Transmission</h2>
+        <p>Here's a question:</p>
+                <center><p>        <i>What are ways a neuron could
+change its membrane potential?</i></p></center>
+<p>Well, we talked about that in the previous section! A neuron's membrane potential changes whenever the movement of ions across the 
+  membrane is altered. This can happen in several ways:
+  <ol>
+    <li>Open/close ion channels</li>
+    <ul>
+      <li>Opening <strong>$Na^+$ channels</strong> lets sodium rush into the cell from 
+        the outside. This <i>depolarises</i> as $V_m$ becomes less negative (as
+      cations flood the inside of the neuron), which means the inside of the neuron becomes more positive.  </li>
+      <li>Open <strong>$K^+$ channels</strong> to let potassium leave the inside of the cell. This leads to <i>
+        hyperpolarisation
+      </i>, where $V_m$ becomes more negative as the outside has less positive potassium than the inside, so $K^+$ moves along the 
+    electric concentration gradient. </li>
+    <li>Open <strong>$Cl^-$ channels</strong> to induce inhibition or stabilisation.</li>
+    <li>Open <strong>$Ca^{2+}$ channels</strong> to let positive calcium into the cell (as there is a deficit of calcium 
+    inside and a surplus of it outside) to depolarise.</li>
+    </ul>
+    <li>Changing channel properties
+      <ul>
+        <li>Voltage-gated channels open in response to changes in $V_m$, which is important for action potentials</li>
+        <li>Ligand-gated channels open when neurotransmitters bind, which is important for synaptic inputs</li>
+        <li>Mechanically-gated channels open in response to stretch or pressure, which is important in sensory neurons</li>
+      </ul>
+    </li>
+    <li>Modulating the activity of the sodium-potassium pump
+      <ul>
+        <li>The activities of the sodium-potassium pump can adjust long-term ioninc gradients (e.g., 
+          stronger $Na^+/K^+$ ATPase activity makes the cell slightly more negative). 
+        </li>
+      </ul>
+    </li>
+    <li>Change the extracellular or intracellular ion concentrations inside or outside the cell
+      <ul>
+        <li>Shifts in $K^+$ outside the neuron strongly influence $V_m$. For instance, high extracellular $K^+$ reduces the $K^+$ 
+          gradient, depolarising the cell. 
+        </li>
+      </ul>
+    </li>
+  </ol>
+</p>
+<h3>The Action Potential</h3>
+  <p><strong><u>Definition. </u></strong>An action potential (AP) is a highly stereotyped wave of depolarisation that travels down the axon. 
+  It is the electrical signal that propagates down the axon and triggers communication across a synapse.</p>
+<p>APs are regenerated along the axon—each adjacent section is depolarised and a new AP occurs. The direction of the AP's travel 
+  is unidirectional as the refractory state of the membrane after a depolarisation event. It starts at the axon hillock, when it 
+  it depolarised to threshold. 
+</p>
+<p><em>Figure (verbal): Picture a classic action potential trace: a rapid rise from the negative resting level to a positive peak, followed by a sharp fall and a slight undershoot before returning to rest. Time is on the horizontal axis and membrane voltage on the vertical axis.</em></p>
+  <p><strong><u>Definition. </u></strong>The refractory state of an action potential refers to the period after an AP during 
+  which a cell is unable to generate a new AP, or requires a stornger stimulus to do so. It consists of two phases:
+  <ol>
+    <li>the <strong>absolute</strong> refractory period, wherein a neuron cannot generate a new AP REGARDLESS of the stimulus
+    strength. It happens when voltage-gated sodium channels are inactived and cannot reopen immediately after being activated
+  and are closed during depolarisation. It occurs from the initial depolarisation phase through the early stages of repolarisation.</li>
+    <li>the <strong>relative</strong> refractory period, in which a second action potential can be triggered $iff$ the stimulus is 
+    stronger than usual. It requires that stronger stimulus since the membrane is still hyperpolarised (i.e., more negative than $V_m$)
+  and some sodium channels are still inactive while others have recovered. This comes at the later states of repolarisation after the 
+absolute refractory period. </li>
+  </ol></p>
+  <p>We see that sodium channels will inactivate briefly after opening. So, only segments of the axon that have not recently been 
+    depolarised can generate an action potential. Hence, unidirectional movement is induced.
+  </p>
+  <p><em>Figure (verbal): Visualize a chain of axon segments. A bright “active” zone progresses from left to right, while the immediately preceding segment is shaded to indicate refractoriness. The refractory shading prevents the spike from traveling backward.</em></p>
+  <h3>Properties of the AP</h3>
+        <p>APs are an all-or-none phenomenon—it either fires at all, uniform strength or it does not fire at all. The intensity
+          of the stimulus does not change the amplitude nor speed nor magnitude nor duration of the AP within a given 
+          neuron, but it can increase the frequency at which the 
+          neuron fires. They are also regenerated along the axon, where each adjacent section is depolarised and a new action 
+          potential occurs. APs travel unidirectionally (see above).
+        </p>
+<h3>What are the Molecular Mechanisms
+Underlying the Action Potential?</h3>
+
+    <p>Normally, the neuron's resting potential is negative. This is on account of the plasma membrane being primarily permeable to 
+      $K^+$ at rest (i.e., at rest, $K^+$ can leave the cell). During an AP, the membrane potential briefly becomes positive due to the 
+      membrane briefly become very permeable to $Na^+$ (i.e., $Na^+$ can enter the cell). 
+    </p>
+    <p><em>Figure (verbal): Imagine two sets of ion channel gates over time. First, voltage-gated sodium channels rapidly open and then inactivate, allowing an inward sodium current that depolarizes the membrane. Shortly after, voltage-gated potassium channels open more slowly and remain open longer, permitting an outward potassium current that repolarizes and hyperpolarizes the membrane before closing.</em></p>
+
+      <h3>Action Potential Summary I</h3>
+      <p><ol>
+        <li>The cell (axon hillock) is depolarised to threshold (becomes more positive).</li>
+        <li>The voltage-gated sodium channels open, permitting $Na^+$ into the cell and depolarising it.</li>
+        <li>The voltage-gated potassium channels open, letting $K^+$ in and repolarises-hyperpolarises the cell</li>
+        <li>The voltage-gated $Na^+$ channels inactivate, thus they no longer pass a current even though the cell is still 
+          depolarised
+        </li>
+        <li>The voltage-gated $K^+$ stay open until the membrane potential returns to the resting potential, or even 
+          a bit below, before closing.
+        </li>
+      </ol></p>
+      <h3>The Role Myelination in APs</h3>
+      <p><em>Figure (verbal): Envision two axons drawn to scale, one unmyelinated and one ensheathed by repeating myelin segments separated by nodes of Ranvier. Labels indicate typical conduction velocities: roughly zero point one to ten meters per second for unmyelinated fibers and up to approximately one hundred fifty meters per second for myelinated fibers.</em></p>
+      <p>
+        Mylenation makes the AP faster! <br><br>
+        <strong><u>Definition. </u></strong> The conduction velocity is the speed of propagation of APs. 
+        <ul>
+          <li>$\leq 150 \frac{m}{sec}$</li> in myelinated axons
+          <li>$~0.1 - 10 \frac{m}{sec}$</li> in unmyelinated axons
+        </ul>
+      </p>
+      <p><strong><u>Definition.</u></strong> Saltatory conduction is the "jumping" of the AP from each node to Ranvier to another.
+</p>
+      <p><em>Figure (verbal): Picture the action potential appearing only at the exposed nodes, with electrical current rapidly spreading beneath the insulating myelin to the next node where the spike is regenerated, creating the impression of a leap from node to node.</em></p>
+<br>
+      <h3>Electrical Transmission</h3>
+      <center><p>        <i>What happens when the AP
+arrives at the synapse?</i></p></center>
+      <p>
+        To answer this question, we must define the two types of synapses. 
+      </p>
+      <p><strong><u>Definition.</u></strong> An electrical synapse is a gap junction which connects two cells physically (which 
+      can also be called as "directly"). It enables fast communication between neurons, but is in the minority of synapses in
+    the nervous system. Since it establishes a direct link, depolarisation of the presynaptic neuron always 
+    results in the depolarisation of the postsynaptic neuron.
+  <ul>
+    <strong><u>Sub-Definition.</u></strong> A gap junction is an ion channel made by two  halves, each half in a participating cell. 
+  </ul></p>
+  <p><em>Figure (verbal): Visualize two neurons whose membranes are connected by a cluster of pore-like channels forming a continuous aqueous bridge so that small ions and signaling molecules pass directly from one cell to the other nearly instantaneously.</em></p>
+  <p><em>Figure (verbal): Now contrast this with a chemical synapse in which the presynaptic terminal is separated from the postsynaptic membrane by a narrow gap; vesicles release neurotransmitter that diffuses across to bind receptors on the postsynaptic side.</em></p>
+
+<h3>The Discovery of Chemical Transmission</h3>
+<p>
+  Otto Loewi discovered chemical neurotransmission in 1921. He did so in the following steps: 
+  <ol>
+    <li>Use two frog hearts, one with the vagus nerve still attached and another without it (both bathed in the same 
+      physiological solution). A fluid pathway is to be drawn from the former heart's bath to the latter heart's bath. 
+    </li>
+    <li>Electrically stimulate the vagus nerve of the first heart to slow it's heart rate.</li>
+    <li>Now that heart No. 1 has slowed, transfer its solution to heart No. 2. One of two outcomes will arise given 
+      that heart No,. 2 has no vagus nerve (recall: vagus nerve is in the PNS):
+        <ul>
+          <li>Nothing, since neurotransmission is electrical (needs direct connection)</li>
+          <li>Something, since neurotransmission is chemical</li>
+        </ul>
+    </li>
+  </ol>
+</p>
+<p> Loewi found at step No. 3 that something happened: the second heart slowed down, showing that something dissolved in the fluid, 
+  a chemical messenger later found to be acetylcholine.
+</p>
+<h3>Chemical Transmission</h3>
+<p>The majority of the synapses of the nervous system are chemical: an electrical signal, AP, is converted to 
+  a chemical, the release of a neurotransmitter. These chemical synapses can either be excitatory (depolarising) or inhibitory 
+(hyperpolarisiing). </p>
+
+<h3>Steps to Synaptic Transmission</h3>
+<p><em>Figure (verbal): Imagine a six-step cartoon. Step one: the arriving action potential invades the presynaptic terminal. Step two: voltage-gated calcium channels open. Step three: calcium influx triggers vesicles to fuse with the membrane. Step four: neurotransmitter diffuses across the cleft. Step five: transmitter binds to receptors and alters ion flow in the postsynaptic cell. Step six: the transmitter is cleared by reuptake into neurons or glia, or by enzymatic breakdown.</em></p>
+<p>Synaptic transmission can be seen as a series of steps:
+  <ol>
+    <li>the AP arrives at the presynaptic terminal</li>
+    <li>voltage gated $Ca^{2+}$ channels open</li>
+    <li>vesicles containing the neurotransmitter release their contents into the synaptic cleft through a 
+      process said to be called <i>exocytosis</i>
+    </li>
+    <li>the neurotransmitter diffuses across the cleft and bind to receptors</li>
+    <li>the receptors produce changes in the postsynaptic cell</li>
+    <li>the neurotransmitter is removed from the synaptic cleft, either by reuptake by neurons/astrocyroes or degradation by enzymes</li>
+  </ol>
+</p>
+<h3>Properties of Synaptic Potentials</h3>
+<p><em>Figure (verbal): Envision several small voltage deflections recorded at a dendrite. Some are upward (excitatory postsynaptic potentials), some downward (inhibitory postsynaptic potentials). When multiple excitatory inputs occur close together in time and space, the deflections add to reach threshold; when excitatory and inhibitory inputs overlap, they partially cancel.</em></p>
+
+<p>Synaptic potentials are a type of graded potential that varies in amplitude and duration, as opposed to APs which do NOT. </p>
+<p>The sum of potentials at the cell body determines influence on whether the action potential will be fired. </p>
+    <p>When neurotransmitters bind to receptors on a postsynaptic neuron, they produce small voltage changes in the membrane called 
+      postsynaptic potentials (PSPs). Thse can be: 
+      <ul>
+        <li>Excitatory Postsynaptic Potentials (EPSPs) that depolarise and bring the cell closer to firing</li>
+        <li>Inhibitory Postsynaptic Potentials (IPSPs) that hyperpolarises and makes the cell less likely to fire.</li>
+      </ul>
+<p>Whether a postsynaptic potential is excitatory (EPSP) or inhibitory (IPSP) depends on the type of neurotransmitter and, crucially, 
+  the specific postsynaptic receptor it binds to. This binding process causes ion channels to open or close—the type of ion that can
+  pass through the channel determines if the resulting potential change depolarises (EPSP) or hyperpolarises (IPSP) the cell. 
+</p>
+<p>A single PSP is oftentimes too small to trigger an action potential firing. So, we must take a summation of many PSPs over
+  space and time. There are many factors which affect that summation: 
+  <ol>
+    <li>The size, amplitude of each (E/I)PSP (the bigger, the more powerful)</li>
+    <li>The space, location on the neuron (the closer to the axon hillock, the more powerful) </li>
+    <li>The time—
+      <ul>
+        <li>if multiple of the same PSPs occur close together in time, the effects compound and build up</li>
+        <li>if multiple PSPs which are different occure close together in time, then overlapping EPSPs and IPSPs cancel</li>
+      </ul>
+    </li>
+  </ol>
+</p><p>Essentially, the goal is this: if the net depolarisation at the axon hillock reaches threshold (which is approximately $-55$ mV), then 
+  then an action potential fires. 
+</p>
+<table style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+  <thead>
+    <tr>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Property</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Action Potential</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Synaptic Potential</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:6px;"><strong>Amplitude & Duration</strong></td>
+      <td style="padding:6px;">All-or-none; always the same amplitude and duration</td>
+      <td style="padding:6px;">Graded; vary in amplitude and duration</td>
+    </tr>
+    <tr>
+      <td style="padding:6px;"><strong>Location</strong></td>
+      <td style="padding:6px;">Axons</td>
+      <td style="padding:6px;">Dendrites and soma</td>
+    </tr>
+    <tr>
+      <td style="padding:6px;"><strong>Polarity</strong></td>
+      <td style="padding:6px;">Always depolarizing (briefly)</td>
+      <td style="padding:6px;">Can be depolarizing (excitatory) or hyperpolarizing (inhibitory)</td>
+    </tr>
+    <tr>
+      <td style="padding:6px;"><strong>Propagation</strong></td>
+      <td style="padding:6px;">Regenerates; self-propagating</td>
+      <td style="padding:6px;">Does not regenerate; signal weakens as it spreads</td>
+    </tr>
+  </tbody>
+</table>
+    
+
+    </p> <br><h3>Ligand Binding & Postsynaptic Response</h3>
+
+<p>What determines the response of a postsynaptic cell to neurotransmitter release? The answer lies in two factors: 
+(1) the neurotransmitter released, and (2) the receptor type present on the postsynaptic membrane. In general, any given synapse 
+releases only one neurotransmitter, but the postsynaptic response can differ dramatically depending on which receptor family 
+receives that signal. Thus, neurotransmission is not a “one size fits all” system: the same transmitter can cause excitation in one 
+cell type and inhibition in another.</p>
+
+<h4>Loewi’s Demonstration of a Chemical Messenger</h4>
+<p>Otto Loewi’s classic experiment (1921) revealed that nerve signals can be transmitted chemically. Stimulating the vagus nerve of 
+a frog’s heart slowed its contractions. When the surrounding solution was transferred to a second heart, that heart also slowed, 
+despite lacking nerve input. This showed that the vagus nerve released a chemical messenger—later identified as acetylcholine (ACh)—into 
+the fluid, establishing the principle of chemical neurotransmission.</p>
+
+<h4>The First Synapse Studied: Neuromuscular Junction (NMJ)</h4>
+<p>The NMJ was the first synapse to be deeply studied. At the NMJ, motor neurons release acetylcholine (ACh) onto skeletal muscle fibers. 
+Here, ACh binding produces depolarization (excitatory) and ultimately muscle contraction. This contrasted with the vagus nerve’s use of ACh 
+on cardiac muscle, where the effect is inhibitory. These observations illustrate a critical principle: 
+<strong>the effect of a neurotransmitter depends on the receptor subtype it activates.</strong></p>
+
+<h4>Vagus Nerve vs Motor Nerves</h4>
+<ul>
+  <li><strong>Vagus nerve →</strong> releases ACh → decreases heart rate (inhibits cardiac muscle contraction).</li>
+  <li><strong>Motor neurons →</strong> release ACh → skeletal muscles contract (induces skeletal muscle contraction).</li>
+</ul>
+<p>In both cases the neurotransmitter is ACh, but the postsynaptic receptors differ, producing opposite responses.</p>
+
+<h4>Neurotransmitter Receptors: Two Major Families</h4>
+<p>Neurotransmitters act by binding to specialized receptors. These receptors control ion flow across the membrane in two main ways:</p>
+<ul>
+  <li><strong>Ionotropic receptors</strong> (ligand-gated ion channels): the receptor is itself an ion channel that opens when bound by a 
+  transmitter. Response is fast and short-lived.</li>
+  <li><strong>Metabotropic receptors</strong> (G protein–coupled receptors, GPCRs): the receptor activates intracellular signaling via G proteins, 
+  which can then modulate ion channels or other cellular processes. Response is slower, but longer lasting and more versatile.</li>
+</ul>
+
+<h4>Examples of ACh Receptors</h4>
+<ul>
+  <li><strong>Nicotinic ACh receptor (nAChR, ionotropic):</strong> Found at the NMJ. When ACh binds, the receptor-channel opens, allowing Na<sup>+</sup> 
+  to flow into the muscle fiber, depolarizing the cell and triggering contraction.</li>
+  <li><strong>Muscarinic ACh receptor (mAChR, metabotropic):</strong> Found in the heart. When ACh binds, the receptor activates a G protein, which 
+  then opens K<sup>+</sup> channels. The efflux of K<sup>+</sup> hyperpolarizes the cardiac muscle cell, slowing its rate of contraction.</li>
+</ul>
+
+<h4>The Versatility of Neurotransmitters</h4>
+<p>The same neurotransmitter can produce very different effects depending on the receptor type it activates. This versatility underlies the 
+richness of neural signaling. For instance, ACh can either excite skeletal muscle through ionotropic nAChRs or inhibit cardiac muscle through 
+metabotropic mAChRs. The diversity of receptor families allows a limited set of neurotransmitters to generate a wide variety of physiological 
+responses.</p>
+
+<h4>Summary: Ionotropic vs Metabotropic Receptors</h4>
+<table style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+  <thead>
+    <tr>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Property</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Ionotropic Receptors</th>
+      <th style="text-align:left; border-bottom:1px solid #ccc; padding:6px;">Metabotropic Receptors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:6px;"><strong>Mechanism</strong></td>
+      <td style="padding:6px;">Receptor is itself a ligand-gated ion channel</td>
+      <td style="padding:6px;">Receptor activates G proteins, which influence channels indirectly</td>
+    </tr>
+    <tr>
+      <td style="padding:6px;"><strong>Speed</strong></td>
+      <td style="padding:6px;">Fast (milliseconds)</td>
+      <td style="padding:6px;">Slower (hundreds of ms to seconds)</td>
+    </tr>
+    <tr>
+      <td style="padding:6px;"><strong>Duration</strong></td>
+      <td style="padding:6px;">Short-lived</td>
+      <td style="padding:6px;">Long-lasting</td>
+    </tr>
+    <tr>
+      <td style="padding:6px;"><strong>Example</strong></td>
+      <td style="padding:6px;">Nicotinic ACh receptor at NMJ (Na<sup>+</sup> influx, muscle contraction)</td>
+      <td style="padding:6px;">Muscarinic ACh receptor in heart (K<sup>+</sup> efflux, slows heart rate)</td>
+    </tr>
+  </tbody>
+</table>
+
+
+</body>
+<br><p><center>[ <a href="#top"><b>BACK TO TOP</b></a> ]</center></p><br><br>
+</html>

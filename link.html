@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WTD Publications</title>
+
+  <style>
+    :root {
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+              "Liberation Mono", "Courier New", monospace;
+    }
+
+    html { font-size: 14px; }              /* was 14x → 14px */
+
+    body {
+      font-family: var(--mono);
+      line-height: 1.6;
+      margin: 0 auto;
+      max-width: 70ch;
+      padding: 2rem 1rem;
+      text-align: justify;                 /* justify all text */
+      text-justify: inter-word;            /* hint for some engines */
+    }
+
+    h1, h2, h3, h4, h5, h6 { 
+      font-weight: 900;                    /* 1000 → clamp to 900 */
+      margin: 1.5rem 0 .5rem; 
+      /* headings will justify if they wrap */
+    }
+
+    p {
+      margin: .75rem 0;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      hyphens: auto;                       /* better word breaks */
+      overflow-wrap: anywhere;             /* prevents overflow */
+    }
+
+    /* Keep code/pre in the same font (explicitly) */
+    code, pre, kbd, samp { font-family: inherit; }
+
+    hr { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #0b0b0c; color: #eaeaea; }
+      a { color: #9ccaff; }
+      hr { border-top-color: #333; }
+    }
+  </style>
+
+  <!-- MathJax v3 (TeX input, SVG output) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<center>  <h1>WILLIAM T. DOAN</h1></center> 
+<hr>
+<center> [ <a href="pub.html"><b>PUBLICATIONS</b></a> ] [ <a href="teach.html"><b>TEACHING</b></a> ] [ <a href="proj.html"><b>PROJECTS</b></a> ] [ <a href="index.html"><b>HOME</b></a> ]
+</center>  <hr>
+<h2>Links</h2>
+  <p>For more on myself and my work, check out the links herein. 
+  </p>
+[ <b><a href="https://www.overleaf.com/project/6747bc74726d77fad7a405eb">VITAE</a></b> ] <br>
+[ <b><a href="https://www.overleaf.com/project/683e5241facfe26bf463bf21">RESUME</a></b> ] <br>
+[ <b><a href="https://orcid.org/0009-0005-3135-6346">ORCID</a></b> ] <br>
+[ <b><a href="https://www.linkedin.com/in/wt3/">LINKEDIN</a></b> ] <br>
+[ <b><a href="https://github.com/wtd-1">GITHUB</a></b> ] <br>
+[ <b><a href="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en">GOOGLE SCHOLAR</a></b> ]
+
+
+</body>
+</html>

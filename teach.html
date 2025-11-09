@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WTD Teachings</title>
+
+  <style>
+    :root {
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+              "Liberation Mono", "Courier New", monospace;
+    }
+
+    html { font-size: 14px; }              /* was 14x → 14px */
+
+    body {
+      font-family: var(--mono);
+      line-height: 1.6;
+      margin: 0 auto;
+      max-width: 70ch;
+      padding: 2rem 1rem;
+      text-align: none;                 /* justify all text */
+      text-justify: inter-word;            /* hint for some engines */
+    }
+
+    h1, h2, h3, h4, h5, h6 { 
+      font-weight: 900;                    /* 1000 → clamp to 900 */
+      margin: 1.5rem 0 .5rem; 
+      /* headings will justify if they wrap */
+    }
+
+    p {
+      margin: .75rem 0;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      hyphens: auto;                       /* better word breaks */
+      overflow-wrap: anywhere;             /* prevents overflow */
+    }
+
+    /* Keep code/pre in the same font (explicitly) */
+    code, pre, kbd, samp { font-family: inherit; }
+
+    hr { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #0b0b0c; color: #eaeaea; }
+      a { color: #9ccaff; }
+      hr { border-top-color: #333; }
+    }
+
+    /* Basic table look */
+    .pub-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    }
+    .pub-table th, .pub-table td {
+    padding: .5rem .6rem;
+    border-bottom: 1px solid #ccc;
+    vertical-align: top;
+    }
+    .pub-table thead th { text-align: left; }
+
+/* Optional: make the year column subtle on narrow screens */
+@media (max-width: 640px) {
+  .pub-table .year { opacity: .7; width: 5ch; }
+}
+
+  </style>
+
+  <!-- MathJax v3 (TeX input, SVG output) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<center>  <h1>WILLIAM T. DOAN</h1></center> 
+<hr>
+<center> [ <a href="pub.html"><b>PUBLICATIONS</b></a> ] [ <a href="index.html"><b>HOME</b></a> ] [ <a href="proj.html"><b>PROJECTS</b></a> ] [ <a href="link.html"><b>LINKS</b></a> ]
+</center>  <hr>
+<h2>Teaching</h2>
+<p>To date, I have been fortunate to serve as the undergraduate teaching assistant for three courses whilst at the University of Texas at Dallas: Programming Fundamentals, Introduction to Data Structures and Algorithmic Analysis, and Professional Responsibility in Computer Science and Software Engineering (ordered chronologically).
+</p>
+<p>I have written notes for all three courses, as well as for the other courses I have taken at UTD and for courses that I have undergone extracurricularly. These notes are always a work in progress, but it is my hope that they are of some modicum of help.
+If you are a returning student, you might not find my original notes here. That is because they are being reformatted.</p>
+
+
+<h3>Completed Notes</h3> 
+<p>[ <b><a href="neuro.html">INTRODUCTION TO NEUROSCIENCE</a></b> ]</p>
+
+</p>
+
+</body>
+<hr>
+<p><center>[ <a href="#top"><b>BACK TO TOP</b></a> ]</center></p><br><br>
+</html>
