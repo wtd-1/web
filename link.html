@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="icon" href="https://wtd-1.github.io/web/pc.png?v=1" type="image/png">
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WTD Links</title>
@@ -84,27 +86,68 @@
 </head>
 <body>
 <center>  <h1>WILLIAM T. DOAN</h1></center> 
-<hr>
+<hr style="border: none; border-top: 4px solid #222; margin: 1.25rem 0;">
 <nav class="nav-scroll" role="navigation" aria-label="Primary">
   <div class="nav-row">
-    [ <a href="index.html"><b>HOME</b></a> ]
     [ <a href="teach.html"><b>TEACHING</b></a> ]
     [ <a href="proj.html"><b>PROJECTS</b></a> ]
     [ <a href="pub.html"><b>PUBLICATIONS</b></a> ]
+    [ <a href="index.html"><b>BIOGRAPHY</b></a> ]
   </div>
 </nav>
-<hr>
+<hr style="border: none; border-top: 4px solid #222; margin: 1.25rem 0;"> <br>
 
-<h2>Links</h2>
-  <p>For more on myself and my work, check out the links herein. 
-  </p>
-[ <b><a href="https://www.overleaf.com/project/6747bc74726d77fad7a405eb">VITAE</a></b> ] <br>
-[ <b><a href="https://www.overleaf.com/project/683e5241facfe26bf463bf21">RESUME</a></b> ] <br>
-[ <b><a href="https://orcid.org/0009-0005-3135-6346">ORCID</a></b> ] <br>
-[ <b><a href="https://www.linkedin.com/in/wt3/">LINKEDIN</a></b> ] <br>
-[ <b><a href="https://github.com/wtd-1">GITHUB</a></b> ] <br>
-[ <b><a href="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en">GOOGLE SCHOLAR</a></b> ]
+<section class="links-grid">
+  <h2>Links</h2>
+  <p>For more on myself and my work, explore the following links herein:</p>
 
+  <div class="grid">
+    <a class="card" href="https://www.overleaf.com/read/grqwhgkxjnjn#f6ff83" target="_blank" rel="noopener">
+      <span>Vitæ</span> <span aria-hidden="true">↗</span>
+    </a>
+    <a class="card" href="https://www.overleaf.com/read/pfbyrtjfywnr#dd01de" target="_blank" rel="noopener">
+      <span>Résumé</span> <span aria-hidden="true">↗</span>
+    </a>
+    <a class="card" href="https://orcid.org/0009-0005-3135-6346" target="_blank" rel="noopener">
+      <span>ORCID</span> <span aria-hidden="true">↗</span>
+    </a>
+    <a class="card" href="https://www.linkedin.com/in/wt3/" target="_blank" rel="noopener">
+      <span>LinkedIn</span> <span aria-hidden="true">↗</span>
+    </a>
+    <a class="card" href="https://github.com/wtd-1" target="_blank" rel="noopener">
+      <span>GitHub</span> <span aria-hidden="true">↗</span>
+    </a>
+    <a class="card" href="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en" target="_blank" rel="noopener">
+      <span>Google Scholar</span> <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .links-grid p { color: var(--muted); margin-top: .25rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: .8rem;
+    margin-top: .9rem;
+  }
+  .card {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: .9rem 1rem;
+    border-radius: 14px;
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: transform .08s ease, border-color .2s ease;
+  }
+  .card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .card span:last-child { opacity: .6; }
+  .card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+</style>
 
 </body>
 </html>
