@@ -5,95 +5,150 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WTD Links</title>
+  <title>WTD Publications</title>
 
-  <style>
-    :root {
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-              "Liberation Mono", "Courier New", monospace;
+<style>
+  :root {
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+            "Liberation Mono", "Courier New", monospace;
+    
+    --bg: #fff;         
+    --fg: #111;         
+    --border: #ccc;     
+    --accent: #007bff;  
+    --card: #f9f9f9;    
+    --text: #111;       
+  }
+
+  html { font-size: 14px; }
+
+  body {
+    font-family: var(--mono);
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 70ch;
+    padding: 2rem 1rem;
+    background: var(--bg);
+    color: var(--fg);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 900;
+    margin: 1.5rem 0 .5rem;
+  }
+
+  p {
+    margin: .75rem 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    hyphens: auto;
+    overflow-wrap: anywhere;
+  }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  @media (prefers-color-scheme: dark) {
+    :root { 
+      --bg: #0b0b0c; 
+      --fg: #eaeaea; 
+      --border: #333; 
+      --card: #161618; 
+      --text: #eaeaea; 
     }
+    a { color: #9ccaff; }
+  }
 
-    html { font-size: 14px; }              /* was 14x → 14px */
+  /* Navigation Scroll (Top Menu) */
+  .nav-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    text-align: center;
+    mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%);
+  }
+  
+  .nav-row {
+    display: inline-block;
+    white-space: nowrap;
+    padding: .25rem 0;
+  }
 
-    body {
-      font-family: var(--mono);
-      line-height: 1.6;
-      margin: 0 auto;
-      max-width: 70ch;
-      padding: 2rem 1rem;
-      text-align: justify;                 /* justify all text */
-      text-justify: inter-word;            /* hint for some engines */
+  .nav-scroll a { display: inline-block; padding: 0 .25rem; }
+
+  /* Base Card Styling */
+  .card {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: .5rem 1rem;     
+    border-radius: 8px;      
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: transform .08s ease, border-color .2s ease;
+    font-size: 0.8rem;       
+    margin-right: 0.5rem;   
+    box-sizing: border-box; /* Ensures padding doesn't affect width calculations */
+  }
+  .card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  
+  /* Top Menu Specifics */
+  nav[aria-label="Primary"] > .nav-row > .card {
+    padding: .9rem 1rem;
+    border-radius: 14px;
+    font-size: 1rem;
+    justify-content: space-between;
+  }
+
+  /* --- NEW GRID STYLING BELOW --- */
+
+  /* The Grid Container */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 1rem; /* Space between rows and columns */
+    margin-top: 1.5rem;
+  }
+
+  /* Making the buttons inside the grid 'Large' */
+  .grid .card {
+    width: 100%;       /* Fill the grid cell */
+    margin-right: 0;   /* Remove the margin used for the top nav */
+    padding: 1.5rem 2rem; /* Large padding for big buttons */
+    font-size: 1.1rem; /* Larger text */
+    font-weight: 700;
+    justify-content: space-between; /* Pushes text left and arrow right */
+  }
+
+  /* Optional: Stack vertically on very small mobile screens */
+  @media (max-width: 480px) {
+    .grid {
+      grid-template-columns: 1fr;
     }
+  }
 
-    h1, h2, h3, h4, h5, h6 { 
-      font-weight: 900;                    /* 1000 → clamp to 900 */
-      margin: 1.5rem 0 .5rem; 
-      /* headings will justify if they wrap */
-    }
-
-    p {
-      margin: .75rem 0;
-      font-size: 0.85rem;
-      line-height: 1.6;
-      hyphens: auto;                       /* better word breaks */
-      overflow-wrap: anywhere;             /* prevents overflow */
-    }
-
-    /* Keep code/pre in the same font (explicitly) */
-    code, pre, kbd, samp { font-family: inherit; }
-
-    hr { border: none; border-top: 1px solid #ccc; margin: 2rem 0; }
-
-    @media (prefers-color-scheme: dark) {
-      body { background: #0b0b0c; color: #eaeaea; }
-      a { color: #9ccaff; }
-      hr { border-top-color: #333; }
-    }
-    /* Horizontally scrollable top nav */
-.nav-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;                 /* Firefox */
-  text-align: center;                    /* centers on wide screens */
-  mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%);
-}
-
-.nav-row {
-  display: inline-block;                 /* shrink-to-fit so it can overflow */
-  white-space: nowrap;                   /* keep it on one line */
-  padding: .25rem 0;
-  background: var(--bg);                 /* matches your theme vars */
-}
-
-/* Optional niceties */
-.nav-scroll a { display: inline-block; padding: 0 .25rem; }
-.nav-scroll::-webkit-scrollbar { height: 8px; }          /* Safari/Chrome */
-
-  </style>
-
-  <!-- MathJax v3 (TeX input, SVG output) -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</style>
 </head>
 <body>
-<center>  <h1>WILLIAM T. DOAN</h1></center> 
+
+<center><h1>WILLIAM T. DOAN</h1></center> 
 <hr style="border: none; border-top: 4px solid #222; margin: 1.25rem 0;">
+
 <nav class="nav-scroll" role="navigation" aria-label="Primary">
   <div class="nav-row">
-    [ <a href="index.html"><b>BIOGRAPHY</b></a> ]
-    [ <a href="pub.html"><b>PUBLICATIONS</b></a> ]
-    <!--[ <a href="teach.html"><b>TEACHING</b></a> ]-->
-    [ <a href="proj.html"><b>PROJECTS</b></a> ]
-    [ <a href="link.html"><b>LINKS</b></a> ]
+    <a class="card" href="index.html">
+      <span>BIOGRAPHY</span> <span aria-hidden="true"></span>
+    </a>
+    <a class="card" href="pub.html">
+      <span>PUBLICATIONS</span> <span aria-hidden="true"></span>
+    </a>
+    <a class="card" href="proj.html">
+      <span>PROJECTS</span> <span aria-hidden="true"></span>
+    </a>
+    <a class="card" href="link.html">
+      <span>LINKS</span> <span aria-hidden="true"></span>
+    </a>
   </div>
 </nav>
 <hr style="border: none; border-top: 4px solid #222; margin: 1.25rem 0;"> <br>
@@ -118,8 +173,7 @@
     <a class="card" href="https://scholar.google.com/citations?user=wqEXnnoAAAAJ&hl=en" target="_blank" rel="noopener">
       <span>Google Scholar</span> <span aria-hidden="true">↗</span>
     </a>
-        </a>
-        <a class="card" href="https://openreview.net/profile?id=~William_T._Doan1" target="_blank" rel="noopener">
+    <a class="card" href="https://openreview.net/profile?id=~William_T._Doan1" target="_blank" rel="noopener">
       <span>OpenReview</span> <span aria-hidden="true">↗</span>
     </a>
     <a class="card" href="https://orcid.org/0009-0005-3135-6346" target="_blank" rel="noopener">
@@ -130,32 +184,5 @@
     </a>
   </div>
 </section>
-
-<style>
-  .links-grid p { color: var(--muted); margin-top: .25rem; }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: .8rem;
-    margin-top: .9rem;
-  }
-  .card {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: .9rem 1rem;
-    border-radius: 14px;
-    background: var(--card);
-    color: var(--text);
-    text-decoration: none;
-    border: 1px solid var(--border);
-    transition: transform .08s ease, border-color .2s ease;
-  }
-  .card:hover { transform: translateY(-2px); border-color: var(--accent); }
-  .card span:last-child { opacity: .6; }
-  .card:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-</style>
-
 </body>
 </html>

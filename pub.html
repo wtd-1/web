@@ -3,7 +3,6 @@
 <head>
   <link rel="icon" href="https://wtd-1.github.io/web/pc.png?v=1" type="image/png">
 
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WTD Publications</title>
@@ -12,12 +11,17 @@
   :root {
     --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
             "Liberation Mono", "Courier New", monospace;
-    --bg: #fff;
-    --fg: #111;
-    --border: #ccc;
+    
+    /* DEFINED MISSING VARIABLES BELOW */
+    --bg: #fff;         /* Background color */
+    --fg: #111;         /* Text color */
+    --border: #ccc;     /* Border color */
+    --accent: #007bff;  /* Hover color (Blue) */
+    --card: #f9f9f9;    /* Button background */
+    --text: #111;       /* Button text color */
   }
 
-  html { font-size: 14px; } /* was 14x → 14px */
+  html { font-size: 14px; }
 
   body {
     font-family: var(--mono);
@@ -25,33 +29,35 @@
     margin: 0 auto;
     max-width: 70ch;
     padding: 2rem 1rem;
-    text-align: none;            /* justify all text */
-    text-justify: inter-word;    /* hint for some engines */
+    text-align: none;
     background: var(--bg);
     color: var(--fg);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 900;            /* 1000 → clamp to 900 */
+    font-weight: 900;
     margin: 1.5rem 0 .5rem;
-    /* headings will justify if they wrap */
   }
 
   p {
     margin: .75rem 0;
     font-size: 0.85rem;
     line-height: 1.6;
-    hyphens: auto;               /* better word breaks */
-    overflow-wrap: anywhere;     /* prevents overflow */
+    hyphens: auto;
+    overflow-wrap: anywhere;
   }
 
-  /* Keep code/pre in the same font (explicitly) */
   code, pre, kbd, samp { font-family: inherit; }
-
   hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
 
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #0b0b0c; --fg: #eaeaea; --border: #333; }
+    :root { 
+      --bg: #0b0b0c; 
+      --fg: #eaeaea; 
+      --border: #333; 
+      --card: #161618; 
+      --text: #eaeaea; 
+    }
     a { color: #9ccaff; }
   }
 
@@ -59,107 +65,91 @@
   .table-scroll {
     position: relative;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* smooth on iOS */
-    scrollbar-width: thin;             /* Firefox */
-    /* subtle edge fade to hint scrollability */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
     mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%);
   }
 
-  /* Publications table */
-  .pub-table {
-    width: 100%;
-    min-width: 84rem;     /* widen beyond page width to enable horizontal scroll */
-    border-collapse: collapse;
-    table-layout: auto;   /* less crammed than fixed */
-  }
-
-  .pub-table th, .pub-table td {
-    padding: .5rem .6rem;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-    background-clip: padding-box; /* cleaner with sticky + borders */
-  }
-
-  /* Sticky header while scrolling vertically */
-  .pub-table thead th {
-    text-align: left;
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    z-index: 2;
-  }
-
-  /* Make the Year column stationary while horizontal scrolling */
-  .pub-table th:first-child,
-  .pub-table td.year,
-  .pub-table td:first-child {
-    position: sticky;
-    left: 0;
-    background: var(--bg);
-    z-index: 4; /* above regular cells */
-    box-shadow: 1px 0 0 var(--border); /* subtle divider when scrolled */
-  }
-  /* Ensure the header cell for Year sits above other sticky cells */
+  /* Publications table styling omitted for brevity, exact same as before... */
+  .pub-table { width: 100%; min-width: 84rem; border-collapse: collapse; table-layout: auto; }
+  .pub-table th, .pub-table td { padding: .5rem .6rem; border-bottom: 1px solid var(--border); vertical-align: top; background-clip: padding-box; }
+  .pub-table thead th { text-align: left; position: sticky; top: 0; background: var(--bg); z-index: 2; }
+  .pub-table th:first-child, .pub-table td.year, .pub-table td:first-child { position: sticky; left: 0; background: var(--bg); z-index: 4; box-shadow: 1px 0 0 var(--border); }
   .pub-table thead th:first-child { z-index: 6; }
-
-  /* Widen the Links column and keep its contents on one line */
-  .pub-table th:nth-child(5),
-  .pub-table td:nth-child(5) {
-    min-width: 24ch;      /* adjust as needed (e.g., 26–30ch) */
-    white-space: nowrap;  /* keep [PAPER] [SLIDES] on one line */
-  }
+  .pub-table th:nth-child(5), .pub-table td:nth-child(5) { min-width: 24ch; white-space: nowrap; }
   .pub-table td:nth-child(5) a { margin-right: .4rem; }
+  @media (max-width: 640px) { .pub-table .year { opacity: .7; width: 5ch; } }
 
-  /* Optional: make the year column subtle on narrow screens */
-  @media (max-width: 640px) {
-    .pub-table .year { opacity: .7; width: 5ch; }
+  /* Navigation Styling */
+  .nav-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    text-align: center; /* Default center for main menu */
+    mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%);
   }
-  /* Horizontally scrollable top nav */
-.nav-scroll {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;                 /* Firefox */
-  text-align: center;                    /* centers on wide screens */
-  mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%);
+.no-mask {
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
 }
 
-.nav-row {
-  display: inline-block;                 /* shrink-to-fit so it can overflow */
-  white-space: nowrap;                   /* keep it on one line */
-  padding: .25rem 0;
-  background: var(--bg);                 /* matches your theme vars */
-}
+  .nav-row {
+    display: inline-block;
+    white-space: nowrap;
+    padding: .25rem 0;
+    background: var(--bg);
+  }
 
-/* Optional niceties */
-.nav-scroll a { display: inline-block; padding: 0 .25rem; }
-.nav-scroll::-webkit-scrollbar { height: 8px; }          /* Safari/Chrome */
+  .nav-scroll a { display: inline-block; padding: 0 .25rem; }
+  .nav-scroll::-webkit-scrollbar { height: 8px; }
+
+  /* Card/Button Styling */
+  .card {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; /* Changed to center for single text items */
+    padding: .5rem 1rem;     /* Adjusted padding for smaller project buttons */
+    border-radius: 8px;      /* Slightly smaller radius for project buttons */
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    transition: transform .08s ease, border-color .2s ease;
+    font-size: 0.8rem;       /* Optional: makes project buttons slightly smaller */
+    margin-right: 0.5rem;    /* Spacing between buttons */
+  }
+  .card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .card span:last-child { opacity: 1; } /* Ensure text is fully visible */
+  
+  /* Specific tweak for the main top menu to keep it looking big */
+  nav[aria-label="Primary"] > .nav-row > .card {
+    padding: .9rem 1rem;
+    border-radius: 14px;
+    font-size: 1rem;
+    justify-content: space-between;
+  }
 
 </style>
-
-
-  <!-- MathJax v3 (TeX input, SVG output) -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-      },
-      svg: { fontCache: 'global' }
-    };
-  </script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body>
-<center>  <h1>WILLIAM T. DOAN</h1></center> 
+
+<center><h1>WILLIAM T. DOAN</h1></center> 
 <hr style="border: none; border-top: 4px solid #222; margin: 1.25rem 0;">
+
 <nav class="nav-scroll" role="navigation" aria-label="Primary">
   <div class="nav-row">
-    [ <a href="index.html"><b>BIOGRAPHY</b></a> ]
-    [ <a href="pub.html"><b>PUBLICATIONS</b></a> ]
-    <!--[ <a href="teach.html"><b>TEACHING</b></a> ]-->
-    [ <a href="proj.html"><b>PROJECTS</b></a> ]
-    [ <a href="link.html"><b>LINKS</b></a> ]
+    <a class="card" href="index.html">
+      <span>BIOGRAPHY</span> <span aria-hidden="true"></span>
+    </a>
+    <a class="card" href="pub.html">
+      <span>PUBLICATIONS</span> <span aria-hidden="true"></span>
+    </a>
+    <a class="card" href="proj.html">
+      <span>PROJECTS</span> <span aria-hidden="true"></span>
+    </a>
+    <a class="card" href="link.html">
+      <span>LINKS</span> <span aria-hidden="true"></span>
+    </a>
   </div>
 </nav>
 <hr style="border: none; border-top: 4px solid #222; margin: 1.25rem 0;"> <br>
@@ -170,10 +160,17 @@
   <a href="link.html"><strong>LINKS</strong></a> tab.
 </p>
 
-<center><p>[ <a href="#y2025"><b>2025</b></a> | <a href="#y2024"><b>2024</b></a> ]</p>
-</center><br>
-<div class="table-scroll" role="region" aria-label="Publications table" tabindex="0">
+<center>
+  <nav class="nav-scroll" role="navigation" aria-label="Year Navigation">
+    <div class="nav-row">
+      <a class="card" href="#y2025"><span>2025</span></a>
+      <a class="card" href="#y2024"><span>2024</span></a>
+    </div>
+  </nav>
+</center>
+<br>
 
+<div class="table-scroll" role="region" aria-label="Publications table" tabindex="0">
 <table class="pub-table">
   <thead>
     <tr>
@@ -185,92 +182,56 @@
     </tr>
   </thead>
 
-  <!-- 2025 -->
   <tbody>
     <tr id="y2025">
       <td class="year">2025</td>
-      <td class="title">
-        <i>Inferred Paths in Genome Graphs</i>
-      </td>
-      <td class="meta">
-        <u>William T. Doan</u>, Daniel Gibney
-      </td>
-        <td class="meta">Undergraduate Honours Thesis</td>
-
-            <td class="meta">[ <a href="https://search.library.utdallas.edu/permalink/01UT_DALLAS/1kh33c3/alma9928452084101421"><b>THESIS</b></a> ]
-      </td>
-    </tr>
-        <tr id="y2025">
-      <td class="year">2025</td>
-      <td class="title">
-        <i>Explainable AI-Generated Image Detection RewardBench</i>
-      </td>
-      <td class="meta">
-        Michael Yang, Shijian Deng, <u>William T. Doan</u>, Kai Wang, Tianyu Yang, Harsh Singh, Yapeng Tian
-      </td>
-        <td class="meta">NeurIPS 2025 Workshop GenProCC</td>
-
-            <td class="meta">[ <a href="https://genprocc.github.io"><b>PAPER</b></a> ]
-      </td>
+      <td class="title"><i>Inferred Paths in Genome Graphs</i></td>
+      <td class="meta"><u>William T. Doan</u>, Daniel Gibney</td>
+      <td class="meta">Undergraduate Honours Thesis</td>
+      <td class="meta">[ <a href="https://search.library.utdallas.edu/permalink/01UT_DALLAS/1kh33c3/alma9928452084101421"><b>THESIS</b></a> ]</td>
     </tr>
     <tr>
       <td class="year">2025</td>
-      <td class="title">
-        <i>Aeros(CASP): Advancing Certification and Safety Through Commonsense
-        Reasoning-Based Constraint Answer Set Programming</i>
-      </td>
-      <td class="meta">
-        <u>William T. Doan</u>
-      </td>
-        <td class="meta">AIAA Region IV Conference</td>
-
-            <td class="meta">[ <a href="https://arc.aiaa.org/doi/10.2514/6.2025-98357"><b>PAPER</b></a> ]<br>[ <a href="https://wtd-1.github.io/web/Aeros(CASP)_%20Advancing%20Certification%20and%20Safety%20Through%20Commonsense%20Reasoning-Based%20Constraint%20Answer%20Set%20Programming.pptx.pdf"><b>SLIDES</b></a> ]
-      </td>
+      <td class="title"><i>Explainable AI-Generated Image Detection RewardBench</i></td>
+      <td class="meta">Michael Yang, Shijian Deng, <u>William T. Doan</u>, Kai Wang, Tianyu Yang, Harsh Singh, Yapeng Tian</td>
+      <td class="meta">NeurIPS 2025 Workshop GenProCC</td>
+      <td class="meta">[ <a href="https://genprocc.github.io"><b>PAPER</b></a> ]</td>
     </tr>
-        <tr>
+    <tr>
       <td class="year">2025</td>
-      <td class="title">
-        <i>Hear Me, See Me, Understand Me: Audio-Visual Autism Behavior Recognition</i>
-      </td>
-      <td class="meta">
-        Shijian Deng, Erin E. Kosloski, Siddhi Patel, 
-        Zeke A. Barnett, Yiyang Nan, Alexander Kaplan, 
-        Sisira Aarukapalli, <u>William T. Doan</u>, Matthew Wang,
-         Harsh Singh, Pamela R. Rollins, Yapeng Tian 
-
-      </td>
-        <td class="meta">IEEE Transactions on Multimedia</td>
-
-            <td class="meta">[ <a href="https://ieeexplore.ieee.org/document/10812841"><b>PAPER</b></a> ]
-      </td>
+      <td class="title"><i>Aeros(CASP): Advancing Certification and Safety Through Commonsense Reasoning-Based Constraint Answer Set Programming</i></td>
+      <td class="meta"><u>William T. Doan</u></td>
+      <td class="meta">AIAA Region IV Conference</td>
+      <td class="meta">[ <a href="https://arc.aiaa.org/doi/10.2514/6.2025-98357"><b>PAPER</b></a> ]<br>[ <a href="https://wtd-1.github.io/web/Aeros(CASP)_%20Advancing%20Certification%20and%20Safety%20Through%20Commonsense%20Reasoning-Based%20Constraint%20Answer%20Set%20Programming.pptx.pdf"><b>SLIDES</b></a> ]</td>
     </tr>
-        </tr>
-        <tr id="y2024">
+    <tr>
+      <td class="year">2025</td>
+      <td class="title"><i>Hear Me, See Me, Understand Me: Audio-Visual Autism Behavior Recognition</i></td>
+      <td class="meta">Shijian Deng, Erin E. Kosloski, Siddhi Patel, Zeke A. Barnett, Yiyang Nan, Alexander Kaplan, Sisira Aarukapalli, <u>William T. Doan</u>, Matthew Wang, Harsh Singh, Pamela R. Rollins, Yapeng Tian</td>
+      <td class="meta">IEEE Transactions on Multimedia</td>
+      <td class="meta">[ <a href="https://ieeexplore.ieee.org/document/10812841"><b>PAPER</b></a> ]</td>
+    </tr>
+    <tr id="y2024">
       <td class="year">2024</td>
-      <td class="title">
-        <i>Audio-Visual Autism Behavior Recognition with MMLMs</i>
-      </td>
-      <td class="meta">
-        Shijian Deng, Erin E. Kosloski, Siddhi Patel, 
-        Zeke A. Barnett, Yiyang Nan, Alexander Kaplan, 
-        Sisira Aarukapalli, <u>William T. Doan</u>, Matthew Wang,
-         Harsh Singh, Pamela R. Rollins, Yapeng Tian 
-
-      </td>
-        <td class="meta">CVPRW'24</td>
-
-            <td class="meta">[ <a href="https://sightsound.org/papers/2024/Audio-Visual_Autism_Behavior_Recognition_with_Multimodal_Large_Language_Models_Audio-Visual_Autism_Behavior_Recognition_with_Multimodal_Large_Language_Models.pdf"><b>PAPER</b></a> ]
-      </td>
+      <td class="title"><i>Audio-Visual Autism Behavior Recognition with MMLMs</i></td>
+      <td class="meta">Shijian Deng, Erin E. Kosloski, Siddhi Patel, Zeke A. Barnett, Yiyang Nan, Alexander Kaplan, Sisira Aarukapalli, <u>William T. Doan</u>, Matthew Wang, Harsh Singh, Pamela R. Rollins, Yapeng Tian</td>
+      <td class="meta">CVPRW'24</td>
+      <td class="meta">[ <a href="https://sightsound.org/papers/2024/Audio-Visual_Autism_Behavior_Recognition_with_Multimodal_Large_Language_Models_Audio-Visual_Autism_Behavior_Recognition_with_Multimodal_Large_Language_Models.pdf"><b>PAPER</b></a> ]</td>
     </tr>
   </tbody>
 
-  <!-- 2024 (example empty section) -->
-  <tbody id="y2024" data-year="2024">
-    <!-- <tr>…</tr> -->
-  </tbody>
+  <tbody data-year="2024"></tbody>
 </table>
 </div>
 
+<br>
+<center>
+  <nav class="nav-scroll" role="navigation" aria-label="Back to Top">
+    <div class="nav-row">
+      <a class="card" href="#top"><span>BACK TO TOP</span></a>
+    </div>
+  </nav>
+</center>
+<br><br>
 </body>
-<br><p><center>[ <a href="#top"><b>BACK TO TOP</b></a> ]</center></p><br><br>
 </html>
