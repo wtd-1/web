@@ -5,20 +5,19 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WTD Home</title>
+  <title>WTD Teaching</title>
 
 <style>
   :root {
     --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
             "Liberation Mono", "Courier New", monospace;
     
-    /* DEFINED MISSING VARIABLES BELOW */
-    --bg: #fff;         /* Background color */
-    --fg: #111;         /* Text color */
-    --border: #ccc;     /* Border color */
-    --accent: #007bff;  /* Hover color (Blue) */
-    --card: #f9f9f9;    /* Button background */
-    --text: #111;       /* Button text color */
+    --bg: #fff;         
+    --fg: #111;         
+    --border: #ccc;     
+    --accent: #007bff;  
+    --card: #f9f9f9;    
+    --text: #111;       
   }
 
   html { font-size: 14px; }
@@ -29,7 +28,6 @@
     margin: 0 auto;
     max-width: 70ch;
     padding: 2rem 1rem;
-    text-align: none;
     background: var(--bg);
     color: var(--fg);
   }
@@ -38,6 +36,7 @@
     font-weight: 1100;
     margin: 1.5rem 0 .5rem;
   }
+
 
   h1 { font-size: 2.5rem; } 
   h2 { font-size: 2rem; }
@@ -54,7 +53,6 @@
     overflow-wrap: anywhere;
   }
 
-  code, pre, kbd, samp { font-family: inherit; }
   hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
 
   @media (prefers-color-scheme: dark) {
@@ -68,72 +66,74 @@
     a { color: #9ccaff; }
   }
 
-  /* Horizontal scroll container */
-  .table-scroll {
-    position: relative;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%);
-  }
-
-  /* Publications table styling omitted for brevity, exact same as before... */
-  .pub-table { width: 100%; min-width: 84rem; border-collapse: collapse; table-layout: auto; }
-  .pub-table th, .pub-table td { padding: .5rem .6rem; border-bottom: 1px solid var(--border); vertical-align: top; background-clip: padding-box; }
-  .pub-table thead th { text-align: left; position: sticky; top: 0; background: var(--bg); z-index: 2; }
-  .pub-table th:first-child, .pub-table td.year, .pub-table td:first-child { position: sticky; left: 0; background: var(--bg); z-index: 4; box-shadow: 1px 0 0 var(--border); }
-  .pub-table thead th:first-child { z-index: 6; }
-  .pub-table th:nth-child(5), .pub-table td:nth-child(5) { min-width: 24ch; white-space: nowrap; }
-  .pub-table td:nth-child(5) a { margin-right: .4rem; }
-  @media (max-width: 640px) { .pub-table .year { opacity: .7; width: 5ch; } }
-
-  /* Navigation Styling */
+  /* Navigation Scroll (Top Menu) */
   .nav-scroll {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    text-align: center; /* Default center for main menu */
+    text-align: center;
     mask-image: linear-gradient(90deg, transparent 0, #000 1rem, #000 calc(100% - 1rem), transparent 100%);
   }
-.no-mask {
-  mask-image: none !important;
-  -webkit-mask-image: none !important;
-}
-
+  
   .nav-row {
     display: inline-block;
     white-space: nowrap;
     padding: .25rem 0;
-    background: var(--bg);
   }
 
   .nav-scroll a { display: inline-block; padding: 0 .25rem; }
-  .nav-scroll::-webkit-scrollbar { height: 8px; }
 
-  /* Card/Button Styling */
+  /* Base Card Styling */
   .card {
     display: flex; 
     align-items: center; 
-    justify-content: center; /* Changed to center for single text items */
-    padding: .5rem 1rem;     /* Adjusted padding for smaller project buttons */
-    border-radius: 8px;      /* Slightly smaller radius for project buttons */
+    justify-content: center; 
+    padding: .5rem 1rem;     
+    border-radius: 8px;      
     background: var(--card);
     color: var(--text);
     text-decoration: none;
     border: 1px solid var(--border);
     transition: transform .08s ease, border-color .2s ease;
-    font-size: 1.1rem;       /* Optional: makes project buttons slightly smaller */
-    margin-right: 0.5rem;    /* Spacing between buttons */
+    font-size: 1.1rem;       
+    margin-right: 0.5rem;   
+    box-sizing: border-box; /* Ensures padding doesn't affect width calculations */
   }
   .card:hover { transform: translateY(-2px); border-color: var(--accent); }
-  .card span:last-child { opacity: 1; } /* Ensure text is fully visible */
   
-  /* Specific tweak for the main top menu to keep it looking big */
+  /* Top Menu Specifics */
   nav[aria-label="Primary"] > .nav-row > .card {
     padding: .9rem 1rem;
     border-radius: 14px;
     font-size: 1rem;
     justify-content: space-between;
+  }
+
+  /* --- NEW GRID STYLING BELOW --- */
+
+  /* The Grid Container */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 1rem; /* Space between rows and columns */
+    margin-top: 1.5rem;
+  }
+
+  /* Making the buttons inside the grid 'Large' */
+  .grid .card {
+    width: 100%;       /* Fill the grid cell */
+    margin-right: 0;   /* Remove the margin used for the top nav */
+    padding: 1.5rem 2rem; /* Large padding for big buttons */
+    font-size: 1.1rem; /* Larger text */
+    font-weight: 700;
+    justify-content: space-between; /* Pushes text left and arrow right */
+  }
+
+  /* Optional: Stack vertically on very small mobile screens */
+  @media (max-width: 480px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
   }
 
 </style>
@@ -149,7 +149,6 @@
   </script>
   <script id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
 </head>
 <body>
 
@@ -172,48 +171,26 @@
     </a>
     <a class="card" href="teach.html">
       <span>TEACHING</span> <span aria-hidden="true"></span>
-    </a>
+    </a>  
   </div>
 </nav>
 <hr style="border: none; border-top: 4px solid #222; margin: 1.25rem 0;"> <br>
 
-<h2>Biography</h2>
-  <p>I am a Ph.D. student at the University of Texas at Dallas. 
-    My advisor is Dr. <a href="https://personal.utdallas.edu/~djg230002/">Daniel Gibney</a>. 
-  I enjoy using the British convention sometimes in my spelling. </p>
-  </p>
-<nav class="nav-scroll no-mask" style="text-align: left;">
-  <div class="nav-row">
-    <a class="card" href="https://wtd-1.github.io/web/MAILING%20ADDRESS%20MS%20EC-31.pdf"><span>CONTACT ME</span></a>
-  </div>    
-</nav>
+<section class="links-grid">
+  <h2>Teaching</h2>
+  <p>Find all the notes I have chosen to post here. Some will be a pdf, others a html file.</p>
 
-  <!--<table border="0" cellpadding="0">
-<tbody>
-<tr><td valign=top><i>
-Mailing <br>
-Address:&nbsp;</i></td><td>
-
-<a href="http://cs.utdallas.edu">
-MS EC-31</a><br>
-University of Texas at Dallas<br>
-800 West Campbell Road<br>
-Richardson, TX 75080, 
-USA
-</td>
-
-
-
-</tr><tr><td valign=top><i>
-Office:&nbsp;</i></td><td>
-ECSS 4.613
-
-</td></tr><tr><td valign=top><i>
-Email:&nbsp;</i></td><td>
-<code>doan [AT] utdallas [DOT] edu</code>
-
-</td></tr></tbody></table>-->
-
-
+  <div class="grid">
+    <a class="card" href="algos.html" target="_blank" rel="noopener">
+      <span>ALGORITHMS</span> <span aria-hidden="true">↗</span>
+    </a>
+    <a class="card" href="" target="_blank" rel="noopener">
+      <span>DATABASE DESIGN (forthcoming)</span> <span aria-hidden="true">↗</span>
+    </a>
+    <a class="card" href="" target="_blank" rel="noopener">
+      <span>ARTIFICIAL INTELLIGENCE (forthcoming)</span> <span aria-hidden="true">↗</span>
+    </a>   
+  </div>
+</section>
 </body>
 </html>

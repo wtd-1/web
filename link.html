@@ -137,6 +137,18 @@
   }
 
 </style>
+<!-- MathJax v3 (TeX input, SVG output) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body>
 
@@ -157,6 +169,9 @@
     <a class="card" href="link.html">
       <span>LINKS</span> <span aria-hidden="true"></span>
     </a>
+    <a class="card" href="teach.html">
+      <span>TEACHING</span> <span aria-hidden="true"></span>
+    </a>  
   </div>
 </nav>
 <hr style="border: none; border-top: 4px solid #222; margin: 1.25rem 0;"> <br>
