@@ -203,12 +203,51 @@ code {
     <i>CS 6363: Design and Analysis of Computer Algorithms</i> course given in the 
 Spring semester of 2026 as well as the assigned textbook for this course. That is, <i>Introduction to Algorithms (3rd edition)</i>
 by T.H. Corman, C.E. Leiserson, R.L. Rivest and C. Stein.</blockquote>
-<br>
+
 <blockquote style="color:#ff2828;"><b>These notes are organised exactly as presented in Dr. Du's course, with 
   each topic within a chapter spanning a single lecture. These notes have been augmented: they are a hodgepodge of Dr. Du's 
   lectures, CLRS, personal anecdotes and other resources.
 </b> </blockquote>
-<br>
+
+<h2>Course Introduction</h2>
+<p>This course is organised into three parts, <i>Algorithms with Self-Reduction</i>, <i>The Incremental Method</i>, and <i>Complexity and Approximation</i>. This 
+arrangement of topics is quite intentional. To start off, we will study <i>Algorithms with Self-Reduction</i>. It is a structural property of the problem, where the optimal solution of the problem 
+faced has within it optimal solutions to smaller sub-problems. Dividing a problem into smaller parts and conquering the pieces, dynamically programming up to the solution using 
+previously computed values, and greedily making what seems to be the most immediate optimal choice are all ways a problem can be solved recursively, or iteratively. Any way the problem is solved, 
+the crux of the solution involves some notion of shrinking the problem into smaller parts such that the latter is still the same kind of problem. The problem contains itself!</p>
+<p>On first blush, it might seem like self-reducibility is the same thing as something else called <strong>optimal substructure.</strong> Though they are similar, they are not the same. Self-reducibility enables optimal substructure. Optimal substructure is a characteristic of a problem whereas self-reducibility is a process that involves repeatedly invoking 
+the decision version of the problem. </p>
+<p>From there, we will move to Part II of the course, <i>The Incremental Method</i>. Part I gave way for us to solve problems in a top-down or bottom-up fashion. This is nice, but there 
+does come times when we do not start with a problem. Rather, we might start with a bad—or, sub-optimal—solution. What we will do here is iteratively, incrementally, improve it until optimality is achieved. In fact, the topics of Part II are quite apropos. In a flow network, there is no reliance on the parts of the network being optimal. As a matter of fact, it is possible to have a sub-flow in the network that is good locally but terrible globally. Instead of an optimal substructure, we will use <strong>Residual Graphs</strong> to undo bad decisions and eventually attain optimality. Unlike in Part I, Part II does not feature reducing the problem size, because there is no need to when the system writ-large matters more (and improving the whole thing from there). </p>
+<p>Parts I and II centered around developing techniques to solve problems. Part III, <i>Complexity and Approximation</i>, begs a different question: "Can we do this—efficiently?" Up to Part III, the 
+algorithms learnt all ran in polynomial time. Part III introduces a class of problems for which no efficient algorithm is known to exist. This is where self-reducibility ermeges again, but as a tool of complexity, not a feature of the problems. Formally, a problem is said to be self-reducible if its search problem reduces (via a Cook reduction) in polynomial time to its corresponding decision problem. In other words, there exists an algorithm to solve the search problem in a polynomial number of steps, where each step is either:</p>
+
+<ol class="upper-alpha">
+    <li> A conventional computational step, or</li>
+    <li> A call to a subroutine solving the decision problem.</li>
+</ol>
+
+<p>In Part III, two things will be discussed: 
+<ol>
+  <li><strong>NP (Nondeterministic Polynomial Time):</strong> these are problems where for a candidate solution, its correctness can be verified in polynomial time. </li>
+  <li><strong>NP-Hard/NP-Complete:</strong> these are problems that are sort of like dominoes—knocking one down will cascade a chain that collapses them all.</li>
+</ol></p>
+<p>Taking from earlier, self-reducibility emerges once again. Instead of being synonymous with recursivity, we use it to form a critical link:</p>
+  <blockquote>
+    If you can answer the decision-version (True/False) of an NP-Complete problem, the actual solution can be found through searching.
+  </blockquote>
+ <p> 
+  Consider a theoretical scenario where a black-box contains an oracle that whispers <em>if</em> a Hamiltonian Cycle (each node visited strictly once) exists in a graph $G=(V,E)$. Using self-reduction 
+can help us find it by testing each edge one-by-one. This proves that finding a solution is about as difficult as checking. 
+</p>
+<p>Part III establishes that some problems, those NP-Hard ones, just can not be solved perfectly and quickly. So, there are two possible resolutions. 
+  <ol>
+    <li><strong>Reduce:</strong> take a problem that has already been established to be computationally hard and reduce it to the problem at hand.</li>
+    <li><strong>Approximate:</strong> get a solution that is not perfect but is good enough (e.g., a $2$-approximation is simply a solution which is no more than twice as large as the perfect one).</li>
+  </ol>
+</p>
+
+
 <h2>Table of Contents</h2>
 <ol class="upper-roman">
     <li><a href="#I">Algorithms with Self-Reduction</a></li>
@@ -267,7 +306,7 @@ by T.H. Corman, C.E. Leiserson, R.L. Rivest and C. Stein.</blockquote>
             </ol>
          </ol>
 </ol>
-<br><br>
+
 <h2 id="I">Algorithms with Self-Reduction</h2>
 <center>
   <nav class="nav-scroll" role="navigation" aria-label="Back to Top">
@@ -616,7 +655,7 @@ we can solve.</p>
     discarding constants, we confirm the result $T(n) = \Theta(n \lg n)$. Here is the recursion tree we just described:
   </p>
 
-<svg width="800" height="550" xmlns="http://www.w3.org/2000/svg">
+<svg width="550" height="375" viewBox="0 0 800 550" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto-start-reverse">
             <path d="M 0 0 L 10 5 L 0 10 z" fill="white" />
@@ -634,12 +673,10 @@ we can solve.</p>
 
     <line x1="300" y1="65" x2="150" y2="135" class="line" />
     <line x1="300" y1="65" x2="450" y2="135" class="line" />
-
     <line x1="150" y1="165" x2="75" y2="235" class="line" />
     <line x1="150" y1="165" x2="225" y2="235" class="line" />
     <line x1="450" y1="165" x2="375" y2="235" class="line" />
     <line x1="450" y1="165" x2="525" y2="235" class="line" />
-
     <line x1="75" y1="265" x2="50" y2="300" class="line" />
     <line x1="75" y1="265" x2="100" y2="300" class="line" />
     <line x1="225" y1="265" x2="200" y2="300" class="line" />
@@ -650,50 +687,43 @@ we can solve.</p>
     <line x1="525" y1="265" x2="550" y2="300" class="line" />
 
     <text x="300" y="50" class="math math-italic">cn</text>
-
     <text x="150" y="150" class="math math-italic">cn/2</text>
     <text x="450" y="150" class="math math-italic">cn/2</text>
-
     <text x="75" y="250" class="math math-italic">cn/4</text>
     <text x="225" y="250" class="math math-italic">cn/4</text>
     <text x="375" y="250" class="math math-italic">cn/4</text>
     <text x="525" y="250" class="math math-italic">cn/4</text>
-
     <text x="75" y="330" class="math">⋮</text>
     <text x="225" y="330" class="math">⋮</text>
     <text x="375" y="330" class="math">⋮</text>
     <text x="525" y="330" class="math">⋮</text>
 
-    <text x="50" y="400" class="math math-italic">c</text>
-    <text x="100" y="400" class="math math-italic">c</text>
-    <text x="150" y="400" class="math">⋯</text>
-    <text x="200" y="400" class="math math-italic">c</text>
-    <text x="250" y="400" class="math math-italic">c</text>
-    
-    <text x="300" y="400" class="math">⋯ ⋯</text>
-    
-    <text x="350" y="400" class="math math-italic">c</text>
-    <text x="400" y="400" class="math math-italic">c</text>
-    <text x="450" y="400" class="math">⋯</text>
-    <text x="500" y="400" class="math math-italic">c</text>
-    <text x="550" y="400" class="math math-italic">c</text>
+    <g transform="translate(0, 400)">
+        <text x="50" y="0" class="math math-italic">c</text>
+        <text x="100" y="0" class="math math-italic">c</text>
+        <text x="150" y="0" class="math">⋯</text>
+        <text x="200" y="0" class="math math-italic">c</text>
+        <text x="250" y="0" class="math math-italic">c</text>
+        <text x="300" y="0" class="math">⋯ ⋯</text>
+        <text x="350" y="0" class="math math-italic">c</text>
+        <text x="400" y="0" class="math math-italic">c</text>
+        <text x="450" y="0" class="math">⋯</text>
+        <text x="500" y="0" class="math math-italic">c</text>
+        <text x="550" y="0" class="math math-italic">c</text>
+    </g>
 
     <line x1="340" y1="50" x2="650" y2="50" class="dashed" />
     <text x="670" y="50" class="annotation"><tspan class="math-italic">cn</tspan></text>
-
     <line x1="490" y1="150" x2="650" y2="150" class="dashed" />
     <text x="670" y="150" class="annotation"><tspan class="math-italic">cn</tspan></text>
-
     <line x1="570" y1="250" x2="650" y2="250" class="dashed" />
     <text x="670" y="250" class="annotation"><tspan class="math-italic">cn</tspan></text>
-
     <line x1="580" y1="330" x2="650" y2="330" class="dashed" />
     <text x="670" y="330" class="annotation">⋮</text>
-
     <line x1="580" y1="400" x2="650" y2="400" class="dashed" />
     <text x="670" y="400" class="annotation"><tspan class="math-italic">cn</tspan></text>
 
-    <line x1="640" y1="430" x2="710" y2="430" class="line" stroke="white" stroke-width="2" />
+    <line x1="640" y1="430" x2="710" y2="430" class="line" stroke-width="2" />
     <text x="675" y="460" class="math" font-size="22px" font-weight="bold">
         Total: <tspan class="math-italic">cn</tspan> lg <tspan class="math-italic">n</tspan> + <tspan class="math-italic">cn</tspan>
     </text>
@@ -703,7 +733,6 @@ we can solve.</p>
         lg <tspan class="math-italic">n</tspan>
     </text>
 </svg>
-  
 <p><strong>Remark. </strong>Earlier, we said the height of the recursion is $lgn$. That is because the branching factor $a$ is equal to two. That means
 the recursion tree drawn from that is a binary tree. In this next coming section, you will find a proof of this fact of the height of a binary tree. </p>
     <h5 id="I.1.b">Sorting</h5>
@@ -878,12 +907,9 @@ nodes are placed starting from the left.
   <strong>Theorem:</strong> Any comparison sort algorithm requires $\Omega(n \lg n)$ comparisons in the worst case.
 </p>
 
-<p>
-  <strong>Proof:</strong>
-</p>
 
 <p>
-  Let us model a comparison sort operating on an input sequence of $n$ elements as a full binary decision tree. In this tree, each internal node represents a comparison between two elements, and each leaf represents a possible sorted permutation of the input. Because a correct sorting algorithm must be capable of producing any valid permutation depending on the initial input, the decision tree must possess at least $n!$ reachable leaves.
+  <strong>Proof. </strong>Let us model a comparison sort operating on an input sequence of $n$ elements as a full binary decision tree. In this tree, each internal node represents a comparison between two elements, and each leaf represents a possible sorted permutation of the input. Because a correct sorting algorithm must be capable of producing any valid permutation depending on the initial input, the decision tree must possess at least $n!$ reachable leaves.
 </p>
 
 <p>
@@ -1157,10 +1183,6 @@ $$h = \Omega(n \lg n)$$
   </p>
 
 <h5>Quicksort</h5>  
-
-<blockquote style="color:#ff2828;"><b>Cards on the table, this section is nearly verbatim from CLRS. I augmented its content with additional workings of germane exercises and small quips. 
-  Truly, the authors have done an excellent job presenting $\text{QUICKSORT}$; I felt as though trying to rephrase it would dilute the potency of CLRS's well-bodied explanations. 
-</b> </blockquote>
 
 <p>
   Heapsort is nice because it is quite memory efficient as is, but there is
@@ -2753,6 +2775,70 @@ S &= \frac{x^{k+1} - 1}{x - 1} \quad \quad \quad \quad \quad \quad \quad \quad \
 \end{aligned}
 $$
 
+
+<p>While the algebraic telescoping sum provides a closed-form solution that can be computed in $O(1)$ time, computing the series incrementally via a standard loop takes $O(n)$ time. However, we can also approach this using a <strong>Divide and Conquer</strong> strategy. It exploits the self-similarity of the sequence. Instead of adding terms one by one, we split the series of $n$ terms into two halves. If $n$ is even, the right half of the series is exactly the left half multiplied by $r^{n/2}$.</p>
+
+$$S_n = (a + ar + \dots + ar^{n/2-1}) + r^{n/2}(a + ar + \dots + ar^{n/2-1}) = S_{n/2} + r^{n/2} S_{n/2}$$
+
+<p>To avoid recalculating powers of $r$ from scratch (which would degrade our time complexity), our recursive function will return a tuple containing both the sum up to $k$ terms ($S_k$) and the common ratio raised to the $k$-th power ($R_k$).</p>
+
+
+
+<pre>
+<code>
+      DC-GEOMETRIC-SUM(a, r, n)
+      1: <b>if</b> n == 1
+      2:     <b>return</b> (a, r)
+      3: 
+      4: k = &lfloor;n / 2&rfloor;
+      5: (S_k, R_k) = DC-GEOMETRIC-SUM(a, r, k)
+      6: 
+      7: <b>if</b> n % 2 == 0
+      8:     S_n = S_k + (R_k * S_k)
+      9:     R_n = R_k * R_k
+      10:    <b>return</b> (S_n, R_n)
+      11: <b>else</b>
+      12:    S_n = S_k + (R_k * S_k) + (a * R_k * R_k)
+      13:    R_n = R_k * R_k * r
+      14:    <b>return</b> (S_n, R_n)
+</code>
+</pre>
+
+<p><strong>Proof. </strong>Let $T(n)$ represent the worst-case running time to compute the sum of $n$ terms. In our algorithm, the problem of size $n$ is divided into exactly one subproblem of size $\lfloor n/2 \rfloor$ (line 5). The work done outside the recursive call (lines 7 through 14) consists purely of basic arithmetic operations (addition, multiplication) and modulo checks, all of which execute in constant time $O(1)$.</p>
+
+<p>This structure yields the following recurrence relation:</p>
+
+$$T(n) = T(n/2) + O(1)$$
+
+<p>We solve this using the Master Theorem for divide-and-conquer recurrences of the form $T(n) = aT(n/b) + f(n)$. Here, $a=1$, $b=2$, and $f(n) = O(1) = O(n^0)$. We calculate the critical exponent $\log_b(a) = \log_2(1) = 0$. Since $f(n) = \Theta(n^{\log_b(a)})$, we are in Case 2 of the Master Theorem. Therefore, the running time resolves strictly to a logarithmic bound:</p>
+
+$$T(n) = \Theta(\log n) \quad \blacksquare$$
+
+
+<p>We prove the correctness of <code>DC-GEOMETRIC-SUM</code> by strong mathematical induction on $n$, the number of terms.</p>
+
+<p><strong>Proof. Base Case ($n=1$):</strong> When $n=1$, the algorithm triggers the base condition at line 1 and returns $(a, r)$. The true sum of a geometric series with 1 term is simply $a \cdot r^0 = a$, and the ratio raised to the 1st power is $r^1 = r$. Thus, the base case holds trivially.</p>
+
+<p><strong>Inductive Hypothesis:</strong> Assume that for all integers $1 \le k < n$, the function call <code>DC-GEOMETRIC-SUM(a, r, k)</code> correctly returns the tuple $(S_k, r^k)$, where $S_k = \sum_{i=0}^{k-1} a r^i$.</p>
+
+<p><strong>Inductive Step:</strong> We must demonstrate that <code>DC-GEOMETRIC-SUM(a, r, n)</code> correctly evaluates to $(S_n, r^n)$. Let $k = \lfloor n/2 \rfloor$. Because $k < n$, our inductive hypothesis guarantees that the recursive call on line 5 accurately assigns $S_k = \sum_{i=0}^{k-1} a r^i$ and $R_k = r^k$. We examine the two mutually exclusive parity cases for $n$:</p>
+
+<p><em>Case 1: $n$ is even.</em> Then $n = 2k$. The algorithm computes the new sum as $S_n = S_k + R_k S_k$. Expanding this using our hypothesis:</p>
+
+$$S_n = \sum_{i=0}^{k-1} a r^i + r^k \sum_{i=0}^{k-1} a r^i = \sum_{i=0}^{k-1} a r^i + \sum_{i=k}^{2k-1} a r^i = \sum_{i=0}^{2k-1} a r^i = \sum_{i=0}^{n-1} a r^i$$
+
+<p>The updated power is calculated as $R_k \cdot R_k = r^k \cdot r^k = r^{2k} = r^n$. Both tuple values are mathematically correct.</p>
+
+<p><em>Case 2: $n$ is odd.</em> Then $n = 2k + 1$. The algorithm computes $S_n = S_k + R_k S_k + a \cdot R_k \cdot R_k$. Expanding this substitution:</p>
+
+$$S_n = \sum_{i=0}^{k-1} a r^i + r^k \sum_{i=0}^{k-1} a r^i + a(r^k)^2 = \sum_{i=0}^{2k-1} a r^i + a r^{2k} = \sum_{i=0}^{n-1} a r^i$$
+
+<p>The updated power is calculated as $R_k \cdot R_k \cdot r = r^k \cdot r^k \cdot r^1 = r^{2k+1} = r^n$. Again, both tuple values are mathematically correct.</p>
+
+<p>Because the inductive step holds true for both possible cases, by the principle of strong mathematical induction, the algorithm is correct for all integers $n \ge 1$. $\blacksquare$</p>
+
+
+
     <h5>The Maximum Subarray Problem</h5>
 
     <p>The <b>maximum subarray problem</b> (or maximum segment sum) involves finding a contiguous subarray within a one-dimensional array \( A[1 \dots n] \) that yields the largest possible sum.</p>
@@ -2792,7 +2878,7 @@ $$
         </tr>
     </table>
 </center>
-    <p>Kadane's algorithm uses a 1-pass scan. It tracks the maximum subarray ending at the current position (\(current\_sum\)) and the overall maximum seen so far (\(best\_sum\)).</p>
+    <p>Kadane's algorithm uses a 1-pass scan. It tracks the maximum subarray ending at the current position and the overall maximum seen so far.</p>
 
     <p>The divide and conquer approach takes \(O(n \log n)\). Furthermore, the problem exhibits <b>self-reducibility</b> and a <b>tree structure</b>. The maximum sum is the maximum of three cases:</p>
     <ol>
@@ -2815,14 +2901,12 @@ FIND-MAXIMUM-SUBARRAY(A, low, high)
 5:     (left-low, left-high, left-sum) = FIND-MAXIMUM-SUBARRAY(A, low, mid)
 6:     (right-low, right-high, right-sum) = FIND-MAXIMUM-SUBARRAY(A, mid + 1, high)
 7:     (cross-low, cross-high, cross-sum) = FIND-MAX-CROSSING-SUBARRAY(A, low, mid, high)
-8:
-
-9:     <b>if</b> left-sum &ge; right-sum <b>and</b> left-sum &ge; cross-sum
-10:        <b>return</b> (left-low, left-high, left-sum)
-11:    <b>elseif</b> right-sum &ge; left-sum <b>and</b> right-sum &ge; cross-sum
-12:        <b>return</b> (right-low, right-high, right-sum)
-13:    <b>else</b>
-14:        <b>return</b> (cross-low, cross-high, cross-sum)
+8:     <b>if</b> left-sum &ge; right-sum <b>and</b> left-sum &ge; cross-sum
+9:        <b>return</b> (left-low, left-high, left-sum)
+10:    <b>elseif</b> right-sum &ge; left-sum <b>and</b> right-sum &ge; cross-sum
+11:        <b>return</b> (right-low, right-high, right-sum)
+12:    <b>else</b>
+13:        <b>return</b> (cross-low, cross-high, cross-sum)
 </code>
 </pre>
 
@@ -2908,12 +2992,32 @@ $$T(n)=\Theta(n^{\log_b a} \lg n)=\Theta(n \lg n) \quad \quad \quad \quad \black
 
 
 <p>
-  On the other hand, Kadane's Algorithm relies on a beautifully simple mathematical observation: a maximum contiguous subarray ending at a specific index $i$ is either the element $A[i]$ itself, or it is the element $A[i]$ combined with the maximum contiguous subarray ending at index $i - 1$. 
+  On the other hand, Kadane's Algorithm relies on a beautifully simple mathematical observation: a maximum contiguous subarray ending at a specific index $i$ is either the element $A[i]$ itself, or it is the element $A[i]$ added with the maximum contiguous subarray ending at index $i - 1$. In other words, checking every possible combination of numbers in the array is not necessary; 
+  all that is needed is that best score from the previous step to know what to do at the present step. 
+</p>
+<p>Take for example the following array $A$.</p>
+          <center>
+          <table style="border-collapse: collapse; margin: 1rem auto; text-align: center;">
+            <tr>
+              <th>$A = \quad$ </th>
+              <th style="padding: 0.5rem 1rem; border: 1px solid var(--border);">6</th>
+              <th style="padding: 0.5rem 1rem; border: 1px solid var(--border);">-5</th>
+              <th style="padding: 0.5rem 1rem; border: 1px solid var(--border);">3</th>
+              <th style="padding: 0.5rem 1rem; border: 1px solid var(--border);">2</th>
+              <th style="padding: 0.5rem 1rem; border: 1px solid var(--border);">-4</th>
+              <th style="padding: 0.5rem 1rem; border: 1px solid var(--border);">-1</th>
+            </tr>
+          </table>
+          </center>
+<p>Starting at $A[0]$, the maximum subarray is just 6. At index 1, there are some choices:
+  <ul>
+    <li>Just take -5</li>
+    <li>Take 6 <em>and</em> -5, which is $6 + -5 = 1$</li>
+  </ul>
+  Looking at the choices, 1 is better than -5, so we keep the 1. Keep going. Once the array has been exhausted, we can examine what we have. Thinking about our goal, seeking a subarray at index $i$ ($S_i$) of $A$ can be modeled as $$S_i = \max (A[i], S_{i-1} + A[i]).$$ The choices we were making earlier model exactly the expression inside the maximisation function: choose the index we are currently on or the sum of the current choice plus the immediate index behind it. Clearly, 6 is the best decision all around: 6 is better than -5, 1 (sum), 3, -2 (sum), 2, 5 (sum), -4, -2 (sum), -1, and -5 (sum). Ergo, Kadane's Algorithm returns $S_i = < 6 >$.
 </p>
 
-<p>
-  As we scan the array from left to right, we maintain a running <code>current-sum</code>. If our accumulated <code>current-sum</code> ever drops below zero, it means the sequence we have built so far is actively dragging our total value down. Therefore, it is mathematically optimal to completely abandon the previous sequence and start a fresh subarray directly at the current element $A[i]$. Throughout this single pass, we continuously update a global <code>max-sum</code> to remember the highest peak we have encountered.
-</p>
+<p>Below, Kadane's Algorithm is implemented. </p>
 
 <pre>
 <code>
@@ -2940,6 +3044,10 @@ $$T(n)=\Theta(n^{\log_b a} \lg n)=\Theta(n \lg n) \quad \quad \quad \quad \black
 </code>
 </pre>
 
+
+<p>
+  Notice how it follows the logic we outlined above. As we scan the array from left to right, we maintain a running <code>current-sum</code>. If our accumulated <code>current-sum</code> ever drops below zero, it means the sequence we have built so far is actively dragging our total value down. Therefore, it is mathematically optimal to completely abandon the previous sequence and start a fresh subarray directly at the current element $A[i]$. Throughout this single pass, we continuously update a global <code>max-sum</code> to remember the highest peak we have encountered.
+</p>
 <p>
   To prove that Kadane's algorithm outperforms the Divide-and-Conquer approach, we must formally analyze both its time and space complexities.
 </p>
@@ -3500,7 +3608,7 @@ $$ C = \begin{bmatrix} a_{11}b_{11} + a_{12}b_{21} & a_{11}b_{12} + a_{12}b_{22}
 <ol>
     <li><strong>Divide:</strong> Separate the list of rankings into two equal pieces.</li>
     <li><strong>Conquer:</strong> Recursively count the inversions in each respective half.</li>
-    <li><strong>Combine:</strong> Count the "split" inversions where elements $a_i$ and $a_j$ are located in different halves. Return the total sum of these three quantities.</li>
+    <li><strong>Combine:</strong> Count the "split" inversions where elements $a_i$ and $a_j$ are located in different halves. Return the total sum of these quantities.</li>
 </ol>
 
 <p>To count the split inversions efficiently during the <strong>Combine</strong> step, we can take from the $\text{MERGE-SORT}$ algorithm. We assume each individual half is already sorted. By merging the two sorted halves into a single sorted whole, we maintain the sorted invariant. During this merge process, every time an element from the right half is placed before an element from the left half, we mathematically know it is inverted with all remaining elements in the left half.</p>
@@ -3632,14 +3740,7 @@ $$ A(-1) = A_{even}(1) - 1 \cdot A_{odd}(1) $$
     <li><strong>Overlapping subproblems:</strong> A recursive solution contains a "small" number of distinct subproblems possibly repeated many times.</li>
 </ol>
 
-<p>This relies heavily on the concept of <strong>Self-reducibility</strong>. Formally, a problem is said to be self-reducible if its search problem reduces (via a Cook reduction) in polynomial time to its corresponding decision problem. In other words, there exists an algorithm to solve the search problem in a polynomial number of steps, where each step is either:</p>
-
-<ol class="upper-alpha">
-    <li> A conventional computational step, or</li>
-    <li> A call to a subroutine solving the decision problem.</li>
-</ol>
-
-<p>In the context of our algorithm design, this means a recursive structure reduces the overall problem to some smaller subproblems. However, it is important to note that this self-reduction may not always strictly adhere to a simple tree structure.</p>
+<p>This relies heavily on the concept of <strong>Self-reducibility</strong>. In the context of our algorithm design, this means a recursive structure reduces the overall problem to some smaller subproblems. However, it is important to note that this self-reduction may not always strictly adhere to a simple tree structure.</p>
 
 <p>There are several algorithm paradigms that utilize self-reducibility:</p>
 <ul>
@@ -3725,7 +3826,7 @@ $$
 <p>Here is an example of the computed $m$ table for a chain of 6 matrices with dimensions: $A_1 (30 \times 35)$, $A_2 (35 \times 15)$, $A_3 (15 \times 5)$, $A_4 (5 \times 10)$, $A_5 (10 \times 20)$, and $A_6 (20 \times 25)$. The table shows the optimal scalar multiplication cost for every subchain $A_i \dots A_j$.</p>
 
 <div style="text-align: center; margin: 20px 0;">
-<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+<svg width="530" height="355" viewBox="0 0 800 550" xmlns="http://www.w3.org/2000/svg">
     <style>
         .val { font-family: Arial, sans-serif; font-size: 16px; text-anchor: middle; fill: white; }
         .label { font-family: 'Times New Roman', serif; font-style: italic; font-size: 28px; fill: white; }
@@ -7071,6 +7172,243 @@ $$ m[i, j] = \max_{i \le k < j} \Big( m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \Big) $$
     The greedy algorithm picks the massive red block simply because it starts at $t=0$. This forces the algorithm to reject the two smaller blue blocks. The greedy solution size is 1, while the optimal solution is 2.
 </p>
 
+    
+<style>
+    .svg-container { text-align: center; margin: 30px 0; overflow-x: auto; }
+    .node { fill: #ffffff; stroke: #FFFFFF; stroke-width: 2px; }
+    .node-text { fill: #FFFFFF; font-family: sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; dominant-baseline: central; }
+    .edge { stroke: #00FFFF; stroke-width: 3px; }
+    .edge-alt { stroke: #7CFC00; stroke-width: 3px; }
+    .edge-error { stroke: #FF4444; stroke-width: 3px; stroke-dasharray: 6,6; }
+    .label { fill: #AAAAAA; font-family: sans-serif; font-size: 14px; text-anchor: middle; }
+    .center-node { fill: #9370DB; stroke: #FFFFFF; stroke-width: 2px; }
+    .leaf-node { fill: #FF8C00; stroke: #FFFFFF; stroke-width: 2px; }
+</style>
+
+<h5>Some Tree Theorems</h5>
+<p>We are about to get into Spanning Tres. Before that, it is important to proof some theorems that are useful to know.</p>
+
+<p><strong>Theorem 1.</strong> For a tree $T$, there is one and only one path between every pair of vertices.</p>
+
+<div class="svg-container">
+    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+        <text x="200" y="20" class="label">If a second path exists, a cycle is formed</text>
+        <line x1="100" y1="100" x2="200" y2="50" class="edge" />
+        <line x1="200" y1="50" x2="300" y2="100" class="edge" />
+        <path d="M 100 100 Q 200 150 300 100" class="edge-error" fill="transparent" />
+        <text x="200" y="140" fill="#FF4444" font-family="sans-serif" font-size="12" text-anchor="middle">Contradiction (Cycle)</text>
+        
+        <circle cx="100" cy="100" r="16" class="leaf-node"/><text x="100" y="100" class="node-text">u</text>
+        <circle cx="200" cy="50" r="16" class="leaf-node"/><text x="200" y="50" class="node-text">w</text>
+        <circle cx="300" cy="100" r="16" class="leaf-node"/><text x="300" y="100" class="node-text">v</text>
+    </svg>
+</div>
+
+<p><strong>Proof.</strong> Since $T$ is a connected graph, there exists at least one path between every pair of vertices. Suppose, for the sake of contradiction, that there exist two distinct paths between a pair of vertices $u$ and $v$. The union of these two distinct paths must contain a cycle. However, by definition, a tree is an acyclic graph. This is a contradiction. Therefore, the path between any two vertices must be unique. $\blacksquare$</p>
+
+<p><strong>Theorem 2.</strong> If a graph $G$ has one and only one path between every pair of vertices, then $G$ is a tree.</p>
+
+<div class="svg-container">
+    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+        <line x1="80" y1="100" x2="160" y2="50" class="edge-alt" />
+        <line x1="160" y1="50" x2="240" y2="50" class="edge-alt" />
+        <line x1="240" y1="50" x2="320" y2="100" class="edge-alt" />
+        <line x1="160" y1="50" x2="160" y2="120" stroke="#555" stroke-width="3" />
+        <line x1="240" y1="50" x2="240" y2="120" stroke="#555" stroke-width="3" />
+        
+        <circle cx="80" cy="100" r="16" class="leaf-node"/><text x="80" y="100" class="node-text">A</text>
+        <circle cx="160" cy="50" r="16" class="node"/>
+        <circle cx="240" cy="50" r="16" class="node"/>
+        <circle cx="320" cy="100" r="16" class="leaf-node"/><text x="320" y="100" class="node-text">B</text>
+        <circle cx="160" cy="120" r="16" class="node"/>
+        <circle cx="240" cy="120" r="16" class="node"/>
+        <text x="200" y="20" class="label" fill="#7CFC00">Only 1 valid path from A to B</text>
+    </svg>
+</div>
+
+<p><strong>Proof.</strong> Because there is a path between every pair of vertices, $G$ is by definition connected. A cycle in a graph implies that there are at least two distinct paths between some pair of vertices on that cycle. Since we are given that $G$ has exactly one path between <em>every</em> pair of vertices, it cannot contain any cycles. A connected graph with no cycles is a tree. $\blacksquare$</p>
+
+
+
+<p><strong>Theorem 3.</strong> A tree with $n$ vertices has exactly $n-1$ edges.</p>
+<div class="svg-container">
+    <svg viewBox="0 0 300 150" width="100%" max-width="300px" xmlns="http://www.w3.org/2000/svg">
+        <line x1="150" y1="40" x2="70" y2="110" class="edge" />
+        <line x1="150" y1="40" x2="150" y2="110" class="edge" />
+        <line x1="150" y1="40" x2="230" y2="110" class="edge" />
+        
+        <circle cx="150" cy="40" r="16" class="node"/>
+        <circle cx="70" cy="110" r="16" class="node"/>
+        <circle cx="150" cy="110" r="16" class="node"/>
+        <circle cx="230" cy="110" r="16" class="node"/>
+        
+        <text x="50" y="30" class="label" fill="#FFFFFF" font-weight="bold">n = 4</text>
+        <text x="50" y="50" class="label" fill="#00FFFF" font-weight="bold">e = 3</text>
+    </svg>
+</div>
+
+
+<p><strong>Proof.</strong> We proceed by mathematical induction on the number of vertices $n$.<br>
+<strong>Base Cases:</strong> If $n=1$, the number of edges is $0$ ($1-1=0$). If $n=2$, the number of edges is $1$ ($2-1=1$). The statement holds.<br>
+<strong>Inductive Step:</strong> Assume the statement is true for any tree with $k$ vertices, meaning it has $k-1$ edges. We must prove it holds for a tree $T$ with $n = k+1$ vertices.<br>
+Let $e = (u,v)$ be any edge in $T$. Because $T$ is a tree, $e$ is the unique path between $u$ and $v$. Deleting $e$ disconnects $T$ into exactly two disjoint subtrees, say $T_1$ and $T_2$. Let $n_1$ and $n_2$ be the number of vertices in $T_1$ and $T_2$, respectively, where $n_1 + n_2 = k+1$. <br>
+Since $n_1 \le k$ and $n_2 \le k$, our inductive hypothesis applies to both subtrees. Therefore, $T_1$ has $n_1 - 1$ edges and $T_2$ has $n_2 - 1$ edges. <br>
+The total number of edges in our original tree $T$ is the edges in $T_1$, plus the edges in $T_2$, plus the edge $e$ we removed:
+$$(n_1 - 1) + (n_2 - 1) + 1 = n_1 + n_2 - 1 = (k+1) - 1$$
+Thus, a tree with $n = k+1$ vertices has $n-1$ edges. By induction, the theorem holds for all $n \ge 1$. $\blacksquare$</p>
+
+
+<p><strong>Theorem 4.</strong> Any connected graph $G$ with $n$ vertices and $n-1$ edges is a tree.</p>
+<div class="svg-container">
+    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+        <text x="200" y="20" class="label">5 Vertices, 4 Edges, Connected = Tree</text>
+        <line x1="80" y1="80" x2="160" y2="80" class="edge" />
+        <line x1="160" y1="80" x2="240" y2="40" class="edge" />
+        <line x1="160" y1="80" x2="240" y2="120" class="edge" />
+        <line x1="240" y1="120" x2="320" y2="120" class="edge" />
+        
+        <circle cx="80" cy="80" r="16" class="node"/>
+        <circle cx="160" cy="80" r="16" class="node"/>
+        <circle cx="240" cy="40" r="16" class="node"/>
+        <circle cx="240" cy="120" r="16" class="node"/>
+        <circle cx="320" cy="120" r="16" class="node"/>
+    </svg>
+</div>
+<p><strong>Proof.</strong> The minimum number of edges required to keep a graph of $n$ vertices connected is $n-1$. Because $G$ has exactly $n-1$ edges, removing even a single edge will disconnect the graph. A graph where the removal of any edge causes disconnection cannot contain a cycle (since removing an edge from a cycle does not disconnect a graph). Since $G$ is connected and acyclic, it is a tree. $\blacksquare$</p>
+
+
+
+<p><strong>Theorem 5.</strong> A graph $G$ with $n$ vertices, $n-1$ edges, and no cycles is a connected graph (and therefore a tree).</p>
+
+<div class="svg-container">
+    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+        <text x="200" y="20" class="label">If disconnected into 2 acyclic components, max edges = n - 2</text>
+        <line x1="60" y1="100" x2="100" y2="50" stroke="#555" stroke-width="3" />
+        <line x1="100" y1="50" x2="140" y2="100" stroke="#555" stroke-width="3" />
+        <circle cx="60" cy="100" r="16" class="node"/>
+        <circle cx="100" cy="50" r="16" class="node"/>
+        <circle cx="140" cy="100" r="16" class="node"/>
+        
+        <line x1="260" y1="80" x2="340" y2="80" stroke="#555" stroke-width="3" />
+        <circle cx="260" cy="80" r="16" class="node"/>
+        <circle cx="340" cy="80" r="16" class="node"/>
+        
+        <line x1="140" y1="100" x2="260" y2="80" class="edge-alt" stroke-dasharray="6,6" />
+        <text x="200" y="135" class="label" fill="#7CFC00">n-1th edge forces connection!</text>
+    </svg>
+</div>
+
+<p><strong>Proof.</strong> Suppose, for contradiction, that $G$ is disconnected and consists of $k$ distinct connected components $C_1, C_2, \dots, C_k$ where $k > 1$. Because $G$ has no cycles, each component $C_i$ is a tree. Let $v_i$ be the number of vertices in component $C_i$. By Theorem 3, each component has $v_i - 1$ edges. <br>
+The total number of edges in $G$ is the sum of the edges in all components:
+$$\sum_{i=1}^{k} (v_i - 1) = \left(\sum_{i=1}^{k} v_i\right) - k = n - k$$
+We are given that $G$ has $n-1$ edges. Therefore, $n - k = n - 1$, which implies $k = 1$. This contradicts our assumption that $k > 1$. Thus, $G$ must be connected. $\blacksquare$</p>
+
+<p><strong>Theorem 6.</strong> A graph $G$ is a tree if and only if it is minimally connected.</p>
+<div class="svg-container">
+    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+        <text x="200" y="20" class="label">Removing ANY edge disconnects the graph</text>
+        <line x1="100" y1="80" x2="160" y2="80" class="edge" />
+        <line x1="240" y1="80" x2="300" y2="80" class="edge" />
+        
+        <line x1="160" y1="80" x2="240" y2="80" class="edge-error" />
+        <path d="M 190 40 L 210 120" stroke="#FFD700" stroke-width="2" stroke-dasharray="4,4" />
+        
+        <circle cx="100" cy="80" r="16" class="node"/>
+        <circle cx="160" cy="80" r="16" class="node"/>
+        <circle cx="240" cy="80" r="16" class="node"/>
+        <circle cx="300" cy="80" r="16" class="node"/>
+    </svg>
+</div>
+<p><strong>Proof.</strong> 
+<b>($\Rightarrow$):</b> Let $G$ be a tree. By definition, there is a unique path between any two vertices. Removing any edge severs the only path between its endpoints, disconnecting the graph. Thus, $G$ is minimally connected. <br>
+<b>($\Leftarrow$):</b> Let $G$ be minimally connected. This means removing any edge disconnects the graph. If $G$ contained a cycle, we could remove an edge from that cycle without disconnecting the graph. Therefore, $G$ must be acyclic. A connected, acyclic graph is a tree. $\blacksquare$</p>
+
+
+
+<p><strong>Theorem 7.</strong> Every tree with $n \ge 2$ vertices has at least two pendant vertices (leaves).</p>
+<div class="svg-container">
+    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+        <text x="200" y="20" class="label">Orange nodes indicate leaves (degree 1)</text>
+        <line x1="100" y1="80" x2="200" y2="80" class="edge" />
+        <line x1="200" y1="80" x2="270" y2="40" class="edge" />
+        <line x1="200" y1="80" x2="270" y2="120" class="edge" />
+        <line x1="270" y1="120" x2="340" y2="120" class="edge" />
+        
+        <circle cx="100" cy="80" r="16" class="leaf-node"/>
+        <circle cx="270" cy="40" r="16" class="leaf-node"/>
+        <circle cx="340" cy="120" r="16" class="leaf-node"/>
+        
+        <circle cx="200" cy="80" r="16" class="node"/>
+        <circle cx="270" cy="120" r="16" class="node"/>
+    </svg>
+</div>
+<p><strong>Proof.</strong> Let $T$ be a tree with $n \ge 2$ vertices. By Theorem 3, $T$ has $n-1$ edges. The Handshaking Lemma states that the sum of the degrees of all vertices is twice the number of edges:
+$$\sum_{i=1}^{n} \deg(v_i) = 2(n-1) = 2n - 2$$
+Since $T$ is connected and $n \ge 2$, no vertex can have a degree of $0$. Thus, $\deg(v_i) \ge 1$ for all vertices. <br>
+Suppose, for contradiction, that $T$ has fewer than two pendant vertices (meaning $1$ or $0$ vertices have a degree of $1$). This means at least $n-1$ vertices have a degree of $2$ or more. 
+If we sum the degrees under this assumption, the sum must be at least:
+$$1(1) + 2(n-1) = 2n - 1$$
+However, we know the sum must be exactly $2n - 2$. Because $2n - 1 > 2n - 2$, we have reached a contradiction. Therefore, $T$ must have at least two vertices of degree 1. $\blacksquare$</p>
+
+
+
+<p><strong>Theorem 8.</strong> Every tree has either one or two centers.</p>
+<div class="svg-container">
+    <svg viewBox="0 0 500 150" width="100%" max-width="500px" xmlns="http://www.w3.org/2000/svg">
+        <text x="125" y="20" class="label">1 Center</text>
+        <line x1="125" y1="75" x2="75" y2="45" stroke="#555" stroke-width="3"/>
+        <line x1="125" y1="75" x2="175" y2="45" stroke="#555" stroke-width="3"/>
+        <line x1="125" y1="75" x2="125" y2="125" stroke="#555" stroke-width="3"/>
+        <circle cx="75" cy="45" r="14" class="node"/>
+        <circle cx="175" cy="45" r="14" class="node"/>
+        <circle cx="125" cy="125" r="14" class="node"/>
+        <circle cx="125" cy="75" r="18" class="center-node"/>
+        
+        <line x1="250" y1="20" x2="250" y2="130" stroke="#333" stroke-width="2" stroke-dasharray="4,4"/>
+        
+        <text x="375" y="20" class="label">2 Centers</text>
+        <line x1="280" y1="75" x2="330" y2="75" stroke="#555" stroke-width="3"/>
+        <line x1="330" y1="75" x2="420" y2="75" stroke="#555" stroke-width="3"/>
+        <line x1="420" y1="75" x2="470" y2="75" stroke="#555" stroke-width="3"/>
+        <circle cx="280" cy="75" r="14" class="node"/>
+        <circle cx="470" cy="75" r="14" class="node"/>
+        <circle cx="330" cy="75" r="18" class="center-node"/>
+        <circle cx="420" cy="75" r="18" class="center-node"/>
+    </svg>
+</div>
+<p><strong>Proof.</strong> A center of a tree is a vertex that minimizes the maximum distance to all other vertices. The maximum distance from any vertex $v$ always occurs at a pendant vertex (leaf). <br>
+If we delete all pendant vertices from a tree $T$ (where $n \ge 3$), the resulting subgraph $T'$ is still a connected tree. Removing the leaves symmetrically reduces the maximum distance from the central nodes to the extremities by $1$. Therefore, $T$ and $T'$ share the exact same centers. <br>
+We can iteratively repeat this process of deleting pendant vertices ($T \to T' \to T'' \dots$). Because the graph is finite, this process must eventually terminate. It will terminate either when a single vertex remains (meaning the original tree had 1 center) or when a single edge connecting two vertices remains (meaning the original tree had 2 centers). $\blacksquare$</p>
+
+
+
+<p><strong>Theorem 9.</strong> The maximum number of vertices at level $L$ in a binary tree is $2^L$, where $L \ge 0$.</p>
+<div class="svg-container">
+    <svg viewBox="0 0 500 200" width="100%" max-width="500px" xmlns="http://www.w3.org/2000/svg">
+        <text x="50" y="40" class="label" fill="#00FFFF">L=0 (2⁰ = 1)</text>
+        <text x="50" y="100" class="label" fill="#00FFFF">L=1 (2¹ = 2)</text>
+        <text x="50" y="160" class="label" fill="#00FFFF">L=2 (2² = 4)</text>
+        
+        <line x1="250" y1="40" x2="170" y2="100" class="edge" />
+        <line x1="250" y1="40" x2="330" y2="100" class="edge" />
+        
+        <line x1="170" y1="100" x2="130" y2="160" class="edge" />
+        <line x1="170" y1="100" x2="210" y2="160" class="edge" />
+        <line x1="330" y1="100" x2="290" y2="160" class="edge" />
+        <line x1="330" y1="100" x2="370" y2="160" class="edge" />
+        
+        <circle cx="250" cy="40" r="14" class="node"/> <circle cx="170" cy="100" r="14" class="node"/> <circle cx="330" cy="100" r="14" class="node"/> <circle cx="130" cy="160" r="14" class="node"/> <circle cx="210" cy="160" r="14" class="node"/> <circle cx="290" cy="160" r="14" class="node"/> <circle cx="370" cy="160" r="14" class="node"/> </svg>
+</div>
+
+<p><strong>Proof.</strong> We prove this by mathematical induction on the level $L$.<br>
+<strong>Base Case:</strong> At the root level ($L=0$), there is only $1$ vertex. The formula gives $2^0 = 1$. The base case holds.<br>
+<strong>Inductive Step:</strong> Assume the statement is true for level $L=k$, meaning the maximum number of vertices at level $k$ is $2^k$. <br>
+By the definition of a binary tree, every vertex at level $k$ can have at most $2$ children. These children make up level $k+1$. Therefore, the maximum number of vertices at level $k+1$ is twice the maximum number of vertices at level $k$:
+$$2 \times 2^k = 2^{k+1}$$
+By mathematical induction, the maximum number of vertices at any level $L$ is $2^L$. $\blacksquare$</p>
+
+
+
 
     <h5 id="I.3.b">Spanning Trees</h5>
 <p>
@@ -7157,7 +7495,23 @@ $$ m[i, j] = \max_{i \le k < j} \Big( m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \Big) $$
     Let $G = (N, A)$ be an undirected network where $N$ is the set of nodes and $A$ is the set of arcs (edges). Because it is undirected, arc $(i, j)$ is identical to arc $(j, i)$. We associate a cost $c_{ij}$ with each arc $(i,j) \in A$. 
 </p>
 <p>
-    A <strong>spanning tree</strong> $T$ of $G$ is defined as a connected, acyclic subgraph that spans (includes) all the nodes in $N$. A fundamental property of graph theory is that any connected graph with $n$ nodes and exactly $n - 1$ arcs is guaranteed to be a spanning tree. The minimum cost spanning tree problem asks us to find a spanning tree $T^*$ such that the sum of its arc costs is minimized. In the figure below, we see that in the connected graph, a spanning tree of minimum cost was found in red.
+    A <strong>spanning tree</strong> $T$ of $G$ is defined as a connected, acyclic subgraph that spans (includes) all the nodes in $N$. A fundamental property of graph theory is that any connected graph with $n$ nodes and exactly $n - 1$ arcs is guaranteed to be a spanning tree. The minimum cost spanning tree problem asks us to find a spanning tree $T^*$ such that the sum of its arc costs is minimized.</p>
+    
+<p><strong>Proposition (Tree Characterization Theorem).</strong> If $G = (V, E)$ is a connected undirected graph with $n$ vertices and exactly $n-1$ edges, then $G$ is a spanning tree.</p>
+
+<p><strong>Proof.</strong> To prove that $G$ is a spanning tree, we must show that $G$ is connected, acyclic, and includes all vertices. We are already given that $G$ is connected and spans all $n$ vertices in $V$. Therefore, we only need to prove that $G$ contains no cycles.</p>
+
+<p>We proceed by contradiction. Assume that $G$ contains at least one cycle.</p>
+
+<p>If we remove a single edge from a cycle in $G$, the graph remains connected. We can continue this process, removing one edge at a time from any existing cycles, until no cycles remain. The resulting subgraph, which we will call $T = (V, E')$, is both connected and acyclic. By definition, $T$ is a tree.</p>
+
+<p>A fundamental, inductively proven property of any tree with $n$ vertices is that it contains exactly $n-1$ edges. Therefore, our newly formed tree $T$ must have $|E'| = n-1$ edges.</p>
+
+<p>However, we established that our original graph $G$ started with exactly $n-1$ edges. Since we assumed $G$ had a cycle, we had to remove at least one edge from $G$ to form $T$. This implies that the number of edges in $T$ must be strictly less than the number of edges in $G$, meaning $|E'| < n-1$.</p>
+
+<p>We have reached a contradiction: $|E'|$ cannot simultaneously be equal to $n-1$ and strictly less than $n-1$. Therefore, our initial assumption must be false, meaning $G$ cannot contain any cycles. $G$ is connected, acyclic, and contains all $n$ vertices of the original graph, $G$ is a spanning tree. $\blacksquare$</p>
+
+    <p>In the figure below, we see that in the connected graph, a spanning tree of minimum cost was found in red.
 </p>
 <svg viewBox="0 0 500 250" width="100%" xmlns="http://www.w3.org/2000/svg;">
     <g stroke="#777" stroke-width="1">
@@ -7244,6 +7598,7 @@ $$ m[i, j] = \max_{i \le k < j} \Big( m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \Big) $$
 <p>The entire theoretical foundation of MST algorithms rests on how trees interact with cycles and cuts.</p>
 
 <p><strong>Lemma (Fundamental Cycle).</strong> Let $T$ be any spanning tree. Let $a$ be any nontree arc (an arc not in $T$). Then adding $a$ to $T$ creates a exactly one unique cycle $C$. Deleting any arc of $C$ breaks the cycle and restores the graph to a valid spanning tree $T'$.</p>
+
 
 <svg viewBox="0 0 600 350" width="100%" xmlns="http://www.w3.org/2000/svg;">
     <g stroke="#FF0000" stroke-width="5">
@@ -7334,6 +7689,70 @@ $$ m[i, j] = \max_{i \le k < j} \Big( m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \Big) $$
 <p><b>Proof.</b> Let $T$ be a spanning tree of a graph $G = (N, A)$, where $N$ is the set of nodes and $A$ is the set of arcs. By definition, a spanning tree $T$ is minimally connected, meaning that for any edge $e$ in $T$, removing $e$ will disconnect the graph. Let $e = (i, j)$ be an arc in $T$. In the tree $T$, the edge $(i, j)$ is the strictly unique path between node $i$ and node $j$ (if there were another path, $T$ would contain a cycle). When we remove $(i, j)$ to form $T \setminus \{(i, j)\}$, there is no longer any path between $i$ and $j$, disconnecting the tree. Because $T$ was connected without any cycles, removing a single edge splits the vertices into exactly two connected components.</p>
 
 <p>Let $S$ be the set of nodes reachable from $i$ in $T \setminus \{(i, j)\}$. Let $N \setminus S$ be the remaining nodes, which must be exactly the set of nodes reachable from $j$. These two sets are disjoint ($S \cap (N \setminus S) = \emptyset$) and their union contains all nodes in the graph ($S \cup (N \setminus S) = N$). In graph theory, a cut is formally defined as a partition of the vertices of a graph into two disjoint subsets. Since we have established that $S$ and $N \setminus S$ form a valid partition of the node set $N$, the set of all arcs in the original graph $G$ that have one endpoint in $S$ and the other endpoint in $N \setminus S$ exactly satisfies the definition of a cutset. Note that $(i, j)$ is the only arc from the spanning tree $T$ that belongs to this specific cutset; all other arcs in this cutset must be nontree arcs. $\blacksquare$</p>
+
+<p><strong>Proposition.</strong> A spanning tree $T$ is a minimum spanning tree if and only if for any tree edge $(u,v)$ there exists a cut such that $(u,v)$ is the shortest edge in the cut.</p>
+
+<p>This is false! The flaw in the proposition lies in the phrase "there exists a cut." Just because an edge is the minimum-weight edge in some arbitrary cut doesn't guarantee that those edges can be combined to form a globally optimal spanning tree. The cut cannot simply be any cut, it must be deliberate: it must be a fundamental cut. </p>
+
+<div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+    <svg viewBox="0 0 600 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <g font-family="sans-serif" font-size="14" fill="#E0E0E0">
+            <text x="20" y="30">Proposed Tree T (Weight = 6)</text>
+            <line x1="230" y1="25" x2="280" y2="25" stroke="#FF0000" stroke-width="5"/>
+            
+            <text x="20" y="60">Other Graph Edges</text>
+            <line x1="160" y1="55" x2="210" y2="55" stroke="#888888" stroke-width="2"/>
+            <line x1="220" y1="55" x2="270" y2="55" stroke="#00FFFF" stroke-width="2" stroke-dasharray="5,5"/>
+
+            <text x="400" y="30" fill="#FF8C00" font-weight="bold">Set {A, C} (Orange)</text>
+            <text x="400" y="60" fill="#9370DB" font-weight="bold">Set {B, D} (Purple)</text>
+        </g>
+
+        <g stroke-linecap="round">
+            <line x1="200" y1="130" x2="400" y2="330" stroke="#00FFFF" stroke-width="3" stroke-dasharray="6,6"/>
+            <text x="335" y="215" font-family="sans-serif" font-size="22" font-weight="bold" fill="#00FFFF">1</text>
+            
+            <line x1="400" y1="130" x2="200" y2="330" stroke="#00FFFF" stroke-width="3" stroke-dasharray="6,6"/>
+            <text x="290" y="215" font-family="sans-serif" font-size="22" font-weight="bold" fill="#00FFFF">1</text>
+            
+            <line x1="200" y1="330" x2="200" y2="130" stroke="#888888" stroke-width="3"/>
+            <text x="175" y="235" font-family="sans-serif" font-size="22" font-weight="bold" fill="#AAAAAA">2</text>
+            
+            <line x1="200" y1="130" x2="400" y2="130" stroke="#FF0000" stroke-width="5"/>
+            <text x="295" y="115" font-family="sans-serif" font-size="24" font-weight="bold" fill="#FF4444">2</text>
+            
+            <line x1="400" y1="130" x2="400" y2="330" stroke="#FF0000" stroke-width="5"/>
+            <text x="415" y="235" font-family="sans-serif" font-size="24" font-weight="bold" fill="#FF4444">2</text>
+            
+            <line x1="400" y1="330" x2="200" y2="330" stroke="#FF0000" stroke-width="5"/>
+            <text x="295" y="365" font-family="sans-serif" font-size="24" font-weight="bold" fill="#FF4444">2</text>
+        </g>
+
+        <g font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle">
+            <circle cx="200" cy="130" r="18" fill="#FF8C00" stroke="#FFFFFF" stroke-width="2"/>
+            <text x="200" y="137" fill="#000000">A</text>
+            
+            <circle cx="400" cy="130" r="18" fill="#9370DB" stroke="#FFFFFF" stroke-width="2"/>
+            <text x="400" y="137" fill="#000000">B</text>
+            
+            <circle cx="400" cy="330" r="18" fill="#FF8C00" stroke="#FFFFFF" stroke-width="2"/>
+            <text x="400" y="337" fill="#000000">C</text>
+            
+            <circle cx="200" cy="330" r="18" fill="#9370DB" stroke="#FFFFFF" stroke-width="2"/>
+            <text x="200" y="337" fill="#000000">D</text>
+        </g>
+    </svg>
+</div>
+
+<p><strong>Proof.</strong> Consider a complete graph on $4$ vertices: $A, B, C,$ and $D$. Let the inner edges $(A,C)$ and $(B,D)$ have a weight of $1$. Let the outer edges $(A,B), (B,C), (C,D),$ and $(D,A)$ have a weight of $2$.</p>
+
+<p>Assume a spanning tree $T$ formed by the simple path $A - B - C - D$. The edges of this tree are $(A,B), (B,C),$ and $(C,D)$. The total weight of $T$ is $2 + 2 + 2 = 6$.</p>
+
+<p>Now, consider the cut that separates the vertices into two sets: $\{A, C\}$ and $\{B, D\}$. The edges crossing this cut are $(A,B), (A,D), (B,C),$ and $(C,D)$. The cheaper edges $(A,C)$ and $(B,D)$ connect vertices within the same sets, so they do not cross this cut.</p>
+
+<p>Notice that every single edge crossing this cut has a weight of $2$. Because all crossing edges have the same minimum weight of $2$, the tree edges $(A,B), (B,C),$ and $(C,D)$ are all tied as the "shortest" edge in this cut. Therefore, for every edge in $T$, there exists a cut where it is the minimum-weight edge.</p>
+
+<p>However, the true Minimum Spanning Tree for this graph uses the two weight $1$ edges and one weight $2$ edge (for example, $(A,C), (B,D),$ and $(A,B)$). That tree has a total weight of $1 + 1 + 2 = 4$. Because $6 > 4$, $T$ is strictly heavier than the optimal tree, meaning it is not an MST. $\blacksquare$</p>
 
 <h5>Conditions for Cut Optimality</h5>
 
@@ -7451,7 +7870,7 @@ $$ m[i, j] = \max_{i \le k < j} \Big( m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \Big) $$
   </p>
 
 <p>
-    These Path Optimality Conditions are the dual counterparts to cut optimality. For every nontree arc $(k,l)$ of $G$, its cost $c_{kl}$ must be greater than or equal to the cost $c_{ij}$ of <em>every</em> tree arc $(i,j)$ contained in the unique path of $T^*$ connecting nodes $k$ and $l$.
+    The Path Optimality Condition is a counterpart to cut optimality. For every nontree arc $(k,l)$ of $G$, its cost $c_{kl}$ must be greater than or equal to the cost $c_{ij}$ of <em>every</em> tree arc $(i,j)$ contained in the unique path of $T^*$ connecting nodes $k$ and $l$.
 </p>
 
 <p><strong>Theorem (Path Optimality).</strong> A spanning tree $T^*$ is a minimum spanning tree if and only if it satisfies the path optimality conditions.</p>
@@ -7468,7 +7887,7 @@ $$ m[i, j] = \max_{i \le k < j} \Big( m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \Big) $$
 
 <p>Before exploring the specific algorithms, we must define the properties that allow greedy strategies to succeed on the MST problem.</p>
 
-<p><strong>Exchange Property:</strong> For an edge $e$ with the absolute smallest weight in a graph $G$, and any minimum spanning tree $T$ that does <em>not</em> contain $e$, there must exist some edge $e'$ in $T$ such that $(T \setminus \{e'\}) \cup \{e\}$ is still a valid minimum spanning tree. This implies that the globally cheapest edge can <em>always</em> safely be included in an optimal solution.</p>
+<p><strong>Exchange Property.</strong> For an edge $e$ with the absolute smallest weight in a graph $G$, and any minimum spanning tree $T$ that does <em>not</em> contain $e$, there must exist some edge $e'$ in $T$ such that $(T \setminus \{e'\}) \cup \{e\}$ is still a valid minimum spanning tree. This implies that the globally cheapest edge can <em>always</em> safely be included in an optimal solution.</p>
 
 <p><strong>Proof of Exchange Property.</strong> 
     Let $T$ be a minimum spanning tree of $G$ that does not contain the globally minimum edge $e$. 
@@ -8231,6 +8650,7 @@ If weights are in the range $1$ to $W$, Counting Sort takes $O(W + E)$ time. If 
 <p>
     The algorithm <strong>fails</strong>. It operates on the flawed assumption that an MST will only cross the arbitrary cut $(V_1, V_2)$ exactly once.
 </p>
+
 <p>
     We present the following counterexample. Consider a graph with $4$ vertices: $A, B, C, D$.
     <br>Partition them into $V_1 = \{A, B\}$ and $V_2 = \{C, D\}$.
@@ -8256,20 +8676,108 @@ If weights are in the range $1$ to $W$, Counting Sort takes $O(W + E)$ time. If 
 
 <p>
     The weights of these edges are:
-    <ul>
-        <li>$w(B, D) = 1$</li>
-        <li>$w(D, C) = 10$</li>
-        <li>$w(C, A) = 1$</li>
-        <li>$w(A, B) = 10$</li>
-    </ul>
 </p>
+<ul>
+    <li>$w(B, D) = 1$</li>
+    <li>$w(D, C) = 10$</li>
+    <li>$w(C, A) = 1$</li>
+    <li>$w(A, B) = 10$</li>
+</ul>
+
+<div style="text-align: center; margin-top: 40px; margin-bottom: 20px; overflow-x: auto;">
+    <svg viewBox="0 0 960 350" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <style>
+                .node { fill: #1E1E1E; stroke: #FFFFFF; stroke-width: 2px; }
+                .node-text { fill: #FFFFFF; font-family: sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; dominant-baseline: central; }
+                .weight-text { fill: #E0E0E0; font-family: sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+                .panel-title { fill: #E0E0E0; font-family: sans-serif; font-size: 16px; font-weight: bold; text-anchor: middle; }
+                .panel-sub { font-family: sans-serif; font-size: 14px; text-anchor: middle; }
+                .edge-base { stroke: #555555; stroke-width: 2px; stroke-dasharray: 4,4; }
+            </style>
+        </defs>
+
+        <g transform="translate(0, 0)">
+            <path d="M 130 30 L 130 250" stroke="#00FFFF" stroke-width="2" stroke-dasharray="6,6" opacity="0.4"/>
+            <text x="130" y="20" fill="#00FFFF" font-family="sans-serif" font-size="12" text-anchor="middle">Cut (V1 | V2)</text>
+
+            <line x1="70" y1="80" x2="70" y2="220" stroke="#888888" stroke-width="3"/> <line x1="190" y1="80" x2="190" y2="220" stroke="#888888" stroke-width="3"/> <line x1="70" y1="80" x2="190" y2="80" stroke="#888888" stroke-width="3"/> <line x1="70" y1="220" x2="190" y2="220" stroke="#888888" stroke-width="3"/> <text x="50" y="155" class="weight-text">10</text>
+            <text x="210" y="155" class="weight-text">10</text>
+            <text x="130" y="70" class="weight-text" fill="#00FFFF">1</text>
+            <text x="130" y="210" class="weight-text" fill="#00FFFF">1</text>
+
+            <circle cx="70" cy="80" r="16" class="node"/><text x="70" y="80" class="node-text">A</text>
+            <circle cx="70" cy="220" r="16" class="node"/><text x="70" y="220" class="node-text">B</text>
+            <circle cx="190" cy="80" r="16" class="node"/><text x="190" y="80" class="node-text">C</text>
+            <circle cx="190" cy="220" r="16" class="node"/><text x="190" y="220" class="node-text">D</text>
+
+            <text x="130" y="285" class="panel-title">1. Original Graph</text>
+            <text x="130" y="305" class="panel-sub" fill="#AAAAAA">All Edges &amp; Cut</text>
+        </g>
+
+        <polygon points="230,140 250,140 250,130 270,150 250,170 250,160 230,160" fill="#555555"/>
+
+        <g transform="translate(240, 0)">
+            <path d="M 130 30 L 130 250" stroke="#00FFFF" stroke-width="2" stroke-dasharray="6,6" opacity="0.4"/>
+
+            <line x1="70" y1="220" x2="190" y2="220" class="edge-base"/> <line x1="70" y1="80" x2="70" y2="220" stroke="#FF4444" stroke-width="5"/> <line x1="190" y1="80" x2="190" y2="220" stroke="#FF4444" stroke-width="5"/> <line x1="70" y1="80" x2="190" y2="80" stroke="#FF4444" stroke-width="5"/> <text x="50" y="155" class="weight-text">10</text>
+            <text x="210" y="155" class="weight-text">10</text>
+            <text x="130" y="70" class="weight-text">1</text>
+
+            <circle cx="70" cy="80" r="16" class="node"/><text x="70" y="80" class="node-text">A</text>
+            <circle cx="70" cy="220" r="16" class="node"/><text x="70" y="220" class="node-text">B</text>
+            <circle cx="190" cy="80" r="16" class="node"/><text x="190" y="80" class="node-text">C</text>
+            <circle cx="190" cy="220" r="16" class="node"/><text x="190" y="220" class="node-text">D</text>
+
+            <text x="130" y="285" class="panel-title" fill="#FF4444">2. Borden's Output</text>
+            <text x="130" y="305" class="panel-sub" fill="#FF4444">Weight = 21</text>
+        </g>
+
+        <polygon points="470,140 490,140 490,130 510,150 490,170 490,160 470,160" fill="#555555"/>
+
+        <g transform="translate(480, 0)">
+            <path d="M 130 30 L 130 250" stroke="#00FFFF" stroke-width="2" stroke-dasharray="6,6" opacity="0.4"/>
+
+            <line x1="190" y1="80" x2="190" y2="220" class="edge-base"/> <line x1="70" y1="80" x2="70" y2="220" stroke="#7CFC00" stroke-width="5"/> <line x1="70" y1="80" x2="190" y2="80" stroke="#7CFC00" stroke-width="5"/> <line x1="70" y1="220" x2="190" y2="220" stroke="#7CFC00" stroke-width="5"/> <text x="50" y="155" class="weight-text">10</text>
+            <text x="130" y="70" class="weight-text">1</text>
+            <text x="130" y="210" class="weight-text">1</text>
+
+            <circle cx="70" cy="80" r="16" class="node"/><text x="70" y="80" class="node-text">A</text>
+            <circle cx="70" cy="220" r="16" class="node"/><text x="70" y="220" class="node-text">B</text>
+            <circle cx="190" cy="80" r="16" class="node"/><text x="190" y="80" class="node-text">C</text>
+            <circle cx="190" cy="220" r="16" class="node"/><text x="190" y="220" class="node-text">D</text>
+
+            <text x="130" y="285" class="panel-title" fill="#7CFC00">3. True MST</text>
+            <text x="130" y="305" class="panel-sub" fill="#7CFC00">Weight = 12</text>
+        </g>
+
+        <polygon points="710,140 730,140 730,130 750,150 730,170 730,160 710,160" fill="#555555"/>
+
+        <g transform="translate(720, 0)">
+            <path d="M 130 30 L 130 250" stroke="#00FFFF" stroke-width="2" stroke-dasharray="6,6" opacity="0.4"/>
+
+            <line x1="70" y1="80" x2="70" y2="220" stroke="#FF4444" stroke-width="5"/> <line x1="190" y1="80" x2="190" y2="220" stroke="#FF4444" stroke-width="5"/> <line x1="70" y1="80" x2="190" y2="80" stroke="#FF4444" stroke-width="5"/> <line x1="70" y1="220" x2="190" y2="220" stroke="#FFD700" stroke-width="5" stroke-dasharray="8,4"/> <text x="50" y="155" class="weight-text">10</text>
+            <text x="210" y="155" class="weight-text">10</text>
+            <text x="130" y="70" class="weight-text">1</text>
+            <text x="130" y="210" class="weight-text" fill="#FFD700">1</text>
+
+            <circle cx="70" cy="80" r="16" class="node"/><text x="70" y="80" class="node-text">A</text>
+            <circle cx="70" cy="220" r="16" class="node"/><text x="70" y="220" class="node-text">B</text>
+            <circle cx="190" cy="80" r="16" class="node"/><text x="190" y="80" class="node-text">C</text>
+            <circle cx="190" cy="220" r="16" class="node"/><text x="190" y="220" class="node-text">D</text>
+
+            <text x="130" y="285" class="panel-title" fill="#FFD700">4. Cycle Formation</text>
+            <text x="130" y="305" class="panel-sub" fill="#FFD700">Adding (B,D) creates cycle</text>
+        </g>
+    </svg>
+</div>
 
 <p>
     According to the lemma, we can break this cycle by deleting <em>any</em> edge and still maintain a spanning tree. To minimize the total weight, we should delete the heaviest edges in the cycle. By deleting the two edges with weight $10$, we are left with the true MST. 
 </p>
 
 <p>
-    Borden's algorithm is fundamentally restricted because it only allows <strong>one</strong> edge to cross the cut, whereas the Lemma proves that cycles (and thus potential optimizations) can involve multiple crossing edges. $\blacksquare$
+    Borden's algorithm is fundamentally restricted because it only allows <strong>one</strong> edge to cross the cut, whereas the Lemma proves that cycles (and thus potential optimizations) can involve multiple crossing edges.
 </p>
 
 
