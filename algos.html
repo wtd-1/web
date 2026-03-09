@@ -27,7 +27,7 @@
     font-family: var(--mono);
     line-height: 1.6;
     margin: 0 auto;
-    max-width: 70ch;
+    max-width: 110ch;
     padding: 2rem 1rem;
     text-align: none;
     background: var(--bg);
@@ -204,9 +204,9 @@ code {
 Spring semester of 2026 as well as the assigned textbook for this course. That is, <i>Introduction to Algorithms (3rd edition)</i>
 by T.H. Corman, C.E. Leiserson, R.L. Rivest and C. Stein.</blockquote>
 
-<blockquote style="color:#ff2828;"><b>These notes are organised exactly as presented in Dr. Du's course, with 
-  each topic within a chapter spanning a single lecture. These notes have been augmented: they are a hodgepodge of Dr. Du's 
-  lectures, CLRS, personal anecdotes and other resources.
+<blockquote style="color:rgb(255, 0, 0);"><b>These notes are organised exactly as presented in Dr. Du's course, with 
+  each topic within a chapter spanning a single lecture. These notes are longer as they have been augmented: they are a hodgepodge of my notes, Dr. Du's 
+  lectures, CLRS, personal anecdotes and other resources. Since Dr. Du's lecture slides were not comprehensive, I took the liberty of fortifying them with rigor, intuition, proof, illustrations, additional examples, and content.
 </b> </blockquote>
 
 <h2>Course Introduction</h2>
@@ -308,13 +308,7 @@ can help us find it by testing each edge one-by-one. This proves that finding a 
 </ol>
 
 <h2 id="I">Algorithms with Self-Reduction</h2>
-<center>
-  <nav class="nav-scroll" role="navigation" aria-label="Back to Top">
-    <div class="nav-row">
-      <a class="card" href="#top"><span>BACK TO TOP</span></a>
-    </div>
-  </nav>
-</center>
+
 <h3 id="I.1">Sorting and Divide and Conquer</h3>
     <h5 id="I.1.a">Introduction</h5>
     <p>
@@ -1397,7 +1391,7 @@ $$h = \Omega(n \lg n)$$
   an assumption about how frequently we expect to encounter the various inputs.
   The behavior of quicksort depends on the relative ordering of the values in the
   array elements given as the input, and not by the particular values in the array. As
-  in our probabilistic analysis of the hiring problem in Section 5.2, we will assume
+  in our probabilistic analysis of the hiring problem, we will assume
   for now that all permutations of the input numbers are equally likely.
 </p>
 <p>
@@ -1659,7 +1653,7 @@ $$h = \Omega(n \lg n)$$
   elements.
 </p>
 <p>
-  Our analysis uses indicator random variables (see Section 5.2). We define
+  Our analysis will use indicator random variables. We define
 </p>
 <p>
   $$X_{ij} = I\{z_i \text{ is compared to } z_j\}$$
@@ -5731,7 +5725,7 @@ The algorithm executes exactly $V$ <code>Extract-Min</code> operations (one for 
 </p>
 
 <p>
-    Before the algorithm takes its first step, it categorizes the graph's nodes into two sets. Set $S$ (Permanently Labeled) is the set of nodes whose true shortest distance from the source has been finalized and locked in. Set $T$ (Temporarily Labeled) is the set of unvisited or partially evaluated nodes whose current distance is just an estimate (an upper bound). It also prepares a distance list, d(j), recording the shortest known distance from the source to node j. The distance to the source node is set to 0, and the distance to all other nodes is initialized to &infin; (infinity).
+    Before the algorithm takes its first step, it categorises the graph's nodes into two sets. Set $S$ (Permanently Labeled) is the set of nodes whose true shortest distance from the source has been finalized and locked in. Set $T$ (Temporarily Labeled) is the set of unvisited or partially evaluated nodes whose current distance is just an estimate (an upper bound). It also prepares a distance list, d(j), recording the shortest known distance from the source to node j. The distance to the source node is set to 0, and the distance to all other nodes is initialized to &infin; (infinity).
 </p>
 
 <p>
@@ -7191,7 +7185,7 @@ $$ m[i, j] = \max_{i \le k < j} \Big( m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \Big) $$
 <p><strong>Theorem 1.</strong> For a tree $T$, there is one and only one path between every pair of vertices.</p>
 
 <div class="svg-container">
-    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 400 150" width="60%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
         <text x="200" y="20" class="label">If a second path exists, a cycle is formed</text>
         <line x1="100" y1="100" x2="200" y2="50" class="edge" />
         <line x1="200" y1="50" x2="300" y2="100" class="edge" />
@@ -7209,7 +7203,7 @@ $$ m[i, j] = \max_{i \le k < j} \Big( m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \Big) $$
 <p><strong>Theorem 2.</strong> If a graph $G$ has one and only one path between every pair of vertices, then $G$ is a tree.</p>
 
 <div class="svg-container">
-    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 400 150" width="60%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
         <line x1="80" y1="100" x2="160" y2="50" class="edge-alt" />
         <line x1="160" y1="50" x2="240" y2="50" class="edge-alt" />
         <line x1="240" y1="50" x2="320" y2="100" class="edge-alt" />
@@ -7232,7 +7226,7 @@ $$ m[i, j] = \max_{i \le k < j} \Big( m[i,k] + m[k+1,j] + p_{i-1}p_kp_j \Big) $$
 
 <p><strong>Theorem 3.</strong> A tree with $n$ vertices has exactly $n-1$ edges.</p>
 <div class="svg-container">
-    <svg viewBox="0 0 300 150" width="100%" max-width="300px" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 300 150" width="50%" max-width="300px" xmlns="http://www.w3.org/2000/svg">
         <line x1="150" y1="40" x2="70" y2="110" class="edge" />
         <line x1="150" y1="40" x2="150" y2="110" class="edge" />
         <line x1="150" y1="40" x2="230" y2="110" class="edge" />
@@ -7260,7 +7254,7 @@ Thus, a tree with $n = k+1$ vertices has $n-1$ edges. By induction, the theorem 
 
 <p><strong>Theorem 4.</strong> Any connected graph $G$ with $n$ vertices and $n-1$ edges is a tree.</p>
 <div class="svg-container">
-    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 400 150" width="60%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
         <text x="200" y="20" class="label">5 Vertices, 4 Edges, Connected = Tree</text>
         <line x1="80" y1="80" x2="160" y2="80" class="edge" />
         <line x1="160" y1="80" x2="240" y2="40" class="edge" />
@@ -7281,7 +7275,7 @@ Thus, a tree with $n = k+1$ vertices has $n-1$ edges. By induction, the theorem 
 <p><strong>Theorem 5.</strong> A graph $G$ with $n$ vertices, $n-1$ edges, and no cycles is a connected graph (and therefore a tree).</p>
 
 <div class="svg-container">
-    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 400 150" width="60%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
         <text x="200" y="20" class="label">If disconnected into 2 acyclic components, max edges = n - 2</text>
         <line x1="60" y1="100" x2="100" y2="50" stroke="#555" stroke-width="3" />
         <line x1="100" y1="50" x2="140" y2="100" stroke="#555" stroke-width="3" />
@@ -7305,7 +7299,7 @@ We are given that $G$ has $n-1$ edges. Therefore, $n - k = n - 1$, which implies
 
 <p><strong>Theorem 6.</strong> A graph $G$ is a tree if and only if it is minimally connected.</p>
 <div class="svg-container">
-    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 400 150" width="60%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
         <text x="200" y="20" class="label">Removing ANY edge disconnects the graph</text>
         <line x1="100" y1="80" x2="160" y2="80" class="edge" />
         <line x1="240" y1="80" x2="300" y2="80" class="edge" />
@@ -7327,7 +7321,7 @@ We are given that $G$ has $n-1$ edges. Therefore, $n - k = n - 1$, which implies
 
 <p><strong>Theorem 7.</strong> Every tree with $n \ge 2$ vertices has at least two pendant vertices (leaves).</p>
 <div class="svg-container">
-    <svg viewBox="0 0 400 150" width="100%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 400 150" width="60%" max-width="400px" xmlns="http://www.w3.org/2000/svg">
         <text x="200" y="20" class="label">Orange nodes indicate leaves (degree 1)</text>
         <line x1="100" y1="80" x2="200" y2="80" class="edge" />
         <line x1="200" y1="80" x2="270" y2="40" class="edge" />
@@ -7354,7 +7348,7 @@ However, we know the sum must be exactly $2n - 2$. Because $2n - 1 > 2n - 2$, we
 
 <p><strong>Theorem 8.</strong> Every tree has either one or two centers.</p>
 <div class="svg-container">
-    <svg viewBox="0 0 500 150" width="100%" max-width="500px" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 500 150" width="70%" max-width="500px" xmlns="http://www.w3.org/2000/svg">
         <text x="125" y="20" class="label">1 Center</text>
         <line x1="125" y1="75" x2="75" y2="45" stroke="#555" stroke-width="3"/>
         <line x1="125" y1="75" x2="175" y2="45" stroke="#555" stroke-width="3"/>
@@ -7384,7 +7378,7 @@ We can iteratively repeat this process of deleting pendant vertices ($T \to T' \
 
 <p><strong>Theorem 9.</strong> The maximum number of vertices at level $L$ in a binary tree is $2^L$, where $L \ge 0$.</p>
 <div class="svg-container">
-    <svg viewBox="0 0 500 200" width="100%" max-width="500px" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 500 200" width="70%" max-width="500px" xmlns="http://www.w3.org/2000/svg">
         <text x="50" y="40" class="label" fill="#00FFFF">L=0 (2⁰ = 1)</text>
         <text x="50" y="100" class="label" fill="#00FFFF">L=1 (2¹ = 2)</text>
         <text x="50" y="160" class="label" fill="#00FFFF">L=2 (2² = 4)</text>
@@ -7407,14 +7401,23 @@ By the definition of a binary tree, every vertex at level $k$ can have at most $
 $$2 \times 2^k = 2^{k+1}$$
 By mathematical induction, the maximum number of vertices at any level $L$ is $2^L$. $\blacksquare$</p>
 
+<p><strong>Theorem 10 (Handshaking Lemma).</strong> Let $deg_G(v)$ denote the degree of vertex $v$ in a graph $G = (V, E)$. Then $$\sum deg_G(v) = 2|E|.$$ In other words, the sum of the values of $deg_G(v)$ taken over all $v \in V$ is equal to twice the number of edges.
+</p>
 
+<p><strong>Proof. </strong>Let $S$ denote the subset $V \times E$ consisting of those pairs $(v, e)$ for which $v$ belongs to $e$ where $v \in V$ and $e \in E$. For each $v \in V$, the 'row total' $r_v(S)$ is the number of edges containing $v$. So, it is equal to $deg_G(v).$ For each $e \in E$, the column total $c_e(S)$ is the number of vertices in $e$, which is 2 (i.e., two vertices are needed to form an edge). Hence, $$\sum deg_G(v) = 2 + 2 + \dots + 2 = 2|E|.\quad \blacksquare$$ </p>
+
+<p>The Handshaking Lemma gives a nice corollary, which is written and proved below.</p>
+
+<p><strong>Corollary. </strong>Every graph has an even number of vertices of odd degree.</p>
+<p><strong>Proof. </strong> The right hand side of the equation in Theorem 10 is even, so on the left hand side, we must have an even number of odd numbers. $\blacksquare$</p>
 
 
     <h5 id="I.3.b">Spanning Trees</h5>
 <p>
     Beyond simple shortest paths, another foundational problem in network design is the <strong>Minimum Cost Spanning Tree (MST)</strong> problem. This problem arises naturally in various physical and logical architectures. For instance, consider a communications company (like AT&T) that needs to build a network connecting $n$ different users. If the cost of making a direct link between user $i$ and user $j$ is $c_{ij}$, the goal is to find the minimum total cost of connecting all users together. A common assumption is that only the links possible are the ones directly joining two nodes. </p>
     
-      <svg viewBox="0 0 500 300" width="100%" xmlns="http://www.w3.org/2000/svg" style="text-align: center">
+<center>
+        <svg viewBox="0 0 500 300" width="70%" xmlns="http://www.w3.org/2000/svg" style="text-align: center">
     <g stroke="#FF0000" stroke-width="4">
         <line x1="80" y1="240" x2="130" y2="180"/>
         <line x1="80" y1="120" x2="130" y2="180"/>
@@ -7440,10 +7443,12 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
         <circle cx="230" cy="260" r="14"/><text x="230" y="265" fill="#000">6</text>
     </g>
 </svg>
+</center>
 <p>
     A similar scenario occurs in electronic circuitry, where pins of different components must be made electrically equivalent by connecting them with wires, and the objective is to minimize the total wire length.
 </p>
-<svg viewBox="0 0 500 200" width="100%" xmlns="http://www.w3.org/2000/svg" style="text-align: center;">
+<center>
+  <svg viewBox="0 0 500 200" width="70%" xmlns="http://www.w3.org/2000/svg" style="text-align: center;">
     <g stroke="#FF0000" stroke-width="4">
         <line x1="120" y1="120" x2="220" y2="70"/>
         <line x1="220" y1="70" x2="220" y2="160"/>
@@ -7459,12 +7464,13 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
         <circle cx="360" cy="70" r="14"/><text x="360" y="76" fill="#000">4</text>
     </g>
 </svg>
-
+</center>
 <p>
     We can also view the <strong>Traveling Salesman Problem (TSP)</strong> through the lens of spanning trees. TSP asks for a minimum cost tour linking $n$ cities. A valid TSP tour can be formulated as a spanning tree (specifically a path) plus exactly one additional edge closing the loop, subject to the strict constraint that every node has a degree of exactly two. 
 </p>
 
-<svg viewBox="0 0 500 300" width="100%" xmlns="http://www.w3.org/2000/svg" style="text-align: center;">
+<center>
+  <svg viewBox="0 0 500 300" width="70%" xmlns="http://www.w3.org/2000/svg" style="text-align: center;">
     <path d="M 80 100 L 140 110 L 220 80 L 300 120 L 360 80 L 380 130 L 340 170 L 410 200 L 380 250 L 280 260 L 210 250 L 170 160 L 110 210 L 120 270 L 60 260 L 70 180 L 80 100" fill="none" stroke="#FF0000" stroke-width="3"/>
     
     <line x1="80" y1="100" x2="140" y2="110" stroke="#1E90FF" stroke-width="5" stroke-linecap="round"/>
@@ -7491,6 +7497,7 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
     <text x="50" y="105" font-family="sans-serif" font-size="20" font-weight="bold" fill="white">1</text>
 </svg>
 
+</center>
 <p>
     Let $G = (N, A)$ be an undirected network where $N$ is the set of nodes and $A$ is the set of arcs (edges). Because it is undirected, arc $(i, j)$ is identical to arc $(j, i)$. We associate a cost $c_{ij}$ with each arc $(i,j) \in A$. 
 </p>
@@ -7513,7 +7520,8 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
 
     <p>In the figure below, we see that in the connected graph, a spanning tree of minimum cost was found in red.
 </p>
-<svg viewBox="0 0 500 250" width="100%" xmlns="http://www.w3.org/2000/svg;">
+<center>
+  <svg viewBox="0 0 500 250" width="70%" xmlns="http://www.w3.org/2000/svg;">
     <g stroke="#777" stroke-width="1">
         <line x1="50" y1="125" x2="150" y2="175"/> <line x1="150" y1="75" x2="150" y2="175"/> <line x1="150" y1="175" x2="270" y2="75"/> <line x1="270" y1="75" x2="270" y2="175"/>  <line x1="270" y1="75" x2="390" y2="175"/>  <line x1="390" y1="75" x2="390" y2="175"/>  </g>
 
@@ -7546,11 +7554,14 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
     </g>
 </svg>
 
+</center>
 
 <p>
     Let $T^*$ be a spanning tree. We refer to the arcs that belong to $T^*$ as <strong>tree arcs</strong>, and the arcs that belong to the original graph $G$ but not to $T^*$ as <strong>nontree arcs</strong>. In the figure below, the blue lines are all non-tree arcs. 
 </p>
-<svg viewBox="0 0 600 350" width="100%" xmlns="http://www.w3.org/2000/svg">
+
+<center>
+  <svg viewBox="0 0 600 350" width="70%" xmlns="http://www.w3.org/2000/svg">
     <g stroke="#1E90FF" stroke-width="1.5">
         <line x1="50" y1="150" x2="150" y2="230"/>  
         <line x1="150" y1="110" x2="250" y2="110"/>  
@@ -7592,15 +7603,15 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
         <circle cx="500" cy="240" r="14"/><text x="500" y="246" fill="#0000FF">10</text>
     </g>
 </svg>
-
-
+</center>
 
 <p>The entire theoretical foundation of MST algorithms rests on how trees interact with cycles and cuts.</p>
 
 <p><strong>Lemma (Fundamental Cycle).</strong> Let $T$ be any spanning tree. Let $a$ be any nontree arc (an arc not in $T$). Then adding $a$ to $T$ creates a exactly one unique cycle $C$. Deleting any arc of $C$ breaks the cycle and restores the graph to a valid spanning tree $T'$.</p>
+<center>
 
 
-<svg viewBox="0 0 600 350" width="100%" xmlns="http://www.w3.org/2000/svg;">
+<svg viewBox="0 0 600 350" width="70%" xmlns="http://www.w3.org/2000/svg;">
     <g stroke="#FF0000" stroke-width="5">
         <line x1="50" y1="150" x2="150" y2="110"/>   <line x1="150" y1="110" x2="230" y2="170"/>  <line x1="230" y1="170" x2="150" y2="230"/>  <line x1="230" y1="170" x2="250" y2="110"/>  <line x1="230" y1="170" x2="330" y2="170"/>  <line x1="330" y1="170" x2="370" y2="110"/>  <line x1="370" y1="110" x2="450" y2="70"/>   <line x1="330" y1="170" x2="380" y2="240"/>  <line x1="380" y1="240" x2="430" y2="190"/>  <line x1="380" y1="240" x2="500" y2="240"/>  </g>
 
@@ -7624,13 +7635,15 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
     </g>
 </svg>
 
+</center>
 <p><b>Proof.</b> We can break this proof into two distinct parts: showing the creation of a unique cycle, and showing the restoration of the spanning tree. Let $G = (V, E)$ be the original graph, where $T$ is a spanning tree of $G$. First, by definition, a spanning tree $T$ is a connected, acyclic subgraph containing all vertices in $V$. Because $T$ is connected, there exists a path between any two vertices in $T$. Furthermore, because $T$ is acyclic, this path is strictly unique. Let the nontree arc be $a = (u, v)$. Since $T$ is a spanning tree, there already exists a unique path $P$ between node $u$ and node $v$ entirely within $T$. When we add the arc $a$ to $T$, we connect $u$ and $v$ directly, closing a loop with the existing path $P$. This combination $P \cup \{a\}$ forms a cycle $C$. Because the path $P$ in $T$ was unique, the resulting cycle $C$ is also unique.</p>
 
 <p>To prove the restoration of the spanning tree, let the new graph be $T_{temp} = T \cup \{a\}$. $T_{temp}$ contains exactly one cycle ($C$). Let $e$ be any arc belonging to the cycle $C$. If we remove $e$, we form a new graph $T' = T_{temp} \setminus \{e\}$. Since $e$ was part of a cycle, removing it breaks that specific cycle. Because $T_{temp}$ only had one cycle, $T'$ is now acyclic. We must also ensure $T'$ remains connected. Suppose we want to travel between two arbitrary nodes $x$ and $y$. If the original path between $x$ and $y$ in $T$ did not use the removed edge $e$, that path still exists in $T'$. If the path did use $e$, we can route around the missing edge by taking the remaining path around the broken cycle $C \setminus \{e\}$. Thus, connectivity is preserved. A connected, acyclic subgraph spanning all vertices is a spanning tree. Therefore, $T'$ is a valid spanning tree. $\blacksquare$</p>
 
 <p><strong>Lemma (Fundamental Cut).</strong> If $(i, j)$ is a tree arc, removing it partitions the tree $T^* - (i,j)$ into exactly two disjoint components, with node sets $S$ and $N - S$. The set of all arcs in the original graph $G$ that connect a node in $S$ to a node in $N - S$ constitutes a <strong>cut</strong> (or cutset). For instance, suppose $(i,j) = (4, 5)$.</p>
 
-<svg viewBox="0 0 600 350" width="100%" xmlns="http://www.w3.org/2000/svg;">
+<center>
+  <svg viewBox="0 0 600 350" width="70%" xmlns="http://www.w3.org/2000/svg;">
     <ellipse cx="160" cy="160" rx="140" ry="120" fill="none" stroke="pink" stroke-width="3"/>
     <text x="40" y="60" font-family="sans-serif" font-size="24" font-weight="bold" fill="pink">S</text>
     
@@ -7685,7 +7698,7 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
         <circle cx="500" cy="240" r="14"/><text x="500" y="246" fill="#0000FF">10</text>
     </g>
 </svg>
-
+</center>
 <p><b>Proof.</b> Let $T$ be a spanning tree of a graph $G = (N, A)$, where $N$ is the set of nodes and $A$ is the set of arcs. By definition, a spanning tree $T$ is minimally connected, meaning that for any edge $e$ in $T$, removing $e$ will disconnect the graph. Let $e = (i, j)$ be an arc in $T$. In the tree $T$, the edge $(i, j)$ is the strictly unique path between node $i$ and node $j$ (if there were another path, $T$ would contain a cycle). When we remove $(i, j)$ to form $T \setminus \{(i, j)\}$, there is no longer any path between $i$ and $j$, disconnecting the tree. Because $T$ was connected without any cycles, removing a single edge splits the vertices into exactly two connected components.</p>
 
 <p>Let $S$ be the set of nodes reachable from $i$ in $T \setminus \{(i, j)\}$. Let $N \setminus S$ be the remaining nodes, which must be exactly the set of nodes reachable from $j$. These two sets are disjoint ($S \cap (N \setminus S) = \emptyset$) and their union contains all nodes in the graph ($S \cup (N \setminus S) = N$). In graph theory, a cut is formally defined as a partition of the vertices of a graph into two disjoint subsets. Since we have established that $S$ and $N \setminus S$ form a valid partition of the node set $N$, the set of all arcs in the original graph $G$ that have one endpoint in $S$ and the other endpoint in $N \setminus S$ exactly satisfies the definition of a cutset. Note that $(i, j)$ is the only arc from the spanning tree $T$ that belongs to this specific cutset; all other arcs in this cutset must be nontree arcs. $\blacksquare$</p>
@@ -7695,7 +7708,7 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
 <p>This is false! The flaw in the proposition lies in the phrase "there exists a cut." Just because an edge is the minimum-weight edge in some arbitrary cut doesn't guarantee that those edges can be combined to form a globally optimal spanning tree. The cut cannot simply be any cut, it must be deliberate: it must be a fundamental cut. </p>
 
 <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-    <svg viewBox="0 0 600 400" width="100%" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 600 400" width="70%" xmlns="http://www.w3.org/2000/svg">
         <g font-family="sans-serif" font-size="14" fill="#E0E0E0">
             <text x="20" y="30">Proposed Tree T (Weight = 6)</text>
             <line x1="230" y1="25" x2="280" y2="25" stroke="#FF0000" stroke-width="5"/>
@@ -7757,10 +7770,10 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
 <h5>Conditions for Cut Optimality</h5>
 
 <p>
-    We must make clear that the problem of the MST has certain conditions for cut optimality. For every tree arc $(i,j) \in T^*$, its cost $c_{ij}$ must be less than or equal to the cost $c_{kl}$ of <em>every</em> arc $(k,l)$ contained in the cut formed by deleting $(i,j)$ from the tree.
+    We must make clear that the problem of the MST has certain conditions for cut optimality. The Cut Optimality Condition is defined thusly. For every tree arc $(i,j) \in T^*$, its cost $c_{ij}$ must be less than or equal to the cost $c_{kl}$ of <em>every</em> non-tree arc $(k,l)$ contained in the cut formed by deleting $(i,j)$ from the tree. Mathematically, $$c_{ij} \leq c_{kl}.$$ That "cut formed by deleting $(i,j)$ from the tree" is exactly the <b>Fundamental Cut</b> because that tree edge must be the most efficient way to bridge those two specific components. Otherwise, it is not fundamental! Removing $(i,j)$ guarantees the creation of exactly two components. 
 </p>
-
-<svg viewBox="0 0 600 350" width="100%" xmlns="http://www.w3.org/2000/svg;">
+<center>
+  <svg viewBox="0 0 600 350" width="70%" xmlns="http://www.w3.org/2000/svg;">
 
     <g stroke="#0000FF" stroke-width="6">
         <line x1="150" y1="110" x2="450" y2="70"/>   
@@ -7803,13 +7816,15 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
     </g>
 </svg>
 
+</center>
 <p><strong>Theorem (Cut Optimality).</strong> A spanning tree $T^*$ is a minimum spanning tree if and only if it satisfies the cut optimality conditions.</p>
 
 <p><strong>Proof.</strong> 
         <strong>($\Rightarrow$):</strong> Suppose $T^*$ is a minimum spanning tree, but the cut optimality condition is violated. This means there exists a tree arc $(i,j) \in T^*$ and some nontree arc $(k,l)$ in the cutset induced by deleting $(i,j)$, such that $c_{ij} > c_{kl}$. If we delete $(i,j)$, the tree splits into two components. Because $(k,l)$ crosses this exact same cut, adding $(k,l)$ reconnects the two components, creating a new valid spanning tree $T' = T^* - (i,j) + (k,l)$. The cost of this new tree is $Cost(T^*) - c_{ij} + c_{kl}$. Since $c_{ij} > c_{kl}$, the new tree $T'$ has a strictly lower cost than $T^*$, which contradicts the premise that $T^*$ was optimal. Thus, the condition must hold.<br><br>
+<center>
 
-<svg viewBox="0 0 600 350" width="100%" xmlns="http://www.w3.org/2000/svg">
-\    <text x="10" y="40" font-family="sans-serif" font-size="16" fill="white">Suppose c_ij > c_kl for some arc (k,l) in the cutset obtained</text>
+<svg viewBox="0 0 600 350" width="70%" xmlns="http://www.w3.org/2000/svg">
+    <text x="10" y="40" font-family="sans-serif" font-size="16" fill="white">Suppose c_ij > c_kl for some arc (k,l) in the cutset obtained</text>
     <text x="10" y="60" font-family="sans-serif" font-size="16" fill="white">by deleting (i,j) from T*. Then T' = T* - (i,j) + (k,l)</text>
     <text x="10" y="80" font-family="sans-serif" font-size="16" fill="white">is a spanning tree with less cost.</text>
 
@@ -7835,10 +7850,12 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
         <circle cx="500" cy="240" r="14"/><text x="500" y="246" fill="#000">10</text>
     </g>
 </svg>
+</center>
 
         <strong>($\Leftarrow$):</strong> Suppose $T^*$ satisfies the cut optimality conditions. Let $T'$ be an optimal minimum spanning tree. Among all possible optimal spanning trees, let $T'$ be the one that shares the maximum number of arcs in common with $T^*$. We claim that $T^* = T'$. Suppose this were not true; then there must exist some arc $(i,j) \in T^*$ that is not in $T'$. Let $P$ be the path from $i$ to $j$ within the optimal tree $T'$. If we were to delete $(i,j)$ from $T^*$, it creates a cut. Because path $P$ connects $i$ and $j$, it must traverse across this cut. Therefore, $P$ contains at least one arc $(k,l)$ that crosses the cutset induced by deleting $(i,j)$. <br>
-  
- <svg viewBox="0 0 600 350" width="100%" xmlns="http://www.w3.org/2000/svg">
+ <center>
+   
+ <svg viewBox="0 0 600 350" width="70%" xmlns="http://www.w3.org/2000/svg">
   <text x="10" y="40" font-family="sans-serif" font-size="16" fill="white">Assume T* is min cost, but (i,j) ∉ T'. Then path P in T'</text>
   <text x="10" y="60" font-family="sans-serif" font-size="16" fill="white">from i to j has arc (k,l) in the cut induced by i,j.</text>
   <text x="10" y="80" font-family="sans-serif" font-size="16" fill="white">Then T' - (k,l) + (i,j) is a min cost tree: contradiction.</text>
@@ -7864,14 +7881,16 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
         <circle cx="500" cy="240" r="14"/><text x="500" y="246" fill="#000080">10</text>
     </g>
 </svg>
+ </center>
 
 
         Because $T^*$ satisfies cut optimality, we know $c_{ij} \le c_{kl}$. If we take the optimal tree $T'$ and swap these edges to form $T'' = T' - (k,l) + (i,j)$, the new cost is $Cost(T') - c_{kl} + c_{ij} \le Cost(T')$. Since $T'$ was already optimally minimum, $T''$ must also be a minimum cost spanning tree. However, $T''$ now shares one more arc in common with $T^*$ than $T'$ did. This contradicts our definition of $T'$ as the optimal tree with the most arcs in common with $T^*$. Thus, our assumption that $T^*$ and $T'$ differ is false, proving $T^*$ is an MST. $\quad \blacksquare$
   </p>
 
 <p>
-    The Path Optimality Condition is a counterpart to cut optimality. For every nontree arc $(k,l)$ of $G$, its cost $c_{kl}$ must be greater than or equal to the cost $c_{ij}$ of <em>every</em> tree arc $(i,j)$ contained in the unique path of $T^*$ connecting nodes $k$ and $l$.
+    The Path Optimality Condition, also known as the Cycle Optimality Condition, is a counterpart to cut optimality. For every nontree arc $(k,l)$ of $G$, its cost $c_{kl}$ must be greater than or equal to the cost $c_{ij}$ of <em>every</em> tree arc $(i,j)$ contained in the unique path of $T^*$ connecting nodes $k$ and $l$. Mathematically, $$c_{ij} \leq c_{kl}.$$ While the Cut Optimality Condition focuses on why a tree edge is good enough to be in the MST, the Path Optimality Condition explains why a non-tree edge was too expensive.
 </p>
+<p>Think about it. For a tree $T*$ to be a MST, the edge $e$ must be the maximum weight edge in the cycle. If there were any edge $f \in P$ such that $c_f > c_e$, then we can replace $f$ with $e$ because clearly $e$ is cheaper. That presents with an entirely new MST with a smaller total weight. This means $T*$ was not the minimum!</p>
 
 <p><strong>Theorem (Path Optimality).</strong> A spanning tree $T^*$ is a minimum spanning tree if and only if it satisfies the path optimality conditions.</p>
 <p>
@@ -7937,6 +7956,8 @@ By mathematical induction, the maximum number of vertices at any level $L$ is $2
 <p>
     This directly contradicts our initial, foundational premise that $T$ is a minimum spanning tree of $G$. Since $w(T^*)$ cannot possibly be less than the minimum weight $w(T)$, our assumption must be false. Therefore, $T'$ must indeed be an optimal minimum spanning tree of $G'$. $\quad \blacksquare$
 </p>
+
+<p>Soon, we will examine two algorithms based on something called the <b><a href="#cutproperty">Cut Property</a></b> </p>
 
 <h5>The Kruskal Greedy Algorithm</h5>
 
@@ -9007,64 +9028,152 @@ MST-REDUCE(G, T)
 <pre>
 <code>
 MAYBE-MST-A(G, w)
-1  sort the edges into nonincreasing order of edge weights w
-2  T = E
-3  for each edge e, taken in nonincreasing order by weight
-4      if T - {e} is a connected graph
-5          T = T - {e}
-6  return T
+1:  sort the edges into nonincreasing order of edge weights w
+2:  T = E
+3:  for each edge e, taken in nonincreasing order by weight
+4:      if T - {e} is a connected graph
+5:          T = T - {e}
+6:  return T
 </code>
 </pre>
 <p>
     This algorithm <strong>does</strong> compute a minimum spanning tree. It is commonly known as the <em>Reverse-Delete Algorithm</em>. It works by applying the <strong>cycle property</strong> in reverse. Because we examine edges in nonincreasing order (heaviest first), when we consider an edge $e$, if removing it does not disconnect the graph, $e$ must be part of some cycle in $T$. Furthermore, because we process the heaviest edges first, $e$ is guaranteed to be the heaviest edge on that cycle. The cycle property states that the heaviest edge on any cycle cannot be part of the MST, so it is safe to remove it.
 </p>
+<p><strong>Proof.</strong> We will prove that <code>MAYBE-MST-A</code> correctly computes a minimum spanning tree by relying on the cycle property. The algorithm initializes $T$ to include all edges in $E$ and processes them in nonincreasing order of weight. When an edge $e$ is examined, if $T - \{e\}$ remains connected, it implies that $e$ is part of a cycle within the current set of edges $T$. Because the algorithm considers edges from heaviest to lightest, all other edges currently in $T$ (including those completing the cycle with $e$) must have weights less than or equal to $w(e)$. Therefore, $e$ is guaranteed to be a maximum-weight edge on this cycle. By the standard cycle property of minimum spanning trees, the heaviest edge on any cycle can be safely excluded without preventing the formation of an MST. Removing $e$ preserves the invariant that $T$ contains the edges of at least one MST of $G$. After all edges are processed, $T$ remains connected and contains no cycles (otherwise, the heaviest edge of that cycle would have been removed). Thus, $T$ is a minimum spanning tree. $\blacksquare$</p>
 <p>
     We can implement by sorting the edges takes $O(E \log E)$ time. For each of the $E$ edges, we must check if removing it disconnects the graph. We can do this by running a Breadth-First Search (BFS) or Depth-First Search (DFS) to see if we can still reach the endpoints of $e$ without using $e$, taking $O(V + E)$ time per edge. The total time complexity is $O(E \log E + E(V + E)) = O(E^2)$. (With more advanced dynamic graph data structures like Euler tour trees, this can be optimized to $O(E \log V \log \log V)$, but the $O(E^2)$ DFS approach is the standard straightforward implementation).
 </p>
+
+<pre>
+<code>
+IMPLEMENT-MST-A(G, w)
+1:  Sort edges in E into an array A in nonincreasing order of weights w
+2:  Initialize an adjacency list for T containing all edges in E
+3:  for each edge e = (u, v) in A:
+4:      Remove e from T's adjacency list
+5:      Initialize a boolean array visited[1..V] to False
+6:      Run DFS(u, visited, T)
+7:      if visited[v] is False:
+8:          // Removing e disconnected u and v, so T - {e} is not connected
+9:          Add e back to T's adjacency list
+10: return T
+</code>
+</pre>
+<p><strong>Proof of Correctness.</strong> The implementation directly mirrors the pseudocode. To check if $T - \{e\}$ remains connected, we temporarily remove $e=(u,v)$ from our working graph $T$ and attempt to find a path between $u$ and $v$ using Depth-First Search (DFS). If $v$ is reachable from $u$, the endpoints are still connected via some alternate path, meaning $e$ was part of a cycle. If $v$ is not reachable, $e$ is a bridge in the current graph, and removing it would disconnect the graph, so we restore it. As established in the algorithm's correctness proof, discarding the heaviest edge of any cycle iteratively leaves exactly the edges of a minimum spanning tree. $\blacksquare$</p>
+<p><strong>Proof of Running Time.</strong> Sorting the array of edges $A$ takes $O(E \log E)$ time. The algorithm then iterates exactly $E$ times. Inside the loop, it performs a DFS on the graph $T$. A standard DFS on an adjacency list takes time proportional to the number of vertices and current edges, which is bounded by $O(V + E)$. Therefore, the loop takes $E \cdot O(V + E) = O(E^2)$ time. The total running time is bounded by the loop, resulting in $O(E^2)$. $\blacksquare$</p>
+<p><strong>Proof of Space Complexity.</strong> Storing the graph $T$ as an adjacency list requires $O(V + E)$ space. The sorting step can be done in-place or with $O(E)$ auxiliary space. The DFS requires a visited array of size $O(V)$ and a call stack of size at most $O(V)$ in the worst case (a linear graph). Thus, the dominant space requirement is the adjacency list, giving a space complexity of $O(V + E)$. $\blacksquare$</p>
+
 
 <p><strong>(b)</strong></p>
 <pre>
 <code>
 MAYBE-MST-B(G, w)
-1  T = &empty;
-2  for each edge e, taken in arbitrary order
-3      if T &cup; {e} has no cycles
-4          T = T &cup; {e}
-5  return T
+1:  T = &empty;
+2:  for each edge e, taken in arbitrary order
+3:      if T &cup; {e} has no cycles
+4:          T = T &cup; {e}
+5:  return T
 </code>
 </pre>
 <p>
-    This algorithm <strong>does not</strong> compute a minimum spanning tree. It computes a valid spanning tree, but because it considers edges in an <em>arbitrary order</em> without looking at their weights, it will likely not be the minimum one. 
-    <br><br>
-    Let us present a counterexample. Consider a triangle graph with vertices $A, B, C$ and edge weights $(A,B)=1$, $(B,C)=2$, and $(A,C)=10$. If the arbitrary order happens to be $(A,C)$, then $(B,C)$, then $(A,B)$, the algorithm will first add $(A,C)$ and $(B,C)$. When it examines $(A,B)$, adding it would form a cycle, so it is discarded. The returned tree has weight $10 + 2 = 12$, but the actual MST has weight $1 + 2 = 3$.
+    This algorithm <strong>does not</strong> compute a minimum spanning tree. It computes a valid spanning tree, but because it considers edges in an <em>arbitrary order</em> without looking at their weights, it will likely not be the minimum one.
 </p>
+<p><strong>Proof.</strong> We will prove by counterexample that <code>MAYBE-MST-B</code> does not necessarily compute a minimum spanning tree. Consider a graph $G = (V, E)$ with three vertices $V = \{A, B, C\}$ and three edges with the following weights: $w(A,B) = 1$, $w(B,C) = 2$, and $w(A,C) = 10$. The unique minimum spanning tree for this graph consists of the edges $(A,B)$ and $(B,C)$, yielding a total weight of $3$. Because the algorithm processes edges in an arbitrary order, suppose it processes them in the sequence: $(A,C)$, then $(B,C)$, then $(A,B)$. First, $(A,C)$ is added to $T$ since it forms no cycles. Next, $(B,C)$ is added to $T$ since it also forms no cycles. Finally, $(A,B)$ is considered, but adding it would form the cycle $A-B-C-A$. The algorithm rejects $(A,B)$. The resulting spanning tree $T = \{(A,C), (B,C)\}$ has a total weight of $12$, which is strictly greater than the optimal weight of $3$. Therefore, the algorithm fails to reliably compute a minimum spanning tree. $\blacksquare$</p>
 <p>
     This is exactly Kruskal's algorithm, just without the initial sorting step. We can use a disjoint-set data structure to keep track of connected components and check for cycles. Processing each edge takes $O(\alpha(V))$ amortized time. Total running time is $O(E \alpha(V))$, which is nearly linear.
 </p>
 
+<pre>
+<code>
+IMPLEMENT-MST-B(G, w)
+1:  T = &empty;
+2:  for each vertex v in V:
+3:      MAKE-SET(v)
+4:  for each edge e = (u, v) in E (in any arbitrary order):
+5:      if FIND-SET(u) &ne; FIND-SET(v):
+6:          T = T &cup; {e}
+7:          UNION(u, v)
+8:  return T
+</code>
+</pre>
+<p><strong>Proof of Correctness.</strong> We previously proved this algorithm does <em>not</em> compute a minimum spanning tree, but rather an arbitrary spanning tree. This implementation correctly executes that logic using a Disjoint-Set data structure. <code>MAKE-SET</code> initializes each vertex in its own component. Processing edges arbitrarily, we use <code>FIND-SET</code> to check if $u$ and $v$ are in the same component. If they are, adding $e$ would create a cycle, so we skip it. If they are not, adding $e$ connects two disjoint components without forming a cycle, so we add $e$ to $T$ and merge the components using <code>UNION</code>. This strictly maintains a cycle-free graph and eventually spans all reachable vertices, perfectly matching the original pseudocode's intent. $\blacksquare$</p>
+<p><strong>Proof of Running Time.</strong> Initializing the disjoint sets takes $O(V)$ operations. We then iterate over the $E$ edges. Inside the loop, we perform two <code>FIND-SET</code> operations and at most one <code>UNION</code> operation. Using union-by-rank and path compression, a sequence of $m$ operations on $n$ elements takes $O(m \alpha(n))$ time, where $\alpha$ is the extremely slow-growing inverse Ackermann function. Here, we do $O(E)$ operations on $V$ elements. The total running time is $O(V + E \alpha(V)) = O(E \alpha(V))$. $\blacksquare$</p>
+<p><strong>Proof of Space Complexity.</strong> The algorithm requires storing the resulting tree $T$, which takes $O(V)$ space since a forest has at most $V-1$ edges. The Disjoint-Set data structure requires two arrays (parent and rank/size) of size $V$, taking $O(V)$ space. Thus, the total space complexity is $O(V)$. $\blacksquare$</p>
 
 
 <p><strong>(c)</strong></p>
 <pre>
 <code>
 MAYBE-MST-C(G, w)
-1  T = &empty;
-2  for each edge e, taken in arbitrary order
-3      T = T &cup; {e}
-4      if T has a cycle c
-5          let e' be a maximum-weight edge on c
-6          T = T - {e'}
-7  return T
+1:  T = &empty;
+2:  for each edge e, taken in arbitrary order
+3:      T = T &cup; {e}
+4:      if T has a cycle c
+5:          let e' be a maximum-weight edge on c
+6:          T = T - {e'}
+7:  return T
 </code>
 </pre>
 <p>
     This algorithm <strong>does</strong> compute a minimum spanning tree. This is a dynamic approach that constantly maintains a Minimum Spanning Forest. When a new edge $e$ is added, it might form a cycle. If a cycle is formed, the algorithm finds the maximum-weight edge $e'$ on that specific cycle and removes it. By the exact definition of the <strong>cycle property</strong>, the heaviest edge on any cycle cannot be in the MST. Therefore, removing it is always safe, regardless of the order in which the edges are processed. At the end, $T$ will be connected (spanning) and cycle-free, leaving only the optimal MST edges.
 </p>
+<p><strong>Proof.</strong> We will prove that <code>MAYBE-MST-C</code> correctly computes a minimum spanning tree. The algorithm begins with an empty set $T$ and adds edges one by one. If the addition of an edge $e$ creates a cycle $c$ in $T$, the algorithm immediately identifies a maximum-weight edge $e'$ on $c$ and removes it. By the cycle property, a maximum-weight edge on any cycle in a graph is not required to form a minimum spanning tree. By removing $e'$, we resolve the cycle while maintaining the invariant that the edges in $T$ can always be extended to form a minimum spanning tree of the graph constructed from all edges considered so far. Since every cycle formed is immediately broken by discarding its heaviest edge, $T$ is always maintained as a forest. After all edges in $E$ have been processed, every edge of $G$ has either been included in $T$ or discarded because it was the heaviest edge on some cycle. Because $G$ is connected, the resulting cycle-free subgraph $T$ spans all vertices of $G$ and contains only edges necessary for the optimal weight. Thus, $T$ is a minimum spanning tree. $\blacksquare$</p>
 <p>
     A simple implementation maintains $T$ as an adjacency list. For each added edge $e = (u, v)$, we first run a DFS/BFS in $T$ from $u$ to find the path to $v$ before actually adding $e$. This path, combined with $e$, forms the cycle. During the traversal, we track the maximum edge weight on the path. This search takes $O(V)$ time since $T$ is a forest and has at most $V-1$ edges. We do this for all $E$ edges, yielding a total time of $O(E V)$. 
     <br><br>
-    <em>(Note: Using advanced data structures like Link-Cut trees, we can find the maximum edge on a path and update the tree dynamically in $O(\log V)$ time per edge, reducing the total running time to $O(E \log V)$).</em>
 </p>
+<pre>
+<code>
+IMPLEMENT-MST-C(G, w)
+1:  Initialize an empty adjacency list for T
+2:  for each edge e = (u, v) in E (arbitrary order):
+3:      Initialize a boolean array visited[1..V] to False
+4:      path = FIND-PATH-DFS(u, v, visited, T)
+5:      if path is NOT empty:
+6:          // A cycle is formed by path + {e}
+7:          Find edge e' with the maximum weight w in path &cup; {e}
+8:          if e' &ne; e:
+9:              Add e to T's adjacency list
+10:             Remove e' from T's adjacency list
+11:     else:
+12:         Add e to T's adjacency list
+13: return T
+</code>
+</pre>
+<p><strong>Proof of Correctness.</strong> The implementation correctly maintains the logic of adding an edge, detecting a cycle, and removing the heaviest edge on that cycle. Before formally adding $e=(u,v)$ to $T$, we check if a path already exists between $u$ and $v$ in $T$ using DFS. If a path exists, adding $e$ would close a cycle consisting of `path` and $e$. We find the maximum weight edge $e'$ on this explicit cycle. If $e'$ is the new edge $e$, we simply discard $e$. If $e'$ is an older edge in $T$, we insert $e$ and remove $e'$. By the cycle property, dropping $e'$ maintains the minimum spanning forest invariant, proving the implementation correctly achieves the MST. $\blacksquare$</p>
+<p><strong>Proof of Running Time.</strong> The outer loop runs $E$ times. Inside the loop, <code>FIND-PATH-DFS</code> traverses $T$. Because $T$ is strictly maintained as a forest (no cycles), it contains at most $V-1$ edges. A DFS on a forest takes $O(V)$ time. Finding the maximum weight edge on the path also takes $O(V)$ time, as the path length is bounded by $V$. Adding or removing an edge from an adjacency list takes $O(V)$ time in the worst case (or $O(1)$ with doubly-linked lists). The dominant operation inside the loop is the $O(V)$ DFS. Thus, the total running time is $O(EV)$. $\blacksquare$</p>
+<p><strong>Proof of Space Complexity.</strong> The graph $T$ is a forest, so its adjacency list stores at most $V-1$ edges, requiring $O(V)$ space. The DFS requires a "visited" array of size $O(V)$, a recursion stack of at most $O(V)$, and space to store the current path, also bounded by $O(V)$. The overall space complexity is tightly bounded to $O(V)$. $\blacksquare$</p>
+
+<p> Using advanced data structures like Link-Cut trees, we can find the maximum edge on a path and update the tree dynamically in $O(\log V)$ time per edge, reducing the total running time to $O(E \log V)$.
+</p>
+
+<pre>
+<code>
+IMPLEMENT-MST-C-ADVANCED(G, w)
+1:  Initialize a Link-Cut Tree forest F containing all vertices in V
+2:  T = &empty;
+3:  for each edge e = (u, v) in E (arbitrary order):
+4:      if CONNECTED(u, v) in F:
+5:          // e forms a cycle with the existing path between u and v
+6:          e' = FIND-MAX-EDGE(u, v) in F
+7:          if w(e) < w(e'):
+8:              CUT(e') in F
+9:              T = T - {e'}
+10:             LINK(u, v, e) in F
+11:             T = T &cup; {e}
+12:     else:
+13:         // e connects two disjoint components
+14:         LINK(u, v, e) in F
+15:         T = T &cup; {e}
+16: return T
+</code>
+</pre>
+
+<p><strong>Proof of Correctness.</strong> The logic strictly follows the dynamic MST algorithm proven previously. The Link-Cut tree $F$ acts as an efficient oracle for the current state of our spanning forest $T$. Because standard Link-Cut trees maintain weights on vertices rather than edges, we implicitly represent each edge in $T$ as an auxiliary vertex connected to its endpoints. When considering a new edge $e = (u, v)$, the <code>CONNECTED(u, v)</code> operation checks if a path already exists. If so, adding $e$ would form a cycle. The <code>FIND-MAX-EDGE(u, v)</code> operation traverses the represented path in $F$ to find the maximum-weight edge $e'$ on this cycle. If the new edge $e$ is strictly lighter than $e'$, then $e'$ is the heaviest edge on the cycle. By the cycle property, $e'$ cannot be in the MST, so we remove it via <code>CUT(e')</code> and insert $e$ via <code>LINK(u, v, e)</code>. If $e$ itself is the heaviest edge on the cycle ($w(e) \ge w(e')$), it is implicitly discarded without modifying $F$. Thus, the forest is correctly updated, and at the end, $T$ is exactly the minimum spanning tree. $\blacksquare$</p>
+
+<p><strong>Proof of Running Time.</strong> The algorithm processes each of the $E$ edges exactly once. For each edge, it performs a constant number of Link-Cut Tree operations: <code>CONNECTED</code>, <code>FIND-MAX-EDGE</code>, and potentially <code>CUT</code> and <code>LINK</code>. Using Sleator and Tarjan's Link-Cut Trees backed by splay trees, each of these operations takes $O(\log N)$ amortized time, where $N$ is the number of nodes in the forest. Because we only maintain tree edges in $F$, there are at most $V$ original vertices and $V-1$ auxiliary edge-vertices in the data structure at any time, giving $N \le 2V - 1$. Therefore, the amortized cost per edge processed is $O(\log V)$. Over $E$ edges, the total running time is exactly $O(E \log V)$. $\blacksquare$</p>
+
+<p><strong>Proof of Space Complexity.</strong> The set $T$ stores the edges of the current forest, which is at most $V-1$ edges, taking $O(V)$ space. The Link-Cut Tree $F$ must store objects for the graph's vertices and the edges currently in the tree. Since the tree never contains more than $V-1$ edges, $F$ contains at most $2V-1$ nodes. Each node in a Link-Cut Tree requires a constant amount of information (pointers for the parent, left child, right child, and path-maximum values). Consequently, the Link-Cut tree requires $O(V)$ space. Overall space complexity is tightly bounded at $O(V)$. $\blacksquare$</p>
 
 <h5>Dr. Du's Suggested Problems</h5>
 
@@ -9076,12 +9185,55 @@ MAYBE-MST-C(G, w)
 
 <p>($\Leftarrow$): assuming that for every non-tree edge $(u, v)$ the unique path $p$ in $T$ between $u$ and $v$ consists only of edges with weight less than or equal to $c(u, v)$, we must show that $T$ is a minimum spanning tree. Let $T^*$ be an actual minimum spanning tree of the graph. If $T$ and $T^*$ are identical, the proof is complete. If they are different, there must be at least one edge $(u, v)$ that is in $T^*$ but not in $T$. Adding this edge $(u, v)$ to $T$ creates a cycle containing a path $p$. Since $T^*$ cannot contain this entire cycle (as it is a tree), there must be some edge $(w, x)$ on $p$ that is in $T$ but absent from $T^*$. According to our assumed condition, $c(w, x) \leq c(u, v)$. If we take $T^*$ and swap the edge $(u, v)$ for the edge $(w, x)$, we create a new valid spanning tree. Because $c(w, x) \leq c(u, v)$, the weight of this new tree is less than or equal to the weight of $T^*$. Since $T^*$ is already a minimum spanning tree, its weight cannot decrease, meaning $c(w, x)$ must exactly equal $c(u, v)$, and the new tree is also a minimum spanning tree. By systematically repeating this swapping procedure for all differing edges, we can transform $T^*$ into $T$ without ever increasing the total weight. This demonstrates that $T$ shares the same minimum weight as $T^*$, confirming that $T$ is indeed a minimum spanning tree.</p>
 
-<blockquote>Prove that a spanning tree is minimum if and only if for every tree edge $(u, v)$ there exists a $(s,t)$-cut $(S, T)$ such that $u \in S$, $v \in T$, and $c(u, v)$ is the smallest one in the cut for some constant $c$.</blockquote>
+<blockquote id="cutproperty">Prove that a spanning tree is minimum if and only if for every tree edge $(u, v)$ there exists a $(s,t)$-cut $(S, T)$ such that $u \in S$, $v \in T$, and $c(u, v)$ is the smallest one in the cut for some constant $c$.</blockquote>
 
-<p>This statement describes the cut property of minimum spanning trees, and we will prove both the necessity and sufficiency of the condition. <br><br>
+<p>This statement describes the cut property of minimum spanning trees. It can be rewritten as a theorem.<br><br> 
+  <strong>Theorem (Cut Property). </strong> Let $e = (v, w)$ be the minimum-weight edge crossing cut $(S, V \setminus S)$ in the graph $G = (V, E)$. Then, $e$ belongs to every minimum spanning tree of $G$. <br><br>
   <strong>Proof. </strong>($\Rightarrow$): assuming $T$ is a minimum spanning tree, we must demonstrate that every edge within it satisfies the cut condition. Let $(u, v)$ be any edge that belongs to $T$. Removing $(u, v)$ from $T$ naturally partitions the vertices of the tree into two distinct, disconnected sets, which we will call $S$ and $V \setminus S$. Because $u$ and $v$ were directly connected by the removed edge, one vertex (say $u$) will belong to $S$, and the other ($v$) will belong to $V \setminus S$. This partition defines an $st$-cut $(S, V \setminus S)$ in the overall graph. We must prove that $c(u, v)$ is the minimum weight among all edges crossing this cut. Suppose, for the sake of contradiction, there is another edge $(x, y)$ crossing the cut such that $c(x, y) < c(u, v)$. If we insert $(x, y)$ into the partitioned tree, it reconnects the two components, forming a new spanning tree $T'$. The total weight of $T'$ equals the weight of $T$ minus $c(u, v)$ plus $c(x, y)$. Given that $c(x, y) < c(u, v)$, $T'$ possesses a strictly lower total weight than $T$. This directly contradicts the established fact that $T$ is a minimum spanning tree. Consequently, no such edge $(x, y)$ can exist, meaning $c(u, v)$ must be the smallest weight edge crossing the cut.</p>
 
-<p>($\Leftarrow$): we assume that for every edge $(u, v)$ in a spanning tree $T$, there exists an $st$-cut where the edge acts as the minimum weight crossing edge. We need to prove that $T$ is a minimum spanning tree. Kruskal's or Prim's algorithms rely heavily on the fundamental theorem that if an edge is the strictly minimum weight edge crossing any cut in a graph, it must be included in all minimum spanning trees. Even if the edge weights are not strictly unique, picking a minimum edge across a cut is always a safe choice that belongs to at least one minimum spanning tree. Since every single edge in $T$ satisfies this condition—acting as the minimum weight connection across its respective structural cut—every edge in $T$ is a globally optimal localized choice. The aggregate of these optimal choices forms a tree whose total weight is minimal, proving that $T$ is undeniably a minimum spanning tree.</p>
+<p>($\Leftarrow$): Assume $T$ is a spanning tree where, for every edge $e = (u, v)$ in $T$, there exists a cut separating $u$ and $v$ such that $e$ is the minimum weight edge crossing that cut. We must prove $T$ is a minimum spanning tree.</p>
+
+<p>Let $T^*$ be an actual minimum spanning tree of the graph. If $T = T^*$, we are done.</p>
+
+<p>Suppose $T \neq T^*$. Then there is at least one edge $e$ that belongs to $T$ but does not belong to $T^*$.</p>
+
+<p>By our initial assumption, because $e \in T$, there is some cut $(S, V \setminus S)$ where $e$ is the lightest edge crossing the cut. Let's say $c(e) \le c(e')$ for all other edges $e'$ crossing this cut. If we add our edge $e$ to the known MST $T^*$, it must create exactly one cycle, because $T^*$ is already a connected spanning tree.Because $e$ connects a vertex in $S$ to a vertex in $V \setminus S$, this cycle must cross the cut boundary, loop around, and cross back over the boundary to close the loop. Therefore, there must be at least one <em>other</em> edge on this cycle, let's call it $e'$, that also crosses the cut $(S, V \setminus S)$ and belongs to $T^*$.</p>
+
+<p>We know $e$ is the absolute lightest edge crossing this cut, which guarantees $c(e) \le c(e')$. If we remove $e'$ from $T^*$ and replace it with $e$, we break the cycle and form a new spanning tree, let's call it $T^{**}$. The total weight of our new tree is $w(T^{**}) = w(T^*) - c(e') + c(e)$. Since $c(e) \le c(e')$, it must be true that $w(T^{**}) \le w(T^*)$. $T^*$ is a minimum spanning tree, so no tree can weigh strictly less than it. Therefore, $w(T^{**})$ must equal $w(T^*)$, making our new tree $T^{**}$ also a valid MST.</p>
+
+<p>We have successfully swapped an edge from $T$ into $T^*$ without increasing the total weight. If we repeat this exchange process for every edge in $T$ that isn't in $T^*$, we will eventually transform the MST $T^*$ entirely into $T$, proving that the total weight of $T$ is identical to the MST. Thus, $T$ is a minimum spanning tree. $\blacksquare$</p>
+
+<p><b>Alternate Proof. </b> Let $T$ be a spanning tree that doesn't include $e = (u, v)$. We'll construct a different spanning tree $T'$ such that $w(T') < w(T)$ and hence $T$ can't be the MST.</p>
+
+<p>Since $T$ is a spanning tree, there's a $u$-$v$ path $P$ in $T$. Since the path starts in $S$ and ends up outside $S$, there must be an edge $e' = (u', v')$ on this path where $u' \in S$, $v' \notin S$.</p>
+
+<p>Let $T' = T - \{e'\} + \{e\}$. This is still connected, since any path in $T$ that needed $e'$ can be routed via $e$ instead, and it has no cycles, so it is a spanning tree.</p>
+
+<p>But since $e$ was the lightest edge between $S$ and $V \setminus S$,</p>
+<p>$$w(T') = w(T) - w(e') + w(e) \le w(T) - w(e') + w(e') = w(T) \quad \blacksquare$$</p>
+
+<p>Imagine you have a map of cities (vertices) connected by roads (edges), and you've found a way to connect them all together using the absolute minimum amount of pavement (a Minimum Spanning Tree, or MST). Now, imagine you draw a line completely dividing the map into two halves (a cut). The Cut Property states that the single shortest road crossing that dividing line <em>must</em> be part of your MST.</p>
+
+<p>We began with a two part proof that sought valid conclusions to each direction of the theorem.</p>
+
+<p>Part 1 ($\Rightarrow$) asked Why every edge in an MST is the cheapest across its cut.</p>
+
+<p>Suppose you have a perfectly built Minimum Spanning Tree ($T$), which is the absolute cheapest way to connect all the points in your graph. If you take scissors and snip any single connection (let's call it edge $(u,v)$) in that tree, the tree will break into two completely separate chunks. The Cut is the gap between these two chunks.</p>
+
+<p>The proof asks: what if the edge you just snipped wasn't actually the cheapest way to connect those two chunks? What if there was a cheaper edge, $(x,y)$, hiding somewhere else that also crosses that same gap? Therein lies the contradiction! So, if that cheaper edge existed, you could swap it in. You would leave $(u,v)$ snipped and use $(x,y)$ to reconnect the two chunks. Now you have a perfectly connected tree that costs less than your original tree. But wait—we started by assuming the original tree was the MST (the absolute cheapest possible)! You cannot get cheaper than the absolute cheapest, which means that hypothetical lighter edge $(x,y)$ simply cannot exist. Therefore, the edge you snipped must be the cheapest connection across that gap.</p>
+
+
+<p>Part 2 ($\Leftarrow$) examined a different, related question: Why a tree made entirely of minimum cut edges is an MST.</p>
+
+<p>Now, flip the scenario. Assume you have a spanning tree where you already know that every single edge inside it is the absolute cheapest way to bridge some gap (cut) in the graph.</p>
+
+<p>Since every single edge in your tree satisfies this rule, every single piece of your tree is a mathematically perfect, optimal choice. If every individual piece of the structure is optimally chosen, then the sum of those pieces must form a globally optimal structure. Therefore, your tree is undeniably an MST.</p>
+
+<p>The alternate uses a proof by contradiction. What if the shortest road crossing the line, let's call it road $e$, is <em>not</em> in our supposed MST? Since the tree already connects all cities, there must already be some other, winding path connecting the two sides of our drawn line. This winding path must cross the dividing line somewhere, via some other road, let's call it $e'$.</p>
+
+<p>If we add the short road $e$ to our map, we create a loop (a cycle). If we then break that loop by removing the other crossing road $e'$, our cities are all still completely connected! However, because $e$ was the lightest crossing edge, we swapped a heavier/longer road for a lighter/shorter one. The total amount of pavement used is now strictly less than what we started with. This proves our original setup couldn't possibly have been the true Minimum Spanning Tree to begin with. Therefore, the shortest road crossing the cut is always safe to include.</p>
+
+
 
 <blockquote>Design an example such that there is an edge $(u, v)$ which is selected by Prim's Algorithm from a cut $(S, T)$. Suppose $T*$ is a minimum spanning tree obtained by Prim's Algorithm. $(S', T')$ is the cut obtained from $T*$ by deleting an edge $(u, v)$. We want $(S', T') \neq (S,T)$.</blockquote>
 
@@ -9124,10 +9276,10 @@ MAYBE-MST-C(G, w)
 
 
 <p>
-    While often called Sollin's algorithm in western literature, the very first minimum-spanning-tree algorithm was actually published in a 1926 paper by <strong>O. Bor&uring;vka</strong>. In fact, Bor&uring;vka's algorithm is essentially just running $O(\log V)$ iterations of the <code>MST-REDUCE</code> procedure (which aggressively contracts edges and vertices) described earlier in Problem 23-2! 
+    While often called Sollin's algorithm, the first minimum-spanning-tree algorithm was actually published in a 1926 paper by <strong>O. Bor&uring;vka</strong>. In fact, Bor&uring;vka's algorithm is essentially just running $O(\log V)$ iterations of the <code>MST-REDUCE</code> procedure (which aggressively contracts edges and vertices) described earlier! 
 </p>
 <p>
-    Similarly, the algorithm commonly known as Prim's (1957) was actually invented much earlier by <strong>V. Jarn&iacute;k</strong> in 1930. Kruskal published his algorithm in 1956. The fundamental reason these greedy approaches work so perfectly for MSTs is rooted in abstract algebra: the set of forests of a graph forms a mathematical structure known as a <strong>graphic matroid</strong>.
+    Similarly, the algorithm commonly known as Prim's (1957) was actually invented much earlier by <strong>V. Jarn&iacute;k</strong> in 1930. Kruskal published his algorithm in 1956. The fundamental reason these greedy approaches work so perfectly for MSTs is rooted in abstract algebra: the set of forests of a graph forms a mathematical structure known as a <strong>graphic matroid</strong> (which will be gone into detail later).
 </p>
 
 <p>
@@ -9164,6 +9316,15 @@ MAYBE-MST-C(G, w)
 </blockquote>
 <p>The concept of a matroid was originally introduced by Hassler Whitney while studying matrices. In a "matric matroid," the elements of $S$ are the rows of a matrix, and a subset of rows belongs to $\mathcal{I}$ if those rows are linearly independent in the standard algebraic sense.</p>
 
+<p>To better understand matroids, it is meritful to examine its roots in Linear Algebra and Graph Theory. A set of 
+  <strong>vectors</strong> is said to be <strong>independent</strong> if no vector in teh set can be created by adding 
+  or scaling others. For example, a vector pointing northward and another eastward are two separate vectors; they are independent as they are pointing in two completely different directions. However, a vector pointing northeast is not independent because it is only possible by combining the north and east vectors. We say that the northeast pointing vector is <strong>redundant</strong>. Graph theory has its own notion of indenependence too. In a graph, a set of edges is said to be <strong>independent</strong> if they do not form a <b>cycle</b> (a loop). Trees, and collections of them called Forests, do not contain loops, so they are independent! Here, redundance is defined by whether or not an edge closes a loop and forms a cycle (i.e., that edge is redundant). 
+</p>
+<p>As you can see, both of these notions of independence and redundance are very similar. In fact, they are the exact same. Matroids are a single structure born forth to describe both. Simply put, a matroid is just a collection of items in which groups of such items are independent. Per the conditions outlined above, the groups must be
+  <ol><li>finite</li>
+  <li>have children subgroups that are themselves independent too (i.e., being made smaller by removing members does not create redundancy)</li>
+<li>be able to exchange members such that if a bigger group has a member that a smaller group does not have, having that member join the smaller group forms an entirely new group that is also independent (i.e., independence is preserved).</li></ol>Another thing that must be clear is that matroids follow an <b>Empty Set Law</b>; this can be thought of as the base case of a matroid: if you have nothing, there is no way to be redundant. 
+</p>
 
 <p>A highly practical example is the <strong>graphic matroid</strong>, denoted as $M_G = (S_G, \mathcal{I}_G)$, which is defined for a given undirected graph $G = (V, E)$.</p>
 
@@ -9171,9 +9332,16 @@ MAYBE-MST-C(G, w)
 
 <p>A subset of edges $A$ belongs to the independent family $\mathcal{I}_G$ if and only if $A$ is acyclic. In other words, a set of edges is considered "independent" if and only if the subgraph $G_A = (V, A)$ forms a forest (a collection of valid, cycle-free trees).</p>
 
-<p>This graphic matroid is the underlying mathematical engine that guarantees the correctness of the greedy Minimum Spanning Tree algorithms we covered in the previous section. When you apply Kruskal's algorithm, for example, you are effectively processing this exact graphic matroid. You start with an empty set (which is independent by Condition 2) and greedily add edges to your tree under construction, provided they don't form a cycle (maintaining independence in $\mathcal{I}_G$).</p>
+<p>This graphic matroid is the underlying mathematical engine that guarantees the correctness of the greedy Minimum Spanning Tree algorithms we covered in the previous section. If a system follows the three laws ("conditions") stipulated above, greedy algorithms will always work. Picking the best option in the moment does not always lead to the best result in the end. However, thanks to Condition 3 (the Exchange Property), we are guaranteed that picking the best independent item every step of the way will eventually lead to the best solution. When you apply Kruskal's algorithm, for example, you are effectively processing a graphic matroid. You start with an empty set (which is independent by Condition 2) and greedily add edges to your tree under construction, provided they don't form a cycle (maintaining independence in $\mathcal{I}_G$).</p>
 
 <p>Because the sets of acyclic forests in a graph perfectly satisfy the matroid exchange property (Condition 3), a greedy strategy is mathematically guaranteed to safely grow the independent set until it becomes a "maximal" independent set. In the context of a connected graphic matroid, a maximal independent set is precisely a minimum spanning tree. The matroid structure essentially proves <em>why</em> the greedy choice never traps you in a local optimum during MST construction.</p>
+
+<p>The same thing, however, cannot be said of Prim's. While it's process:
+  <ol><li>starts at a single node</li>
+  <li>only considers edges connected to the current tree</li>
+<li>grows a single, connected component until it hits every node,</li>
+</ol>may seem like it is processing a graphic matroid, Prim's strict consideration of "edges connected to the current tree" forms a structural constraint not implemented in Kruskal's. This means Prim's does not exactly follow matroid rules, so it is not quite a matroid algorithm. To be more precise, the reason for that is the laws of a matroid allow us to pick <i>any</i> independent element from the entire set—it does not force us to be picky with what we choose. Prim's is still correct though on account of its base on the Cut Property.
+</p>
 
 <p><strong>Theorem. The Graphic Matroid.</strong> If $G = (V, E)$ is an undirected graph, then $M_G = (S_G, \mathcal{I}_G)$ is a matroid.</p>
 
@@ -9188,8 +9356,6 @@ MAYBE-MST-C(G, w)
 <p>This implies that $t = |V_F| - |E_F|$. Applying this logic, the forest $G_A$ contains $|V| - |A|$ trees, and the forest $G_B$ contains $|V| - |B|$ trees.</p>
 
 <p>Since $|B| > |A|$, the forest $G_B$ must contain fewer trees than forest $G_A$. Because forest $G_B$ has fewer trees, it must contain some tree $T$ whose vertices span across two different trees in forest $G_A$. Moreover, since tree $T$ is connected, it must contain an edge $(u, v)$ such that vertices $u$ and $v$ belong to two completely different trees in forest $G_A$.</p>
-
-
 
 <p>Since the edge $(u, v)$ connects vertices in two different trees in forest $G_A$, we can safely add the edge $(u, v)$ to forest $G_A$ without creating a cycle. Therefore, $M_G$ satisfies the exchange property, completing the proof that $M_G$ is a matroid. $\blacksquare$</p>
 
@@ -9207,7 +9373,6 @@ MAYBE-MST-C(G, w)
 
 <p>As an illustration of this theorem, consider a graphic matroid $M_G$ for a connected, undirected graph $G$. Every maximal independent subset of $M_G$ must be a free tree with exactly $|V|-1$ edges that connects all the vertices of $G$. Such a tree is uniquely called a spanning tree of $G$.</p>
 
-<h5>Greedy Algorithms and the Weighted Matroid</h5>
 <p>We say that a matroid $M=(S, \mathcal{I})$ is <strong>weighted</strong> if it is associated with a weight function $w$ that assigns a strictly positive weight $w(x) > 0$ to each element $x \in S$. The weight function $w$ extends to subsets of $S$ by simple summation:</p>
 
 <p>$$w(A) = \sum_{x \in A} w(x)$$</p>
@@ -9255,7 +9420,7 @@ Therefore, <code>GREEDY</code> always returns an independent subset $A$.</p>
 
 <p>To prove <code>GREEDY</code> is correct, we first show that making the best local choice (picking the heaviest available independent element) is always safe. This is known as the <strong>greedy-choice property</strong>.</p>
 
-<p><strong>Lemma (Greedy-choice property).</strong> Suppose that $M = (S, \mathcal{I})$ is a weighted matroid with weight function $w$ and that $S$ is sorted into monotonically decreasing order by weight. Let $x$ be the first element of $S$ such that $\{x\}$ is independent. If such an $x$ exists, then there exists an optimal subset $A$ of $S$ that contains $x$.</p>
+<p><strong>Lemma (Greedy-choice Property of Matroids).</strong> Suppose that $M = (S, \mathcal{I})$ is a weighted matroid with weight function $w$ and that $S$ is sorted into monotonically decreasing order by weight. Let $x$ be the first element of $S$ such that $\{x\}$ is independent. If such an $x$ exists, then there exists an optimal subset $A$ of $S$ that contains $x$.</p>
 
 <p>Think of $x$ as the "premium" item. Since it’s the heaviest thing you can legally pick at the start, if you had an optimal collection $B$ that <em>didn't</em> include $x$, you could swap something in $B$ for $x$. Because $x$ is heavier than (or equal to) anything else in $B$, this swap won't hurt your total weight—it might even help. This proves you never "regret" picking the heaviest possible independent element first.</p>
 
@@ -9274,7 +9439,7 @@ Therefore, <code>GREEDY</code> always returns an independent subset $A$.</p>
 
 <p>Once you commit to your first best choice $x$, the "rest of the problem" is just another matroid problem on the remaining elements that don't conflict with $x$.</p>
 
-<p><strong>Lemma (Optimal-substructure property).</strong> Let $x$ be the first element of $S$ chosen by <code>GREEDY</code>. The problem of finding a maximum-weight independent subset containing $x$ reduces to finding a maximum-weight independent subset of the weighted matroid $M' = (S', \mathcal{I}')$, where:<br>
+<p><strong>Lemma (Optimal-substructure Property of Matroids).</strong> Let $x$ be the first element of $S$ chosen by <code>GREEDY</code>. The problem of finding a maximum-weight independent subset containing $x$ reduces to finding a maximum-weight independent subset of the weighted matroid $M' = (S', \mathcal{I}')$, where:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;$S' = \{y \in S : \{x, y\} \in \mathcal{I}\}$<br>
 &nbsp;&nbsp;&nbsp;&nbsp;$\mathcal{I}' = \{B \subseteq S - \{x\} : B \cup \{x\} \in \mathcal{I}\}$<br>
 and the weight function is $w$ restricted to $S'$. This $M'$ is called the <strong>contraction</strong> of $M$ by $x$.</p>
@@ -9288,7 +9453,7 @@ and the weight function is $w$ restricted to $S'$. This $M'$ is called the <stro
 <h5>Furthermore on Matroids</h5>
 
 <p>
-    The versatility of matroid theory is best demonstrated by examining various combinatorial and algebraic structures that satisfy the three defining axioms: 
+    The versatility of matroid theory is best demonstrated by examining various combinatorial and algebraic structures that satisfy the three defining axioms of matroids. Let us recall that they are: 
     <ol>
       <li>the existence of a finite set $S$</li>
       <li>a hereditary family of independent subsets $\mathcal{I}$</li>
@@ -9353,7 +9518,7 @@ and the weight function is $w$ restricted to $S'$. This $M'$ is called the <stro
 
 <p>Our objective is to create a <strong>schedule</strong>—a specific permutation of $S$ dictating the order of execution—that minimizes the total penalty incurred from missed deadlines. Alternatively, minimizing the penalties of the late tasks is mathematically identical to maximizing the sum of the penalties of the early tasks. This shifts our goal to finding a maximum-weight set of tasks that can all be completed on time.</p>
 
-<p>To reduce the search space, we categorize tasks in a given schedule as either <strong>early</strong> (finishing on or before their deadline) or <strong>late</strong> (finishing after their deadline). We can systematically rearrange any arbitrary schedule into a highly organized <strong>canonical form</strong> without ever changing which tasks are early and which are late.</p>
+<p>To reduce the search space, we can categorise the tasks in a given schedule as either <strong>early</strong> (finishing on or before their deadline) or <strong>late</strong> (finishing after their deadline). We can then systematically rearrange any arbitrary schedule into a highly organized <strong>canonical form</strong> without ever changing which tasks are early and which are late.</p>
 
 
 
@@ -9361,7 +9526,7 @@ and the weight function is $w$ restricted to $S'$. This $M'$ is called the <stro
 
 <p>Second, we can organize the early-first schedule into <strong>canonical form</strong>, where the early tasks are strictly ordered by monotonically increasing deadlines. Suppose we have two adjacent early tasks, $a_i$ finishing at time $k$ and $a_j$ finishing at time $k+1$, but they are out of deadline order, meaning $d_j < d_i$. Because $a_j$ is currently early, we know its finish time $k+1 \le d_j$. If we swap their positions, $a_j$ now finishes at time $k$. Since $k < k+1 \le d_j$, task $a_j$ is still early. Task $a_i$ now finishes at time $k+1$. However, we know $k+1 \le d_j < d_i$, which guarantees $k+1 \le d_i$. Thus, $a_i$ also remains early. </p>
 
-<p>This organizational proof is powerful: it dictates that the entire search for an optimal schedule reduces to merely selecting the correct subset $A$ of tasks to be early. Once we choose $A$, we simply sort $A$ by increasing deadlines, schedule them sequentially, and then append the rejected tasks $S \setminus A$ at the end in any arbitrary order.</p>
+<p>This organization dictates that the entire search for an optimal schedule reduces to merely selecting the correct subset $A$ of tasks to be early. Once we choose $A$, we simply sort $A$ by increasing deadlines, schedule them sequentially, and then append the rejected tasks $S \setminus A$ at the end in any arbitrary order we want.</p>
 
 
 <p>We define a subset of tasks $A$ as <strong>independent</strong> if there exists a valid schedule for $A$ such that no task in $A$ is late. Let $\mathcal{I}$ represent the family of all independent sets of tasks. To rapidly check if a set is independent without simulating a schedule, we use a counting metric. Let $N_t(A)$ denote the number of tasks in subset $A$ whose deadline is $t$ or earlier, for $t = 0, 1, \dots, n$. By definition, $N_0(A) = 0$.</p>
@@ -9381,7 +9546,7 @@ If (2) holds, (3) naturally follows. Scheduling tasks by increasing deadlines me
 Finally, (3) implies (1) trivially, because if scheduling them in increasing deadline order yields zero late tasks, then an early schedule exists, fulfilling the definition of independence. $\blacksquare$</p>
 
 
-<p>We can use (2) to compute whether or not a given
+<p>We can use (2) of the Counting Lemma to compute whether or not a given
 set of tasks is independent! A naive implementation of the greedy scheduling algorithm might repeatedly simulate schedules or scan up to the maximum possible deadline $n$ to verify the $N_t(A) \le t$ condition. This results in $O(n)$ time per check, leading to an overall runtime of $O(n^2)$. However, by leveraging the mathematical properties of the capacity constraints, we can determine whether a given subset $A$ is independent in strictly $O(|A|)$ time.</p>
 
 <p>The underlying rationale for this optimization is the observation that a set of $k = |A|$ tasks requires exactly $k$ time slots. If we pack these $k$ tasks as early as possible, they will never occupy a time slot beyond $t = k$. Consequently, any task with a deadline strictly greater than $k$ imposes no tighter constraint on the schedule than a task with a deadline exactly equal to $k$. If the capacity constraint $N_t(A) \le t$ holds for all $t$ from $1$ up to $k$, then for any $t > k$, the maximum possible number of tasks in the entire set is $k$, ensuring that $N_t(A) \le k < t$. The condition is naturally satisfied for all $t > k$.</p>
@@ -9418,19 +9583,27 @@ INDEPENDENT(A)
 
 <p>To deploy the greedy algorithm, we must mathematically establish that the system of tasks and independent subsets forms a matroid.</p>
 
-<p><strong>Theorem. <code>GREEDY</code> finds $A$ of Maximum Total Penalty. </strong> If $S$ is a set of unit-time tasks with deadlines, and $\mathcal{I}$ is the family of all independent sets of tasks, then the system $(S, \mathcal{I})$ is a matroid.</p>
+<p><strong>Theorem (Matroid Property of Task Scheduling).</strong> 
+Let $S$ be a finite set of unit-time tasks, each with an associated deadline. Let $\mathcal{I}$ be the collection of all independent sets of tasks, where a set is independent if there exists a schedule such that no task is late. Then the system $(S, \mathcal{I})$ is a matroid.</p>
 
-<p><strong>Proof. </strong> 
-First, the hereditary property clearly holds. If a set of tasks can be scheduled without any being late, then removing any task from that set creates a subset that is also perfectly schedulable without lateness. </p>
+<p><strong>Proof. </strong> The set of tasks is finite, so that is out of the way. Now, we can focus our proof on conditions (2) and (3) of matroids.
+First, the hereditary property clearly holds. If a set of tasks can be scheduled without any being late, then removing any task from that set creates a subset that is also perfectly schedulable without lateness. Formally, if $A \in \mathcal{I}$ and $B \subseteq A$, then $B \in \mathcal{I}$. 
+This follows directly from the definition of independence. If the tasks in $A$ can be scheduled without any task being late, then removing tasks from that schedule to form $B$ cannot result in any of the remaining tasks becoming late. Thus, $B$ is also independent.</p> </p>
 
-<p>Second, we must prove the exchange property. Suppose $B$ and $A$ are independent sets of tasks and $|B| > |A|$. We must find a task in $B$ to add to $A$ that maintains $A$'s independence. Let $k$ be the largest time $t$ such that $N_t(B) \le N_t(A)$. Such a $k$ definitely exists because at time zero, $N_0(A) = N_0(B) = 0$. Because set $B$ has strictly more total tasks than $A$, at the very end of the timeline $n$, we have $N_n(B) = |B|$ and $N_n(A) = |A|$, meaning $N_n(B) > N_n(A)$. Therefore, the crossover point $k$ must be strictly less than $n$.</p>
+<p>Second, we must prove the exchange property. Suppose $A, B \in \mathcal{I}$ and $|B| > |A|$. We must show there exists some task $x \in B \setminus A$ such that $A \cup \{x\} \in \mathcal{I}$. 
+To find this task, we utilize the <strong>Counting Lemma</strong>, which states that a set $X$ is independent if and only if for all $t \in \{0, 1, \dots, n\}$, the number of tasks in $X$ with deadlines $\le t$ (denoted $N_t(X)$) satisfies $N_t(X) \le t$.</p>
 
-<p>For every time step $j$ after $k$ (from $k+1$ up to $n$), it is strictly true that $N_j(B) > N_j(A)$. Because $N_{k+1}(B)$ jumps ahead of $N_{k+1}(A)$, but they were $\le$ at step $k$, set $B$ must contain more tasks with a deadline of exactly $k+1$ than set $A$ does. We can therefore pick a specific task $a_i \in B \setminus A$ that has a deadline of exactly $k+1$. Let $A' = A \cup \{a_i\}$.</p>
+<p>Let $k$ be the largest time step such that $N_k(B) \le N_k(A)$. Such a $k$ must exist because at $t=0$, $N_0(B) = N_0(A) = 0$. However, we know that at the final time step $n$, $N_n(B) = |B|$ and $N_n(A) = |A|$. Since $|B| > |A|$, it follows that $N_n(B) > N_n(A)$, which implies that $k < n$.</p>
 
-<p>We check $A'$ for independence using Lemma 16.12's capacity rule, $N_t(A') \le t$:
-<br>For $0 \le t \le k$: The new task $a_i$ has a deadline of $k+1$, which is strictly greater than $t$. It does not affect the count for these earlier times. Thus, $N_t(A') = N_t(A) \le t$ (since $A$ is independent).
-<br>For $k < t \le n$: The new task contributes to the count, so $N_t(A') = N_t(A) + 1$. However, we established that for all $t > k$, $N_t(B) > N_t(A)$, which means $N_t(A) + 1 \le N_t(B)$. Since $B$ is an independent set, we know $N_t(B) \le t$. By transitivity, $N_t(A') \le t$. 
-<br>Therefore, the new set $A'$ maintains the capacity constraint at every time step, proving it is an independent set. The system satisfies the exchange property and is definitively a matroid. $\blacksquare$</p>
+<p>By our choice of $k$ as the <em>largest</em> such value, it must be true that for all $j$ in the range $k+1 \le j \le n$, the inequality reverses: $N_j(B) > N_j(A)$. Specifically, for $j = k+1$, $B$ contains more tasks with deadlines $\le k+1$ than $A$ does. Since $N_k(B) \le N_k(A)$, the "extra" tasks in $B$ must have deadlines exactly equal to $k+1$. Therefore, there must exist at least one task $x \in B \setminus A$ whose deadline $d_x$ is $k+1$.</p>
+
+<p>Now, let $A' = A \cup \{x\}$. We check if $A'$ satisfies the Counting Lemma constraint $N_t(A') \le t$ for all $t$:</p>
+<ul>
+    <li><strong>For $0 \le t \le k$:</strong> Since the deadline of $x$ is $k+1$, the task $x$ does not contribute to the count for any $t \le k$. Thus, $N_t(A') = N_t(A)$. Since $A$ is independent, $N_t(A) \le t$, so the constraint holds.</li>
+    <li><strong>For $k+1 \le t \le n$:</strong> For these time steps, $N_t(A') = N_t(A) + 1$. From our earlier observation that $N_j(B) > N_j(A)$ for all $j > k$, we have $N_t(B) \ge N_t(A) + 1$. Thus, $N_t(A') \le N_t(B)$. Since $B$ is independent, we know $N_t(B) \le t$. By transitivity, $N_t(A') \le t$.</li>
+</ul>
+
+<p>Since the capacity constraint holds for all $t$, $A \cup \{x\}$ is independent. This satisfies the exchange property. $\blacksquare$</p>
 
 
 <p>The problem is a weighted matroid, so <code>GREEDY</code> is mathematically guaranteed to find the optimal schedule. The algorithm sorts the $n$ tasks into monotonically decreasing order by their penalties $w_i$. It iterates through the tasks, attempting to add each one to the growing independent set $A$. It accepts the task if the resulting set $A$ still passes the $N_t(A) \le t$ capacity check, and permanently rejects it otherwise.</p>
@@ -9711,7 +9884,7 @@ Let $B = \{(2,1), (3,2), (3,1)\}$. This set has size 3. The only paths are $3 \t
 
 <h5>Scheduling Variations</h5>
 
-<p>The unit-time task scheduling problem from Section 16.5 relies on finding a maximum-weight independent set of tasks. The standard greedy algorithm accepts or rejects tasks based on a capacity check, and only after determining the optimal set does it construct the final schedule. An alternative, more direct approach constructs the schedule iteratively on the fly.</p>
+<p>The unit-time task scheduling problem from earlier relies on finding a maximum-weight independent set of tasks. The standard greedy algorithm accepts or rejects tasks based on a capacity check, and only after determining the optimal set does it construct the final schedule. An alternative, more direct approach constructs the schedule iteratively on the fly.</p>
 
 <p>Suppose we have $n$ initially empty time slots, where slot $i$ represents the unit of time finishing at time $i$. We process the tasks in monotonically decreasing order of their penalty weights. For each task $a_j$ with deadline $d_j$, we attempt to assign it to the <em>latest</em> available time slot that is less than or equal to $d_j$. If such a slot exists, the task is scheduled early and incurs no penalty. If no such slot exists (meaning all slots prior to $d_j$ are filled), the task is doomed to be late, and we simply assign it to the latest of the remaining unfilled slots in the entire schedule to keep it out of the way.</p>
 
@@ -9868,7 +10041,8 @@ FURTHEST-IN-FUTURE(r, k)
 <circle cx="480" cy="160" r="80" fill="#7CFC00" fill-opacity="0.5" stroke="#7CFC00" stroke-width="2"/> <text x="480" y="215" class="text-small" fill="#E0E0E0">Greedy</text>
 <circle cx="480" cy="120" r="40" fill="#FF0000" fill-opacity="0.8" stroke="#FF0000" stroke-width="2"/> <text x="480" y="125" class="text-small" fill="#FFF">Matroid</text> </svg>
 <p>Incidentally, on the topic of diagrams, we an illustrate the Greedy approach to algorithm design below.</p>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%">
+<center>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="65%">
   <rect x="20" y="20" width="760" height="460" fill="none" stroke="#00a651" stroke-width="3" />
   
   <text x="400" y="75" font-family="Arial, sans-serif" font-size="28" fill="white" text-anchor="middle">Self-Reducibility</text>
@@ -9881,19 +10055,59 @@ FURTHEST-IN-FUTURE(r, k)
   
   <text x="400" y="320" font-family="Arial, sans-serif" font-size="28" fill="#ff0000" text-anchor="middle">Matroids</text>
 </svg>
+</center>
 
 <h5>The Local Ratio Method</h5>
-<p>The Local Ratio method provides a robust alternative to standard greedy approaches, particularly when dealing with optimization problems involving weights. The basic mathematical idea is surprisingly elegant. Consider an optimization problem where the goal is to evaluate $$\min_{x \in \Omega} c(x)$$ or $$\max_{x \in \Omega} c(x).$$</p>
+<p>The Local Ratio method provides a robust alternative to standard greedy approaches, particularly when dealing with optimization problems involving weights. In a Greedy approach, all that is done is actually quite simple: pick the best element, add it to a solution, and then reduce the problem. This paradigm can fail. Recall: a greedy approach makes decisions based on a static, metric—like picking the item with the lowest cost or highest value-to-weight ratio. This is short-sighted, especially in complex problems (like finding a minimum weight Vertex Cover) where a node with a low cost might only cover one edge, while a slightly more expensive node covers fifty. A pure greedy algorithm gets trapped by these local illusions. The Local Ration method is a bit more robust in that an element is not simply "picked," it is "paid for" by weights. The basic mathematical idea is surprisingly elegant. Consider an optimization problem where the goal is to evaluate $$\min_{x \in \Omega} c(x)$$ or $$\max_{x \in \Omega} c(x)$$ for an element $x.$ Instead of making a definitive "take it or leave it" decision based on the original weights, Local Ratio incrementally <em>deconstructs the weights themselves</em>. We isolate a local bottleneck, pay for it by splitting the weight function, and defer the final decision until the problem becomes trivial. We aren't breaking the graph into smaller piece; we are breaking the cost function.</p>
 
-<p>Suppose the objective function can be linearly decomposed into two constituent functions: $c(x) = c_1(x) + c_2(x)$.</p>
+<h5>A More Rigorous Introduction</h5>
 
-<p><strong>The Local Ratio Theorem. </strong>If a feasible solution $x^*$ is an optimal solution for both objective functions $c_1$ and $c_2$ simultaneously, then $x^*$ is guaranteed to be an optimal solution for the original objective function $c$.</p>
+<p>Like we said before, the Local Ratio technique is quite useful in the design and analysis of approximation algorithms for NP-hard optimisation problems. We will now begin defining more rigorously the notation and terms we will need. An <b>optimisation problem</b> is comprised of a family of problem instances associated with 
+<ol>
+  <li>a collection of solutions each of which is either feasible or infeasible</li>
+  <li>a cost function assigning a cost to each solution.</li>
+</ol>There are one of two goals to an optimsation problem: minimisation or maximisation. </p>
 
-<p><strong>Proof. </strong> $x^*$ minimizes both sub-functions independently. This means that for any other feasible $x$, we know that $c_1(x) \ge c_1(x^*)$ and $c_2(x) \ge c_2(x^*)$. By summing these inequalities, we obtain $c(x) = c_1(x) + c_2(x) \ge c_1(x^*) + c_2(x^*) = c(x^*) \quad \blacksquare$.</p>
+<p>The minimum spanning tree (MST) problem is a classic example of an optimisation problem. There, we seek those solutions under the objective that the spanning tre is of, well, minimum total cost given a graph with edge weights. 
+  This problem is polynomial-time solvable, but there are others which abide by the same paradigm that are not. These problems are called <strong>NP-Hard problems</strong>, and for them, it suffices to find <strong>approximate</strong> solutions. A solution whose cost is within a factor of $r \geq 1$ of the optimum is said to be <strong>$r$-approximate</strong>. An $r$-approximation algorithm is guaranteed to return $r$-approximate solutions. 
+</p>
 
-<p>The intuition behind the Local Ratio algorithm is to deliberately construct $c_1(x)$ such that it possesses a vastly large set of optimal solutions. When this is achieved, navigating the problem mathematically reduces to simply finding the optimum of the residual function, $\min_{x \in \Omega} c_2(x)$. This successive weight deduction shrinks the complexity of the problem until trivial solutions emerge.</p>
+<p>For minimisation problem, a feasible solution $S$ is said to be $r$-approximate if $$w(S) \leq r \cdot w(S*)$$ where $w(S)$ is the cost of $S$ and $S*$ is the optimal solution. With some algebra, we can play around and get a feasible solution that is said to be $r$-approximate for the maximisation case if $$w(S) \geq w(S*_/r.$$ In both cases, the closer $S$ is to $S*$, the smaller the $r$-value. $r$ has been defined as the approximation factor, which gives rise to the approximation ratio, where $$inf\{r | r \text{ is a performance guarantee of the algorithm}\}.$$</p>
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 650" width="100%">
+<h5>The Local Ratio Theorem</h5>
+
+<p>Historically, many approximation algorithms relied on <em>localized payments</em>—making a down payment on several items in each round and arguing that the optimal cost (OPT) must drop proportionally because every optimal solution involves some of those items. However, this weakness becomes apparent in problems where no single set of items is necessarily involved in every optimal solution (such as the Feedback Vertex Set problem). The Local Ratio Theorem elegantly bypasses this by focusing not on the items themselves, but on <strong>linearly decomposing the weight function</strong>.</p>
+
+<p>Suppose the objective (cost or weight) function can be linearly decomposed into two constituent functions: $w(x) = w_1(x) + w_2(x)$.</p>
+
+<p><strong>The Local Ratio Theorem (Exact Case). </strong>Let $\Omega$ be a set of feasible solutions, and let $w, w_1, w_2$ be objective functions mapping $\Omega$ to the real numbers such that $w = w_1 + w_2$. If a feasible solution $x^* \in \Omega$ is an optimal solution for both objective functions $w_1$ and $w_2$ simultaneously, then $x^*$ is guaranteed to be an optimal solution for the original objective function $w$.</p>
+
+<p>At its core, this theorem guarantees that optimization is additive. If you can find a solution that happens to be perfectly optimal for two separate, simpler cost landscapes ($w_1$ and $w_2$), you don't need to worry about the complex landscape of $w$. You are already at its global optimum. This gives us mathematical permission to solve a hard problem by slicing its weight function into easier, bite-sized pieces.</p>
+
+<p><strong>Proof. </strong> $x^*$ minimizes both sub-functions independently. This means that for any other feasible $x$, we know that $w_1(x) \ge w_1(x^*)$ and $w_2(x) \ge w_2(x^*)$. By summing these inequalities, we obtain $w(x) = w_1(x) + w_2(x) \ge w_1(x^*) + w_2(x^*) = w(x^*) \quad \blacksquare$.</p>
+
+<p>While the algebra is trivially simple, the implication is massive. The proof shows that as long as we never make a sub-optimal choice in $w_1$ and $w_2$, our final combination is strictly protected. There are no "cross-terms" or hidden penalties when recombining the weights.</p>
+
+<p>The true power of the theorem emerges when applied to approximations for NP-hard covering problems (like we said before). Using it, the theorem proves that approximation ratios are preserved under linear decomposition.</p>
+
+<p><strong>Theorem (Local Ratio—Minimization Problems). </strong> Let $\mathcal{F}$ be a set of feasibility constraints on vectors in $\mathbb{R}^n$. Let $w, w_1, w_2 \in \mathbb{R}^n$ be such that $w = w_1 + w_2$. Let $x \in \mathbb{R}^n$ be a feasible solution (with respect to $\mathcal{F}$) that is $r$-approximate with respect to $w_1$ and with respect to $w_2$. Then, $x$ is $r$-approximate with respect to $w$ as well.</p>
+
+<p><strong>Proof. </strong> Let $x^*, x_1^*$, and $x_2^*$ be the absolute optimal solutions with respect to $w, w_1$, and $w_2$, respectively. Because $x^*$ is a valid feasible solution overall, it cannot be better than the absolute optimums for the sub-functions. Therefore, $w_1 \cdot x_1^* \le w_1 \cdot x^*$ and $w_2 \cdot x_2^* \le w_2 \cdot x^*$. Thus,</p>
+
+<p>$$w \cdot x = w_1 \cdot x + w_2 \cdot x \le r(w_1 \cdot x_1^*) + r(w_2 \cdot x_2^*) \le r(w_1 \cdot x^*) + r(w_2 \cdot x^*) = r(w \cdot x^*) \blacksquare$$</p>
+
+
+<p>Algorithms based on the Local Ratio Theorem are typically recursive and follow a general structure: If a zero-cost solution can be found, return it. Otherwise, find a decomposition of $w$ into two weight functions $w_1$ and $w_2 = w - w_1$, and solve the problem recursively on $w_2$.</p>
+
+<p>The true genius lies in how we deliberately engineer the function $w_1(x)$. We want to construct $w_1(x)$ such that it possesses a <strong>vastly large set of optimal (or $r$-approximate) solutions</strong>. To formalize this shared trait across all local ratio algorithms, we use the following definition:</p>
+
+<p><strong>Definition 1 (Fully r-effective). </strong> Given a set of constraints $\mathcal{F}$ on vectors in $\mathbb{R}^n$ and a number $r \ge 1$, a weight vector $w \in \mathbb{R}^n$ is said to be fully $r$-effective if there exists a number $b$ such that $b \le w \cdot x \le r \cdot b$ for all feasible solutions $x$.</p>
+
+<p>If $w_1$ is fully $r$-effective, then <em>every single valid solution in the entire problem space</em> is automatically an $r$-approximation for $w_1$. When this is achieved, navigating the problem mathematically reduces to simply finding the optimum of the residual function, $\min_{x \in \Omega} w_2(x)$. Because $w_1$ is essentially "solved automatically," we ignore it and focus entirely on $w_2$. By repeating this successive weight deduction, we continuously shrink the numerical complexity until trivial (zero-cost) base cases emerge.</p>
+
+<center>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 650" width="70%">
   <line x1="120" y1="120" x2="280" y2="120" stroke="white" stroke-width="1.5" />
   <line x1="120" y1="280" x2="280" y2="280" stroke="white" stroke-width="1.5" />
   <line x1="120" y1="120" x2="120" y2="280" stroke="white" stroke-width="1.5" />
@@ -10008,6 +10222,7 @@ FURTHEST-IN-FUTURE(r, k)
   <circle cx="880" cy="580" r="8" fill="#ff0000" stroke="#00a651" stroke-width="2.5" />
   <circle cx="800" cy="500" r="8" fill="#ff0000" stroke="#00a651" stroke-width="2.5" />
 </svg>
+</center>
 
 <h5>Activity Selection and Interval Graphs</h5>
 <p></p>
@@ -10038,6 +10253,29 @@ FURTHEST-IN-FUTURE(r, k)
 11:  <b>else</b>
 12:      <b>return</b> IS &cup; {&Icirc;} </code></pre>
 
+<p>To understand how the <code>MAX-IS</code> algorithm leverages the Local Ratio Theorem, we must first recognise the shift from <em>minimisation</em> to <em>maximisation</em>. The fundamental logic of the theorem remains identical: if we can decompose our profit function $p = p_1 + p_2$, and find a solution that is simultaneously optimal for both $p_1$ and $p_2$, it is guaranteed to be optimal for $p$.</p>
+
+
+<p>In the unweighted Activity Selection problem, any maximal independent set (a schedule where no more jobs can fit) is just as good as another if they have the same size, which perfectly aligns with the Matroid Exchange Property. However, the introduction of weights breaks this. A single, highly profitable job might overlap with three low-profit jobs. A naive greedy algorithm (Matroid approach) cannot safely decide whether to take the one heavy job or the three light ones without looking ahead. Local Ratio bypasses this by decomposing the weights instead of agonizing over the intervals themselves.</p>
+
+<p>Because we are maximizing profit, intervals with zero or negative profit actively harm or provide no value to our objective. <code>Line 3</code> and <code>Line 4</code> simply prune these out. This acts as a secondary base case alongside the empty set in <code>Lines 1-2</code>.</p>
+
+<p>Recall that the Local Ratio is building a $w_1$ (or in this case, $p_1$) where <em>almost every valid solution is optimal</em>. 
+<code>Line 5</code> selects $\hat{I}$, the interval that ends first. <code>Line 6</code> and <code>Line 7</code> define $p_1$ such that $\hat{I}$ and <em>every interval that conflicts with it</em> receives a profit equal to $p(\hat{I})$. All other intervals get a profit of $0$.</p>
+
+<p>$\hat{I}$ is the interval that ends <em>first</em>, so any interval that conflicts with $\hat{I}$ must cross the exact moment in time when $\hat{I}$ ends. Because the processor can only handle one job at a time, <strong>it is physically impossible to schedule more than one of these conflicting intervals</strong>. Therefore, under the $p_1$ profit function, the absolute maximum profit <em>any</em> valid schedule can achieve is exactly $p(\hat{I})$. Any schedule that picks at least one of these intervals is mathematically optimal for $p_1$!</p>
+
+<p>Once $p_1$ is defined, we subtract it from our total profit to find the residual: $p_2 = p - p_1$. We then trust the recursion in <code>Line 8</code> to find an optimal solution for $p_2$. Note that because of the subtraction, some profits in $p_2$ might drop below zero—which is exactly why <code>Lines 3-4</code> exist to clean them up in the next recursive frame.</p>
+
+<p>When the recursion unwinds, we receive a schedule <code>IS</code> that is optimal for $p_2$. But to invoke the Local Ratio Theorem, <code>IS</code> <em>must also</em> be optimal for $p_1$. </p>
+
+<p>To be optimal for $p_1$, the schedule <code>IS</code> must contain exactly one interval from our conflict zone (earning the $p(\hat{I})$ profit). This is what it means for the solution to be <strong>$\hat{I}$-maximal</strong>. </p>
+<ul>
+    <li><code>Line 9</code> checks if <code>IS</code> is already $\hat{I}$-maximal (i.e., it already includes an interval that conflicts with $\hat{I}$). If it does, we are safe! It is optimal for $p_1$ and $p_2$, so we just <code>return IS</code> (<code>Line 10</code>).</li>
+    <li>If it is <em>not</em> $\hat{I}$-maximal, it means <code>IS</code> missed out on the $p_1$ profit entirely. Because no intervals in <code>IS</code> conflict with $\hat{I}$, we can safely force it to be optimal by simply adding $\hat{I}$ to the schedule in <code>Line 12</code> (<code>return IS &cup; {&Icirc;}</code>).</li>
+</ul>
+
+<p>By guaranteeing the solution is maximal with respect to $\hat{I}$ at every step of the unwinding recursion, we ensure the solution remains perfectly optimal for every single $p_1$ slice we carved out. The Local Ratio Theorem then mathematically cements that the final assembled schedule is optimal for the original profit function $p$.</p>
 
 <h5>Minimum Weight Arborescence (Directed MST)</h5>
 <p></p>
@@ -10247,10 +10485,29 @@ FURTHEST-IN-FUTURE(r, k)
 </svg>
 
 
+<p>The problem of finding a Minimum-Cost Arborescence (often solved by the Chu-Liu/Edmonds' algorithm) is one of the most elegant applications of the Local Ratio Theorem. The algorithm succeeds by decomposing a complex cost function into a trivial base function and a residual function.</p>
 
+
+<p>A naive greedy approach would simply look at every node $v$ and pick the absolutely cheapest incoming edge to satisfy the requirement that every node (except the root) must have exactly one parent. If you do this and miraculously form an arborescence (a directed tree with no cycles), you are done! It is mathematically optimal.</p>
+
+<p>However, because the graph is directed, this "blindly greedy" approach frequently creates a directed cycle instead of a tree. This is where the standard greedy algorithm gets stuck, and where the Local Ratio Theorem steps in to save the day. To use the Local Ratio Theorem, we need to split our cost function $c = c_1 + c_2$. We want to engineer $c_1$ such that <strong>every single valid arborescence is equally optimal for $c_1$</strong>. How do we do this?</p>
+
+<p>Let $m(v)$ be the cost of the cheapest incoming edge to node $v$. We define our base cost function $c_1$ such that <em>every</em> incoming edge to $v$ is assigned a cost of exactly $m(v)$. </p>
+
+<p>An arborescence is essentially a directed spanning tree, which means the rules of the structure dictate that <strong>every node (except the root) must have exactly one incoming edge</strong>. Therefore, no matter which valid arborescence you build, when evaluated under the $c_1$ cost function, it will <em>always</em> pay exactly $\sum_{v \neq r} m(v)$. </p>
+
+<p>Since the cost under $c_1$ is a fixed mathematical constant for all valid solutions, <strong>every valid arborescence is an optimal solution for $c_1$</strong>. The $c_1$ function is perfectly "fully effective." The Local Ratio Theorem guarantees that we can now completely ignore $c_1$ and focus entirely on finding the optimal solution for the residual cost, $c_2 = c - c_1$.</p>
+
+<p>By subtracting $c_1$ from our original costs, our residual cost $c_2$ inherently possesses a beautiful property: for every node $v$, its cheapest incoming edge now has a cost of exactly $0$.</p>
+
+<p>If our initial greedy choices formed a cycle $C$, every edge in that cycle now has a residual cost of $0$ under $c_2$. Because they are free, it is highly advantageous to use them. However, a valid arborescence cannot contain cycles. </p>
+
+<p>We know an optimal arborescence must enter this cycle exactly once (to connect these nodes to the root) and then use the zero-cost edges to traverse the rest of the cycle. To solve this, we can take the entire cycle $C$ and collapse it into a single "super-node." We then recursively call the algorithm on this smaller, collapsed graph using the residual costs $c_2$. When the recursion unwinds and returns an optimal arborescence for the collapsed graph, we expand the super-node back into a cycle. Because one edge of the arborescence will enter the cycle, we simply drop the one internal edge of the cycle that points to that same entry node, breaking the cycle and forming a perfect tree.</p>
+
+<p>Since the Local Ratio Theorem proves that optimizing $c_2$ simultaneously optimizes $c$, we are mathematically guaranteed that the final, unwound arborescence is the absolute minimum-cost solution for the original graph.</p>
 
 <h5>Fundamental Properties of the Minimum Spanning Tree</h5>
-<p></p>
+
 <p>The Minimum Spanning Tree (MST) holds a profound geometric property relative to any other spanning tree in the same graph. Let $T$ be an arbitrary spanning tree and $T^*$ be the minimum spanning tree of a network. There mathematically exists a one-to-one and onto mapping $\sigma: E(T) \to E(T^*)$ such that for every edge $e \in E(T)$, the weight is strictly bounded by $||e|| \ge ||\sigma(e)||$.</p>
 
 <p>This is proven by mapping shared edges directly ($\sigma(e) = e$ for every edge $e \in E(T^*) \cap E(T)$). For any differing edge $e \in E(T) \setminus E(T^*)$, uniting it with the MST $(e \cup T^*)$ forces the creation of a cycle $Q_e$. Because $T^*$ is minimal, for every edge $e'$ within $Q_e$, it must hold that $||e'|| \le ||e||$. Utilizing Hall's Marriage Theorem, we can orchestrate a perfect bipartite matching between $E(T) \setminus E(T^*)$ and $E(T^*) \setminus E(T)$ such that every edge maps to a smaller or equal counterpart within its respective cycle.</p>
@@ -10262,20 +10519,19 @@ FURTHEST-IN-FUTURE(r, k)
     <strong>Alpha-Power Minimization:</strong> For a graph $G=(V,E)$ with edge weights $w: E \to \mathbb{R}^+$, the spanning tree $T$ that minimizes $\sum_{e \in E(T)} ||e||^\alpha$ for any fixed $\alpha > 0$ is precisely the minimum spanning tree. Once again, since the mapping maintains $||e|| \ge ||\sigma(e)||$, applying the power of $\alpha$ preserves the inequality, dictating that $cost(T) = \sum_{e \in E(T)} ||e||^\alpha \ge \sum_{e \in E(T)} ||\sigma(e)||^\alpha = cost(T^*)$.
 </blockquote>
 
+<p>While the Local Ratio Theorem and the $\sigma$-mapping rely on different mathematical engines, they share a profound, unifying philosophy: <strong>proving global optimality through localized, undeniable inequalities.</strong></p>
+
+<p>In the Local Ratio Theorem, we simplify an optimization problem by slicing the <em>cost function</em>. We prove that a solution $x^*$ is globally better than $x$ by finding sub-functions where $w_1(x) \ge w_1(x^*)$ and $w_2(x) \ge w_2(x^*)$. We completely bypass the need to evaluate the entire complex cost landscape; if we win on every individual slice of the weight, we win globally.</p>
+
+<p>The MST $\sigma$-mapping accomplishes the exact same goal, but it slices the <em>solution structure</em> instead of the weights. By using Hall's Marriage Theorem to orchestrate a perfect bipartite matching, we decompose the two massive, complex trees ($T$ and $T^*$) into distinct, one-to-one edge battles. Because $T^*$ is a matroid basis, it is mathematically guaranteed to win or tie every single localized edge battle ($||e|| \ge ||\sigma(e)||$).</p>
+
+<p>Just as Local Ratio algorithms sum their trivial sub-functions to guarantee a global minimum ($w_1 + w_2$), the MST proofs simply sum these localized edge battles. Whether we are summing standard weights, counting Steiner points, or applying non-linear $\alpha$-powers, the algebraic logic is identical: if you never lose a local, one-to-one comparison, you cannot possibly lose globally.</p>
 
 
 
-
-    
 
 <h2 id="II">The Incremental Method</h2>
-<center>
-  <nav class="nav-scroll" role="navigation" aria-label="Back to Top">
-    <div class="nav-row">
-      <a class="card" href="#top"><span>BACK TO TOP</span></a>
-    </div>
-  </nav>
-</center>
+
 <h3 id="II.1">Network Flows and the Incremental Method</h3>
     <h5 id="II.1.a">The Ford-Fulkerson Method</h5>
     <p>
@@ -10299,13 +10555,7 @@ FURTHEST-IN-FUTURE(r, k)
     </p>
 
 <h2 id="III">Complexity and Approximation</h2>
-<center>
-  <nav class="nav-scroll" role="navigation" aria-label="Back to Top">
-    <div class="nav-row">
-      <a class="card" href="#top"><span>BACK TO TOP</span></a>
-    </div>
-  </nav>
-</center>
+
 <h3 id="III.1">NP-hard Problems and Approximation Algorithms</h3>
     <h5 id="III.1.a">What is NP?</h5>
     <p>
