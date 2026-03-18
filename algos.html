@@ -13,7 +13,7 @@
             "Liberation Mono", "Courier New", monospace;*/
     
     /* DEFINED MISSING VARIABLES BELOW */
-    --bg: #fff;         /* Background color */
+      --bg: #0b0b0c; 
     --fg: #111;         /* Text color */
     --border: #ccc;     /* Border color */
     --accent: #007bff;  /* Hover color (Blue) */
@@ -9374,11 +9374,13 @@ IMPLEMENT-MST-C-ADVANCED(G, w)
 
 <p>Because the sets of acyclic forests in a graph perfectly satisfy the matroid exchange property (Condition 3), a greedy strategy is mathematically guaranteed to safely grow the independent set until it becomes a "maximal" independent set. In the context of a connected graphic matroid, a maximal independent set is precisely a minimum spanning tree. The matroid structure essentially proves <em>why</em> the greedy choice never traps you in a local optimum during MST construction.</p>
 
+
 <p>The same thing, however, cannot be said of Prim's. While it's process:
   <ol><li>starts at a single node</li>
   <li>only considers edges connected to the current tree</li>
 <li>grows a single, connected component until it hits every node,</li>
-</ol>may seem like it is processing a graphic matroid, Prim's strict consideration of "edges connected to the current tree" forms a structural constraint not implemented in Kruskal's. This means Prim's does not exactly follow matroid rules, so it is not quite a matroid algorithm. To be more precise, the reason for that is the laws of a matroid allow us to pick <i>any</i> independent element from the entire set—it does not force us to be picky with what we choose. Prim's is still correct though on account of its base on the Cut Property.
+</ol>may seem like it is processing a graphic matroid, Prim's strict consideration of "edges connected to the current tree" forms a structural constraint not implemented in Kruskal's. Removing an edge from a tree does not 
+always guarantee a tree. This means Prim's does not exactly follow matroid rules, so it is not quite a matroid algorithm. To be more precise, the reason for that is the laws of a matroid allow us to pick <i>any</i> independent element from the entire set—it does not force us to be picky with what we choose. Prim's is still correct though on account of its base on the Cut Property.
 </p>
 
 <p><strong>Theorem. The Graphic Matroid.</strong> If $G = (V, E)$ is an undirected graph, then $M_G = (S_G, \mathcal{I}_G)$ is a matroid.</p>
