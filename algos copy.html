@@ -10534,6 +10534,10 @@ FURTHEST-IN-FUTURE(r, k)
 
 <h5>Fundamental Properties of the Minimum Spanning Tree</h5>
 
+<blockquote style="color:red;">It was later discovered, after these notes were written, that Dr. Du had placed these slides from a different lecture. I.e., these slides, from a different deck, were placed in 
+    the Local Ratio lecture just so he could retain them. They have NOTHING to do with the local ratio at all. 
+</blockquote>
+
 <p>The Minimum Spanning Tree (MST) holds a profound geometric property relative to any other spanning tree in the same graph. Let $T$ be an arbitrary spanning tree and $T^*$ be the minimum spanning tree of a network. There mathematically exists a one-to-one and onto mapping $\sigma: E(T) \to E(T^*)$ such that for every edge $e \in E(T)$, the weight is strictly bounded by $||e|| \ge ||\sigma(e)||$.</p>
 
 <p>This is proven by mapping shared edges directly ($\sigma(e) = e$ for every edge $e \in E(T^*) \cap E(T)$). For any differing edge $e \in E(T) \setminus E(T^*)$, uniting it with the MST $(e \cup T^*)$ forces the creation of a cycle $Q_e$. Because $T^*$ is minimal, for every edge $e'$ within $Q_e$, it must hold that $||e'|| \le ||e||$. Utilizing Hall's Marriage Theorem, we can orchestrate a perfect bipartite matching between $E(T) \setminus E(T^*)$ and $E(T^*) \setminus E(T)$ such that every edge maps to a smaller or equal counterpart within its respective cycle.</p>
@@ -10545,23 +10549,13 @@ FURTHEST-IN-FUTURE(r, k)
     <strong>Alpha-Power Minimization:</strong> For a graph $G=(V,E)$ with edge weights $w: E \to \mathbb{R}^+$, the spanning tree $T$ that minimizes $\sum_{e \in E(T)} ||e||^\alpha$ for any fixed $\alpha > 0$ is precisely the minimum spanning tree. Once again, since the mapping maintains $||e|| \ge ||\sigma(e)||$, applying the power of $\alpha$ preserves the inequality, dictating that $cost(T) = \sum_{e \in E(T)} ||e||^\alpha \ge \sum_{e \in E(T)} ||\sigma(e)||^\alpha = cost(T^*)$.
 </blockquote>
 
-<p>While the Local Ratio Theorem and the $\sigma$-mapping rely on different mathematical engines, they share a profound, unifying philosophy: <strong>proving global optimality through localized, undeniable inequalities.</strong></p>
-
-<p>In the Local Ratio Theorem, we simplify an optimization problem by slicing the <em>cost function</em>. We prove that a solution $x^*$ is globally better than $x$ by finding sub-functions where $w_1(x) \ge w_1(x^*)$ and $w_2(x) \ge w_2(x^*)$. We completely bypass the need to evaluate the entire complex cost landscape; if we win on every individual slice of the weight, we win globally.</p>
-
-<p>The MST $\sigma$-mapping accomplishes the exact same goal, but it slices the <em>solution structure</em> instead of the weights. By using Hall's Marriage Theorem to orchestrate a perfect bipartite matching, we decompose the two massive, complex trees ($T$ and $T^*$) into distinct, one-to-one edge battles. Because $T^*$ is a matroid basis, it is mathematically guaranteed to win or tie every single localized edge battle ($||e|| \ge ||\sigma(e)||$).</p>
-
-<p>Just as Local Ratio algorithms sum their trivial sub-functions to guarantee a global minimum ($w_1 + w_2$), the MST proofs simply sum these localized edge battles. Whether we are summing standard weights, counting Steiner points, or applying non-linear $\alpha$-powers, the algebraic logic is identical: if you never lose a local, one-to-one comparison, you cannot possibly lose globally.</p>
-
-
-
 
 <hr><center>
     <h2 id="II">The Incremental Method</h2>
 </center><hr>
 <h3 id="II.1">Network Flows and the Incremental Method</h3>
     <h5 id="II.1.a">The Ford-Fulkerson Method</h5>
-    <h6>Flow Networks</h6>
+    <h5>Flow Networks</h5>
     <p>
         Previously, we showed how digraphs can be used to find the shortest path from one point to another. The algorithms to perform such a task are well-studied. The fact of the matter is: these algorithms
         are proven to return the result desired and have well-established bounds. But there is another use for the digraph model of illustration: we can use it to visualise something called <i>material flows.</i>
@@ -10594,7 +10588,7 @@ minus the flow into the source. </p>
     There is a reason we included it though: it is to prepare us ahead of time for an introduction to residual flows (later on). Moreover, the maximum-flow problem is just a maximation problem of finding a maximum-valued 
 flow from $s$ to $t$ given a flow network $G$. Incidentally, if it is not already clear, what goes into a vertex must come out of that vertex in the same quantity; we call that property <b>flow-conservation</b>.</p>
 
-<h6>Modeling Problems with Antiparallel Edges</h6>
+<h5>Modeling Problems with Antiparallel Edges</h5>
 <p>
     The constraint of no corresponding reverse edge for an edge $(v_1, v_2) \in E$ (i.e., no $(v_2, v_1) \in E$) means what it sounds like: there cannot be an edge $(v_1, v_2)$ and a reverse of that very 
     edge $(v_2, v_1)$ at the same time in a graph. If there are two edges $(v_1, v_2)$ and $(v_2, v_1)$ that are flip-flops of each other, we say those edges are <b>antiparallel.</b> This means we can 
@@ -10781,7 +10775,7 @@ it in the reverse direction as well to achieve equality. $\quad \blacksquare$</p
     first network with antiparallel edges drawn.
 </p>
 
-<h6>Networks with Multiple Sources and Sinks</h6>
+<h5>Networks with Multiple Sources and Sinks</h5>
 <p>As the title of this subsection would suggest, it is possible to have a network which has more than one source $\{s_1, s_2, \dots, s_m\}$ and one sink $\{t_1, t_2, \dots, t_n\}$. This is actually 
     no harder than an ordinary maximum flow problem. The reason for that is quite simple: just as before, when we converted antiparallel edges to an equivalent new network whose edges do not exhibit antiparallelism, 
     we can convert a multiple sinked or multiple sourced network by placing down a <b>supersource</b> $s$ and a <b>supersink</b> $t$. $s$ and $t$ will come with a directed edge $(s, s_i)$ and $(t, t_i)$
@@ -10950,7 +10944,7 @@ it in the reverse direction as well to achieve equality. $\quad \blacksquare$</p
         are equivalent. $\quad \blacksquare$
 </p>
 
-<h6>More on Flow Networks</h6>
+<h5>More on Flow Networks</h5>
 <p>Suppose a flow network $G=(V,E)$ violates the assumption we made earlier that the network contains a path $s \rightsquigarrow v \rightsquigarrow t \quad \forall v \in V.$ We will let $u$ be a vertex for which 
     there is no path  $s \rightsquigarrow u \rightsquigarrow t.$ We can show that there must exist a maximum flow $f$ in $G$ such that $f(u,v) = f(v, u) = 0 \quad \forall v \in V.$ Bodnar and Lohr returns. 
 </p>
@@ -10964,7 +10958,7 @@ it in the reverse direction as well to achieve equality. $\quad \blacksquare$</p
 </p>
 <p>There are obviously more exercises from CLRS that are useful to us, but we will leave those to the reader.</p>
 
-<h6>The Ford-Fulkerson Method</h6>
+<h5>The Ford-Fulkerson Method</h5>
 <p>There is a way to solve the maximum-flow problem, and it is called the Ford-Fulkerson Method. There are many implementations of it, each with different running times. Hence why it is called a "method" 
     and not an "algorithm". The Ford-Fulkerson Method is predicated on three critical pillars:
 </p>
@@ -10989,7 +10983,7 @@ it in the reverse direction as well to achieve equality. $\quad \blacksquare$</p
   </pre>
 <p>Remember the three pillars of the Ford-Fulkerson Method mentioned earlier? They must first be examined more closely before the method can be scrutinised.</p>
 
-<h6>Residual Networks</h6>
+<h5>Residual Networks</h5>
 
 
 

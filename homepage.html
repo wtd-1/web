@@ -62,6 +62,14 @@
             flex-wrap: wrap;
             gap: 10px;
         }
+        .nav-row1 {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+
+        }
 
         .card {
             display: inline-flex;
@@ -98,9 +106,20 @@
         }
 
         #sidebar {
-            flex: 1;
+            flex: 1.5;
             padding: 20px;
             background: #0f0f11;
+
+            /* Add these two lines to enable scrolling: */
+            max-height: 600px; 
+            overflow-y: auto;
+        }
+
+        #box {
+            max-width: 100%;
+            border: 1px solid var(--border);
+            padding: 5px;
+            background: var(--card);
         }
 
         /* Typography */
@@ -195,48 +214,83 @@
 
 </nav>
 
-    <div id="content-wrap">
-        <div id="main">
-            <h1>About Me </h1>
-            <p>
-                I am a Ph.D. student at the University of Texas at Dallas. 
-                My advisor is Dr. <a href="https://personal.utdallas.edu/~djg230002/">Daniel Gibney</a>. 
-                I enjoy using the British convention sometimes, but not consistently, in my spelling; frankly, it depends on my mood.
-            </p>
-
-            <p>
-                A fun fact about me is my Erdős Number is five. Curious about yours? 
-                Find out <a href="https://mathscinet.ams.org/mathscinet/freetools/collab-dist">here</a>.
-            </p>
-                <a class="card" href="https://wtd-1.github.io/web/Kami%20Export%20-%20MAILING%20ADDRESS%20MS%20EC-31-2.pdf">CONTACT ME</a></p>
-
-            <h2>Research Profile</h2>
-            <p>
-                My current work focuses on efficient algorithms and data structures. I have been in research since I started as an undergraduate; at that time, I did 
-                computer vision and multimodal computing under Dr. <a href="https://www.yapengtian.com">Yapeng Tian</a>. I still do work there, actually, in using multimodal LLMs
-                for deepfake detection. 
-            </p>
-            <p>Later, I did work on incorporating artificially intelligent watershed algorithms in segmenting grains in methylammonium lead iodide ($MAPbI_3$) 
-                films for perovskite solar cell optimization at the Natural Science and Engineering Research Laboratory under a grant awarded by the Research Experiences for Undergraduates
-            program of the United States National Science Foundation.</p>
-
-            <p>Following that, I did work under Dr. <a href="https://ekfox.web.illinois.edu">Emily Fox</a> on approximating the Fréchet Distance. Ever since, my work has been 
-            in computational biology and data compression under Dr. Gibney. </p>
-            
-            <!--<p align="center">
-                <br>
-                <img src="content_files/wordle3.jpg" alt="Research Word Cloud" style="width: 100%; max-width: 600px;">
-            </p>-->
+    <nav id="nav-wrap">
+        <div class="nav-row1">
+            <font size="7"> ⚠️ </font>
+            <p align="left">By viewing this webpage, you are acknowledging that any deadlines, content, and otherwise anything
+                possibly captured under the span of the course herein is solely the responsibility of the student and 
+            that this website exists to strictly to serve as a <i>resource</i> ancillary to the delivery of content
+        in this course—not as a inoculation against having to take notes, check for deadlines and updates on eLearning, and
+    being a responsible classroom citizen.</p>
+    
         </div>
-<!--
-        <div id="sidebar">
-            <div class="sidebox">
-                     <h1>Contact Info</h1>
-                <p align="center">
-                <a class="card" href="https://wtd-1.github.io/web/Kami%20Export%20-%20MAILING%20ADDRESS%20MS%20EC-31-2.pdf">CONTACT ME</a></p>
+    </nav>
+
+    <div id="content-wrap">
+        
+        <div id="main">
+            <h1>Course Homepage Template </h1>
+
+        <div class="nav-row">
+            <a class="card" href=".html">NOTES</a>
+            <a class="card" href=".html">ASSIGNMENTS</a>
+            <a class="card" href=".html">PROJECTS</a>
+            <a class="card" href=".html">EXAMS</a>            
+            <a class="card" href=".html">MORE</a>
+        </div>
+        <hr>
+
+            <!--FALL-->
+            <p align="center">
+                <br>
+                <img src="https://wtd-1.github.io/web/ecs-building-fall-2000.jpg" alt="utd" style="width: 100%; max-width: 600px;">
+            </p>
+
+            <!--SPRING-->
+         <p align="center">
+                <br>
+                <img src="https://wtd-1.github.io/web/i.php.jpeg" alt="utd" style="width: 100%; max-width: 600px;">
+            </p>
+            
+            <h2>Introduction</h2>
+            <p>
+                Welcome to the Fall 2026 semester, it is good to be with you. I am William Doan, the Teaching Assistant for this 
+                course; Dr. [INSERT] is the instructor of record. In this course, you will learn [...] 
+            </p>
+
+            <h2>Administrivia</h2>
+            <p>Below, find the <kbd>CONTACT ME</kbd> button to open information about how you can contact me should any inquires arise.
+            Beside it, the <kbd>PROFESSOR INFO</kbd> button does the same thing, but for him/her. </p>
+                <p><a class="card" href="https://wtd-1.github.io/web/Kami%20Export%20-%20MAILING%20ADDRESS%20MS%20EC-31-2.pdf">CONTACT ME</a></p>
+
+            <p>list syllabus information</p>
+            <p>On the right, or below if you are on a mobile device, there is a <kbd>CLASSROOM BULLETIN</kbd> that displays
+            any updates for this course—deadlines, updates, errate, et cetera. This 
+                website is maintained by a sole individual: me. I will make an honest effort to keep it up-to-date with the 
+                ebbs and flows of the course, but I am busy too. <b><font color="red">Ultimately, keeping track of this course is wholly and categorically up to the 
+                student.
+            </font></b> </p>
+
+
+        <div id="box">
+            <p align="center"><b><font color="red">⚠️ <u>WARNING</u> ⚠️</font></b></p>
+            <p><b><u>IN CASE THIS WAS MISSED</u>:</b> By viewing this webpage, you are acknowledging that any deadlines, content, and otherwise anything
+                possibly captured under the span of the course herein is solely the responsibility of the student and 
+            that this website exists to strictly to serve as a <i>resource</i> ancillary to the delivery of content
+        in this course—not as a inoculation against having to take notes, check for deadlines and updates on eLearning, and
+    being a responsible classroom citizen.</p>
             </div>
 
-        </div>-->
+
+            
+            
+        </div>
+
+        <div id="sidebar">
+                     <h1 align="center">Classroom Bulletin</h1>
+               <p>► This is a test.</p>
+
+        </div>
     </div>
 
     <div id="footer-wrap">
