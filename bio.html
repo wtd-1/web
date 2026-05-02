@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>/~wtd/BIOGRAPHY/bio.html</title>
+    <style>
+        /* Base Desktop Styles (LNCS Layout) */
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 40px; 
+            
+            /* The LNCS Magic */
+            width: 55%;         /* Restricts text width, creating huge side margins */
+            max-width: 1400px;  /* Prevents it from getting absurdly wide on 4K monitors */
+            margin: 80px auto;  /* 'auto' perfectly centers the 55% block on the screen */
+            line-height: 1.4;   /* Adds a bit of breathing room between lines of text */
+
+            text-align: justify; /* Forces text to stretch to both margins */
+            hyphens: auto;       /* Breaks long words with hyphens to prevent ugly gaps */
+        }
+
+        /* Existing Table & formatting styles */
+        table {
+            font-family: monospace;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 2000px; 
+        }
+        .box {
+            /*width: 400px;
+            height: 100px;*/
+            border: 1px solid black;
+            padding: 30px;
+            /*margin: 10px;*/
+        } 
+
+        th, td {
+            text-align: left;
+            padding: 4px 15px 4px 0; 
+            font-weight: normal;
+        }
+        th {
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #000;
+            margin-top: 5px;
+            max-width: 2000px; 
+            margin-left: 0;
+        }
+        a {
+            text-decoration: none;
+            color: #0000ee;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        img {
+            border: none;
+            vertical-align: middle;
+            margin-right: 5px;
+            width: 30px; 
+            height: 36px; 
+        }
+
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        /* If the screen is 900px wide or smaller, these rules take over */
+        @media screen and (max-width: 900px) {
+            body {
+                width: 90%;        /* Reclaims the whitespace for the content */
+                margin: 30px auto; /* Reduces the massive top/bottom margins */
+                
+                /* I highly recommend scaling down your 40px font on mobile, 
+                   otherwise you might only fit 2-3 words per line! */
+                font-size: 20px;   
+            }
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <h1>Biography</h1>
+<p style="font-family: monospace;">I am a Ph.D. student at the <a href="https://www.utdallas.edu">University of Texas at Dallas</a>. My advisor is Dr. <a href="https://personal.utdallas.edu/~djg230002/">Daniel Gibney</a>. 
+I enjoy using the British convention sometimes, but not consistently, in my spelling; frankly, it depends on my mood.</p>
+
+<p style="font-family: monospace;">A fun fact about me is my Erdős Number is—for now—five. Curious about yours? 
+Find out <a href="https://mathscinet.ams.org/mathscinet/freetools/collab-dist">here</a>.
+</p>
+  <!--<div class="box">This is a box created using a
+        &lt;div&gt; element.
+    </div>-->
+<h1>Research Profile</h1>
+<p style="font-family: monospace;">My current work focuses on efficient algorithms and data structures. I have been in research since I started as an undergraduate; 
+at that time, I did computer vision and multimodal computing under Dr. <a href="https://www.yapengtian.com">Yapeng Tian</a>. 
+I still do work there, actually, in using multimodal LLMs for deepfake detection. </p>
+
+<p style="font-family: monospace;">Later, I did work on incorporating artificially intelligent watershed algorithms in segmenting grains in methylammonium lead iodide  films for perovskite solar cell optimization at the Natural Science and Engineering Research Laboratory under a grant 
+awarded by the Research Experiences for Undergraduates program of the United States National Science Foundation.
+
+<p style="font-family: monospace;">Following that, I did work under Dr. <a href="https://ekfox.web.illinois.edu">Emily Fox</a> on approximating the Fréchet Distance. Ever since, 
+my work has been in computational biology and data compression under Dr. Gibney.</p>
+<br><hr>
+<p style="text-align: right; font-family: monospace;"> <font style="font-family: monospace;">
+    <a href="">pwd</a></font>: /~wtd/bio.html <br><font style="font-family: monospace;">
+    <a href="../">cd -</a></font></p> 
+<br>
+</body>
+</html>
