@@ -2,22 +2,41 @@
 <html>
 <head>
     <title>/~wtd/LINKS</title>
-<style>
-        /* Preserves the classic Apache look but uses modern, easy-to-manage tables */
+    <style>
+        /* Base Desktop Styles (LNCS Layout) */
         body {
             background-color: #ffffff;
             color: #000000;
-            font-size: 40px; /* <-- ADD THIS: Adjust this number up or down (e.g., 20px, 24px) until it feels right */
+            font-size: 20px; 
+            
+            /* The LNCS Magic */
+            width: 55%;         /* Restricts text width, creating huge side margins */
+            max-width: 1400px;  /* Prevents it from getting absurdly wide on 4K monitors */
+            margin: 80px auto;  /* 'auto' perfectly centers the 55% block on the screen */
+            line-height: 1.4;   /* Adds a bit of breathing room between lines of text */
+
+            text-align: justify; /* Forces text to stretch to both margins */
+            hyphens: auto;       /* Breaks long words with hyphens to prevent ugly gaps */
         }
+
+        /* Existing Table & formatting styles */
         table {
-            font-family: monospace; /* <-- Added here! */
+            font-family: monospace;
             border-collapse: collapse;
             width: 100%;
-            max-width: 2000px; /* <-- OPTIONAL: Increased from 800px to give the larger text more room to breathe */
+            max-width: 1000px; 
         }
+        .box {
+            /*width: 400px;
+            height: 100px;*/
+            border: 1px solid black;
+            padding: 30px;
+            /*margin: 10px;*/
+        } 
+
         th, td {
             text-align: left;
-            padding: 4px 15px 4px 0; /* <-- OPTIONAL: Slightly increased top/bottom padding to space out the rows */
+            padding: 4px 15px 4px 0; 
             font-weight: normal;
         }
         th {
@@ -29,7 +48,7 @@
             border: 0;
             border-top: 1px solid #000;
             margin-top: 5px;
-            max-width: 2000px; /* <-- Make sure this matches your table's max-width */
+            max-width: 1000px; 
             margin-left: 0;
         }
         a {
@@ -43,8 +62,22 @@
             border: none;
             vertical-align: middle;
             margin-right: 5px;
-            width: 30px; /* <-- Increased from 20px to match the larger text */
-            height: 36px; /* <-- Increased from 22px to match the larger text */
+            width: 30px; 
+            height: 36px; 
+        }
+
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        /* If the screen is 900px wide or smaller, these rules take over */
+        @media screen and (max-width: 900px) {
+            body {
+                width: 90%;        /* Reclaims the whitespace for the content */
+                margin: 30px auto; /* Reduces the massive top/bottom margins */
+                
+                /* I highly recommend scaling down your 40px font on mobile, 
+                   otherwise you might only fit 2-3 words per line! */
+                font-size: 20px;   
+            }
         }
     </style>
 </head>
@@ -65,7 +98,7 @@
     <tbody>
         <tr>
             <td><img src="https://icons.apache.org/icons/back.gif" alt="[DIR]"></td>
-            <td><a href="../">Parent Directory</a></td>
+            <td><a href="index.html">Parent Directory</a></td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
