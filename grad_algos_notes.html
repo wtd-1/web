@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>grad_algos_notes.html</title>
+    <style>
+        /* Base Desktop Styles */
+        html {
+            background-color: #ffffff;
+        }
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: monospace;
+            font-size: 20px;
+            line-height: 1.45;
+            text-align: left;
+            hyphens: auto;       /* Breaks long words with hyphens to prevent ugly gaps */
+            margin: 0;
+        }
+        .page {
+            display: flex;
+            align-items: flex-start;
+            gap: 32px;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 48px 56px;
+        }
+        .toc {
+            position: sticky;
+            top: 24px;
+            flex: 0 0 260px;
+            padding-right: 24px;
+            border-right: 1px solid #ffffff;
+            box-sizing: border-box;
+            text-align: left;
+        }
+        .toc h2 {
+            font-size: 18px;
+            font-weight: normal;
+            margin: 0 0 16px 0;
+            text-align: left;
+        }
+        .toc a {
+            display: block;
+            margin: 0 0 10px 0;
+        }
+        .content {
+            flex: 1;
+            min-width: 0;
+            max-width: 980px;
+            text-align: justify;
+        }
+        .content h2 {
+            font-size: 20px;
+            font-weight: normal;
+            margin: 28px 0 8px 0;
+            text-align: left;
+        }
+        .content p {
+            margin: 0 0 12px 0;
+        } 
+        .red {
+            color: red;
+        }
+
+        /* Existing Table & formatting styles */
+        table {
+            font-family: monospace;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 1000px; 
+        }
+        .box {
+            /*width: 400px;
+            height: 100px;*/
+            border: 1px solid #ffffff;
+            padding: 0px;
+            margin: 0px;
+        } 
+
+        th, td {
+            text-align: left;
+            padding: 4px 15px 4px 0; 
+            font-weight: normal;
+        }
+        th {
+            border-bottom: 1px solid #ffffff;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #ffffff;
+            margin-top: 5px;
+            max-width: 1000px; 
+            margin-left: 0;
+        }
+        a {
+            text-decoration: none;
+            color: #0000ee;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        img {
+            border: none;
+            vertical-align: middle;
+            margin-right: 5px;
+            width: 30px; 
+            height: 36px; 
+        }
+        p {
+            font-family: monospace;
+        }
+
+        li{
+            font-family: monospace;
+        }
+
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        /* If the screen is 900px wide or smaller, these rules take over */
+        @media screen and (max-width: 900px) {
+            .page {
+                display: block;
+                padding: 24px 18px;
+            }
+            .toc {
+                position: static;
+                flex: none;
+                padding-right: 0;
+                padding-bottom: 18px;
+                margin-bottom: 18px;
+                border-right: 0;
+                border-bottom: 1px solid #ffffff;
+            }
+        }
+    </style>
+<!-- MathJax v3 (TeX input, SVG output) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+
+</head>
+<body>
+<div class="page">
+    <aside class="toc">
+        <h2>TABLE OF CONTENTS</h2>
+        <a href="#introduction">Introduction</a>
+        <a href="#asymptotic-analysis">Asymptotic analysis</a>
+        <a href="#recurrences">Recurrences</a>
+        <a href="#divide-conquer">Iterative, Recursive, and Divide-and-Conquer algorithms</a>
+        <a href="#dynamic-programming">Dynamic programming</a>
+        <a href="#greedy">Greedy methods</a>
+        <a href="#matroid">Matroids <span class="red">(Extra)</span></a>
+        <a href="#graphs">Graphs</a>
+        <a href="#flows">Network flows</a>
+        <a href="#np-completeness">NP-completeness</a>
+        <a href="#randomized">Randomised algorithms <span class="red">(Extra)</span></a>
+    </aside>
+
+    <main class="content">
+        <p style="text-align: center; margin-top: 0;">NOTES ON<br>DESIGN AND ANALYSIS OF COMPUTER ALGORITHMS</p>
+        <p style="text-align: center;">[<a href="index.html">Return to the Parent Directory</a>]</p>
+        <br>
+
+
+        <h2 id="introduction">INTRODUCTION</h2>
+        <p><i>Introduce the course and administrivia.</i></p>
+        <br>
+
+        <h2 id="asymptotic-analysis">ASYMPTOTIC ANALYSIS</h2>
+        <p><i>Focus on growth rates, bounds, and the difference between worst-case, average-case, and amortized analysis.</i></p>
+        <br>
+        
+        <h2 id="recurrences">RECURRENCES</h2>
+        <p><i>It is not always clear the complexity of an algorithm. Learn how forming recurrences can part the fog.</i></p>
+        <br>
+        
+        <h2 id="divide-conquer">ITERATIVE, RECURSIVE, AND DIVIDE-AND-CONQUER ALGORITHMS</h2>
+        <p><i>Break problems into smaller subproblems, solve them recursively, and combine the results with a simple merge step.</i></p>
+        <br>
+        
+        <h2 id="dynamic-programming">DYNAMIC PROGRAMMING</h2>
+        <p><i>Record overlapping subproblems once, then reuse the stored results instead of recomputing them.</i></p>
+        <br>
+        
+        <h2 id="greedy">GREEDY METHODS</h2>
+        <p><i>Choose locally optimal steps only when the exchange argument or cut property makes the choice safe.</i></p>
+        <br>
+        
+        <h2 id="greedy">MATROIDS</h2>
+        <p><i>See a beautiful combinatorial theory perfectly describes many situations 
+            where the greedy method does yield optimal solutions.</i></p>
+        <br>
+        
+        <h2 id="graphs">GRAPHS</h2>
+        <p><i>Learn about traversals, shortest-paths, and spanning-tree techniques, but keep them separate so the structure of the problem stays visible.</i></p>
+        <br>
+        
+        <h2 id="flows">NETWORK FLOWS</h2>
+        <p><i>Model problems as a graph having a flow coursing through it.</i></p>
+        <br>
+        
+        <h2 id="np-completeness">NP-COMPLETENESS</h2>
+        <p><i>Use reductions to compare problem difficulty and keep the boundary between tractable and intractable problems clear.</i></p>
+        <br>
+        
+        <h2 id="randomized">RANDOMISED ALGORITHMS</h2>
+        <p><i>Describe expected performance, probability of failure, and the role randomness plays in simplifying the analysis.</i></p>
+        <br>
+
+    <br>
+    <center>
+        <p style="text-align: center; font-family: monospace;">    [<a href="index.html">Return to the Parent Directory</a>]</p> 
+
+    </center>
+    <p style="text-align: right; font-family: monospace;"> <span style="font-family: monospace;">
+        <span style="font-family: monospace;"> <a href="">pwd</a></span>: /~wtd/TEACHING/grad_algos.html</p> 
+        <br>
+    </main>
+</div>
+</body>
+</html>
