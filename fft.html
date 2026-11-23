@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fast Fourier Transform</title>
+
+<!-- OPTIONAL. MathJax converts LaTeX source ($...$ inline, $$...$$ and \[...\] display) into math drawn in the
+     TeX (Computer Modern) fonts, with hidden MathML for screen readers.
+     It is the ONLY external file in this deck. Delete these two blocks for zero
+     dependencies; native MathML (slide 4) still works with no script at all. -->
+<script>
+  window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']],
+                       displayMath: [['$$','$$'], ['\\[','\\]']],
+                       processEscapes: true },
+                     svg: { fontCache: 'global' } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+/* ---------- Colours ----------
+   --title is the colour of every slide title: a dark red, #B91C1C.
+   It has a contrast ratio of about 6.3:1 on white. That passes the WCAG (Web Content
+   Accessibility Guidelines) level AA for all text and level AAA for large text.
+   Body text stays black on white (21:1). Change one value to change all titles. */
+:root { --bg: #fff; --fg: #000; --title: #B91C1C; --text: 1; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg); overflow: hidden; }
+/* ---------- Fonts: Helvetica, with fallbacks for systems that do not have it ---------- */
+body { font-family: Helvetica, "Helvetica Neue", Arial, "Liberation Sans", sans-serif; }
+code, kbd { font-family: "Latin Modern Mono", Menlo, Consolas, "Courier New", monospace; font-size: .9em; }
+math { font-family: "Latin Modern Math", "STIX Two Math", math; }
+
+/* ---------- Slide canvas: fixed 16:9 design size, scaled to fit the window ---------- */
+/* --W is 1280 for 16:9 and 960 for 4:3. Height stays 720, as in Beamer. */
+#deck { position: absolute; left: 50%; top: 50%; width: calc(var(--W, 1280) * 1px); height: 720px;
+        transform: translate(-50%, -50%) scale(var(--scale, 1)); }
+.slide { position: absolute; inset: 0; padding: 64px 88px 96px; background: var(--bg);
+         display: flex; flex-direction: column; gap: 24px; overflow: auto;
+         font-size: calc(30px * var(--text));
+         opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s; }
+.slide.active { opacity: 1; visibility: visible; }
+.slide h1 { font-family: "Times New Roman", Times, "Liberation Serif", serif; font-size: 2.2em; margin: 0; font-weight: 700; color: var(--title); }
+.slide h2 { font-family: "Times New Roman", Times, "Liberation Serif", serif; font-size: 1.5em; margin: 0 0 8px; font-weight: 700; color: var(--title); }
+.slide p, .slide li { font-size: 1em; line-height: 1.45; margin: 0; }
+.slide ul, .slide ol { margin: 0; padding-left: 1.2em; display: grid; gap: 12px; }
+.slide.center { justify-content: center; align-items: center; text-align: center; }
+.row { display: flex; gap: 48px; align-items: center; justify-content: center; flex: 1; }
+.row > * { flex: 0 1 auto; min-width: 0; }
+.row > svg, .row > img, .row > video { max-width: 100%; height: auto; }
+/* Shrink-to-fit: the engine sets --fit below 1 only when a slide's content does not fit. */
+.slide > * { zoom: var(--fit, 1); }
+.small { font-size: .75em !important; }
+.bar { height: 36px; background: var(--fg); transform-origin: left; margin: 10px 0; }
+
+/* ---------- Fragments: parts of a slide shown one step at a time ---------- */
+.fragment { opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; }
+.fragment.shown { opacity: 1; visibility: visible; }
+mjx-assistive-mml .fragment { opacity: 1; visibility: visible; }
+
+/* ---------- CSS animation that restarts each time its slide opens ---------- */
+.slide.active .grow { animation: grow 1.4s ease-out both; }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ---------- Paused motion: animations jump to their final frame ---------- */
+body.paused *, body.paused *::before, body.paused *::after {
+  animation-duration: 0s !important; animation-delay: 0s !important;
+  animation-iteration-count: 1 !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+
+/* ---------- Controls ---------- */
+#controls { position: fixed; left: 12px; bottom: 12px; display: flex; gap: 6px;
+            align-items: center; z-index: 20; font: 18px Helvetica, "Helvetica Neue", Arial, sans-serif; }
+#controls button { min-width: 44px; min-height: 44px; padding: 0 10px; font: inherit;
+                   background: var(--bg); color: var(--fg); border: 2px solid var(--fg);
+                   border-radius: 4px; cursor: pointer; }
+#controls button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+#counter { margin-left: 8px; }
+body.nocontrols #controls { display: none; }
+#controls { flex-wrap: wrap; max-width: calc(100vw - 24px); }
+body.doc { display: flex; flex-direction: column; }
+body.doc #controls { order: -1; position: sticky; top: 0; left: 0; max-width: none;
+                     padding: 8px 16px; background: var(--bg); border-bottom: 2px solid var(--fg); }
+input[type="checkbox"] { accent-color: var(--fg); }
+:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px;
+                 box-shadow: 0 0 0 6px var(--bg); }
+#progress { position: fixed; left: 0; bottom: 0; height: 4px; width: 0;
+            background: var(--fg); transition: width .3s; z-index: 10; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden;
+           clip: rect(0 0 0 0); white-space: nowrap; }
+
+dialog { font: 20px/1.4 Helvetica, "Helvetica Neue", Arial, sans-serif; color: var(--fg); background: var(--bg);
+         border: 2px solid var(--fg); padding: 20px 28px; max-width: min(720px, 92vw);
+         max-height: 92vh; overflow: auto; }
+dialog::backdrop { background: rgba(0,0,0,.5); }
+dialog table { border-collapse: collapse; margin: 8px 0 16px; }
+dialog th, dialog td { text-align: left; padding: 2px 16px 2px 0; vertical-align: top; }
+dialog kbd { font-family: "Latin Modern Mono", Menlo, Consolas, "Courier New", monospace; border: 1px solid var(--fg);
+             padding: 0 5px; border-radius: 3px; }
+dialog label { display: block; margin: 6px 0; }
+dialog input { width: 22px; height: 22px; vertical-align: middle; }
+dialog button { font: inherit; min-height: 44px; padding: 0 16px; background: var(--bg);
+                color: var(--fg); border: 2px solid var(--fg); border-radius: 4px; cursor: pointer; }
+
+/* ---------- Overview (O) and document view (D) ---------- */
+html:has(body.overview), html:has(body.doc) { overflow: auto; height: auto; }
+body.overview, body.doc { overflow: visible; height: auto; }
+body.doc #deck { min-width: 0; width: 100%; }
+body.doc .row > * { min-width: 0; }
+body.overview #deck, body.doc #deck { position: static; transform: none; width: auto; height: auto; }
+body.overview #deck { display: grid; grid-template-columns: repeat(auto-fill, calc(var(--W, 1280) * .25px));
+                      gap: 16px; padding: 16px 16px 80px; justify-content: center; }
+body.overview .slide { position: relative; opacity: 1; visibility: visible;
+                       width: calc(var(--W, 1280) * 1px); height: 720px; zoom: .25; cursor: pointer;
+                       border: 4px solid var(--fg); outline-offset: 8px; }
+body.overview .slide.active { border-width: 16px; }
+/* Document view: one column that reflows; browser zoom works normally. */
+body.doc #deck { width: 100%; max-width: 48em; margin: 0 auto; padding: 16px 16px 96px; }
+body.doc .slide { position: relative; opacity: 1; visibility: visible; display: block;
+                  padding: 24px 0; font-size: calc(1.25rem * var(--text)); overflow: visible;
+                  border-bottom: 2px solid var(--fg); }
+body.doc .slide > * + * { margin-top: 16px; }
+body.doc .slide.center { text-align: left; }
+body.doc .row { justify-content: flex-start; flex-wrap: wrap; }
+body.doc .slide > * { zoom: 1; }
+body.doc .row > * { max-width: 100%; }
+body.doc svg, body.doc img { max-width: 100%; height: auto; }
+body.overview .fragment, body.doc .fragment { opacity: 1; visibility: visible; }
+body.doc #progress, body.overview #progress { display: none; }
+
+/* ---------- Windows High Contrast and other forced-colour modes ---------- */
+@media (forced-colors: active) {
+  .bar, #progress { background: CanvasText; forced-color-adjust: none; }
+}
+
+/* ---------- Print: one slide per page ---------- */
+@page { size: 1280px 720px; margin: 0; }
+@media print {
+  html, body { overflow: visible; height: auto; }
+  #deck { position: static; transform: none; width: auto; height: auto; }
+  .slide { position: relative; opacity: 1; visibility: visible; width: calc(var(--W, 1280) * 1px); height: 720px;
+           break-after: page; overflow: hidden; }
+  .slide:last-child { break-after: auto; }
+  .fragment { opacity: 1; visibility: visible; }
+  body > :not(#deck) { display: none !important; }
+  .slide { padding-bottom: 64px; }
+  /* PDF export: every slide fully revealed (all .hide / .fragment steps shown), whatever
+     view is active (slides, document or overview), with the slide colours kept. */
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
+      transition: none !important; animation: none !important; }
+  html, body, body.doc, body.overview { display: block; overflow: visible !important; height: auto !important;
+      margin: 0 !important; padding: 0 !important; background: none !important; }
+  body #deck, body.doc #deck, body.overview #deck { display: block; position: static; transform: none;
+      width: 100vw; max-width: none; height: auto; margin: 0; padding: 0; }
+  /* Each slide fills the whole printed page, whatever paper size the browser uses
+     (the @page size above is a hint some browsers ignore). --pz is the page-to-canvas
+     scale as a plain number: tan(atan2(a, b)) = a / b, the CSS way to divide lengths. */
+  body .slide, body.doc .slide, body.overview .slide {
+      --pz: min(tan(atan2(100vw, calc(var(--W, 1280) * 1px))), tan(atan2(100vh, 720px)));
+      position: relative; display: flex; opacity: 1 !important; visibility: visible !important;
+      width: 100vw; height: 100vh; zoom: 1; border: 0; margin: 0;
+      padding: calc(64px * var(--pz)) calc(88px * var(--pz)); gap: calc(24px * var(--pz));
+      font-size: calc(30px * var(--text)); overflow: hidden; break-after: page; break-inside: avoid; }
+  body .slide > *, body.doc .slide > *, body.overview .slide > * { zoom: calc(var(--fit, 1) * var(--pz)); }
+  body.doc .slide.center { text-align: center; }
+  body.doc .slide > * + * { margin-top: 0; }
+  body.doc .row { justify-content: center; flex-wrap: nowrap; }
+  .slide:last-child { break-after: auto; }
+  .hide, .fragment, .slide .hide, .slide .fragment { opacity: 1 !important; visibility: visible !important; }
+}
+
+/* ---------- 1990s theme (Windows 95 and Netscape Navigator 3 look) ----------
+   Grey #C0C0C0 chrome, square beveled buttons, a navy #000080 bar, sunken slide window,
+   groove rules under titles, square bullets, blue and purple underlined links,
+   Courier New code. Delete this whole block to return to the plain theme. */
+:root { --chrome: #C0C0C0; --navy: #000080; }
+html, body { background: var(--chrome); }
+.slide { box-shadow: inset 2px 2px 0 #808080, inset 4px 4px 0 #404040, inset -2px -2px 0 #fff, inset -4px -4px 0 #DFDFDF; }
+.slide h1, .slide h2 { border-bottom: 3px groove #808080; padding-bottom: 6px; }
+.slide.center h1 { border-bottom: 0; }
+.slide ul { list-style: square; }
+.slide ol:not([type]) { list-style-type: decimal; }
+.slide a, dialog a { color: #0000EE; text-decoration: underline; }
+.slide a:visited, dialog a:visited { color: #551A8B; }
+code, kbd, dialog kbd { font-family: "Courier New", Courier, "Liberation Mono", monospace; }
+#controls, dialog { font-family: "MS Sans Serif", Tahoma, Arial, "Liberation Sans", sans-serif; }
+#controls button, dialog button {
+  background: var(--chrome); color: #000; border: 2px solid; border-radius: 0;
+  border-color: #fff #404040 #404040 #fff; box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #DFDFDF; }
+#controls button:active, dialog button:active,
+#controls button[aria-pressed="true"] {
+  background: var(--chrome); color: #000; border-color: #404040 #fff #fff #404040;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #DFDFDF; }
+body.doc #controls { background: var(--chrome); border-bottom: 2px groove #808080; }
+:focus-visible { outline: 1px dotted #000; outline-offset: -6px; box-shadow: none; }
+#progress { background: var(--navy); height: 6px; transition: none; }
+dialog { background: var(--chrome); border: 2px solid; border-color: #fff #404040 #404040 #fff;
+         box-shadow: inset -1px -1px 0 #808080, inset 1px 1px 0 #DFDFDF, 4px 4px 0 rgba(0,0,0,.5);
+         padding: 4px 16px 16px; }
+dialog h2 { background: var(--navy); color: #fff; margin: 0 -12px 12px !important; padding: 3px 6px;
+            font-size: 1em; font-weight: 700; }
+dialog kbd { background: #fff; border: 2px inset #808080; border-radius: 0; }
+dialog input[type="checkbox"] { accent-color: var(--navy); }
+
+/* ---------- 1980s theme for the SLIDES only (IBM PC with a CGA display look) ----------
+   Colours are IBM Color Graphics Adapter (CGA) palette values: blue #0000AA, white #FFFFFF,
+   light red #FF5555, yellow #FFFF55, light cyan #55FFFF. Square pixel font stack, double-line
+   frame, scanlines, blocky pixelated images, and no fades (slides change at once).
+   Delete this whole block to return to the 1990s theme. */
+.slide { --bg: #0000AA; --fg: #FFFFFF; --title: #FFFF55; background: #0000AA; color: #FFFFFF;
+         font-family: "Perfect DOS VGA 437", "Px437 IBM VGA8", "Lucida Console", "Courier New", Courier, "Liberation Mono", monospace;
+         border: 0; box-shadow: none; transition: none; letter-spacing: .02em;
+         text-shadow: 1px 0 0 rgba(255,255,255,.35); }
+.slide::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 5;
+                background: repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0, rgba(0,0,0,0) 2px, rgba(0,0,0,.22) 3px, rgba(0,0,0,0) 4px); }
+.slide h1, .slide h2 { font-family: inherit; font-weight: 700; text-transform: uppercase; color: #FFFF55;
+                       border-bottom: 4px solid #FF5555; text-shadow: 3px 3px 0 #000055; }
+.slide.center h1 { border-bottom: 4px solid #FF5555; }
+.slide ul { list-style: none; padding-left: 1.4em; }
+.slide li { position: relative; }
+.slide ul > li::before { content: "\25A0"; position: absolute; left: -1.4em; color: #55FFFF; }
+/* Numbered lists use the browser's own markers, so type="a|A|i|I|1", start and reversed all work.
+   Nested lists without a type step through 1. -> a. -> i. like an outline. */
+.slide ol { padding-left: 2em; }
+.slide ol:not([type]) { list-style-type: decimal; }
+.slide ol ol:not([type]) { list-style-type: lower-alpha; }
+.slide ol ol ol:not([type]) { list-style-type: lower-roman; }
+.slide ol > li::marker { color: #55FFFF; font-weight: 700; }
+.slide code, .slide kbd { font-family: inherit; background: #000000; color: #55FF55; padding: 0 .25em; border: 0; }
+.slide a, .slide a:visited { color: #55FFFF; text-decoration: underline; }
+.slide .bar { background: #FF5555; }
+.slide img, .slide video { image-rendering: pixelated; border: 4px solid #FFFFFF; }
+.slide svg { background: #000000; border: 4px solid #FFFFFF; }
+.slide mjx-container svg { background: none; border: 0; }
+.slide mjx-container { color: inherit; }
+.slide svg [stroke="#000"] { stroke: #55FF55; }
+.slide svg [fill="#000"] { fill: #FFFF55; }
+#counter { background: var(--chrome); color: #000; padding: 2px 8px; border: 2px solid; border-color: #404040 #fff #fff #404040; }
+.fragment { transition: none; }
+@media print { .slide::after { display: none; } }
+/* ---------- Full screen: only the slides, on black, no controls ----------
+   body.fs is set by the script for both the F key / Fullscreen API and the
+   browser's own full-screen mode (green button, Ctrl+Cmd+F, F11). */
+body.fs:not(.doc):not(.overview), html:has(body.fs:not(.doc):not(.overview)) { background: #000; }
+body.fs:not(.doc):not(.overview) :is(#controls, #progress) { display: none; }
+body.fs:not(.doc):not(.overview) { cursor: none; }
+body.fs.mouse:not(.doc):not(.overview) { cursor: auto; }
+/* ---------- Figure grid: original + reconstruction on top, the three sinusoids below ---------- */
+.figgrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px 16px; align-items: start; }
+.figgrid > * { min-width: 0; }
+.figgrid svg { display: block; width: 100%; height: auto; }
+.figgrid .fig-orig  { grid-area: 1 / 1 / 2 / 4; }
+.figgrid .fig-recon { grid-area: 1 / 4 / 2 / 7; }
+.figgrid .fig-s1 { grid-area: 2 / 1 / 3 / 3; }
+.figgrid .fig-s2 { grid-area: 2 / 3 / 3 / 5; }
+.figgrid .fig-s3 { grid-area: 2 / 5 / 3 / 7; }
+</style>
+</head>
+<body>
+<main id="deck" aria-label="Presentation">
+
+  <!-- ============ SLIDES: each <section class="slide"> is one slide ============
+       Accessibility rules for your own slides:
+       - Start each slide with a heading (<h1> on the title slide, <h2> elsewhere).
+       - Give every <img> an alt text, and every <svg> role="img" plus a <title>.
+       - Give every video captions: <track kind="captions" src="clip.vtt" srclang="en">.
+       - Do not use colour as the only way to show meaning. -->
+
+  <section class="slide center">
+    <h1>Fast Fourier Transform</h1>
+    <p><b>William T. Doan</b></p>
+    <p class="small">Prepared for the CS 6363 class.</p>
+  </section>
+
+  <section class="slide">
+    <h2>History</h2>
+    <ul>
+      <li>During the Cold War there was an interest in the U.S. government to detect seismic activity.</li>
+      <li>In theory this should be simple:</li>
+      <ol>
+        <li>Measure the ground vibrations;</li>
+        <li>Convert them into electrical signals;</li>
+        <li>Record <kbd>2</kbd> as seismograms.</li>
+      </ol>
+      <li><kbd>2</kbd> is the most computationally expensive part.</li>
+    </ul>
+  </section>
+
+
+  <section class="slide">
+    <h2>Nowadays</h2>
+    <ul>
+        <li>The Fourier Transform (and its speedier younger sibling) is obviously applied beyond reconnaissance. </li>
+        <li>Digital Recording and pitch correction </li>
+        <li>Telecommunications (e.g., 5G)</li>
+        <li>Data compression (e.g., perceptual compression in audio and images)</li>
+        <li>Pattern recognition and filtering</li>
+        <li>In place of the self-attention sublayer in a Transformer encoder <a href="https://arxiv.org/abs/2105.03824">[FNet 2021]</a></li>
+        <ul>
+            <li>70% <i>faster</i> TPU and 80% <i>faster</i> GPU training</li>
+        </ul>
+        <li><a href="https://www.nature.com/articles/s41598-025-21799-5">[FFTMed 2025]</a>, <a href="https://arxiv.org/abs/2311.05908">FlashFFTConv 2023]</a>
+        </li>
+    </ul>
+  </section>
+  
+<section class="slide">
+    <h2>Today on "CS 6363"</h2>
+    <div class="hide">
+    <ul>
+        <li>The (Discrete) Fourier transform</li>
+        <ul>
+            <li>The <i>Inverse</i> Fourier transform</li>
+        </ul>
+        <li>The <i>Fast</i> Fourier transform</li>
+        <li><kbd><b>BONUS! AS SEEN IN ICML 2026!</b></kbd> How the FFT can replace self-attention</li>
+    </ul>
+    </div>
+</section>
+
+<section class="slide">
+    
+    <h2>Demonstrating the Fourier Transform</h2>
+<div class="figgrid">
+<div class="hide fig-orig">
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 230" width="480" height="230" role="img" aria-label="Original time series signal" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <text x="24" y="20" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="18">Original time series signal</text>
+  <path d="M24 222 V34" />
+  <path d="M20 40 L24 34 L28 40" />
+  <path d="M24 125 H446" />
+  <path d="M440 121 L446 125 L440 129" />
+  <text x="454" y="130" fill="white" stroke="none" font-family="Times New Roman, serif" font-style="italic" font-size="18">t</text>
+  <path d="M24.0 125.0 L26.6 112.4 L29.2 100.2 L31.8 88.8 L34.4 78.4 L37.0 69.4 L39.6 61.9 L42.2 56.2 L44.8 52.1 L47.4 49.8 L50.0 49.0 L52.6 49.7 L55.2 51.6 L57.8 54.4 L60.4 57.8 L63.0 61.6 L65.6 65.5 L68.2 69.2 L70.8 72.5 L73.4 75.3 L76.0 77.4 L78.6 78.9 L81.2 79.7 L83.8 79.9 L86.4 79.6 L89.0 78.9 L91.6 78.1 L94.2 77.2 L96.8 76.4 L99.4 75.8 L102.0 75.6 L104.6 75.9 L107.2 76.5 L109.8 77.7 L112.4 79.2 L115.0 81.1 L117.6 83.2 L120.2 85.4 L122.8 87.6 L125.4 89.8 L128.0 91.7 L130.6 93.4 L133.2 94.7 L135.8 95.6 L138.4 96.3 L141.0 96.6 L143.6 96.6 L146.2 96.5 L148.8 96.3 L151.4 96.1 L154.0 96.0 L156.6 96.1 L159.2 96.5 L161.8 97.1 L164.4 98.1 L167.0 99.3 L169.6 100.8 L172.2 102.5 L174.8 104.4 L177.4 106.3 L180.0 108.1 L182.6 109.9 L185.2 111.4 L187.8 112.7 L190.4 113.8 L193.0 114.5 L195.6 115.0 L198.2 115.3 L200.8 115.4 L203.4 115.4 L206.0 115.4 L208.6 115.4 L211.2 115.6 L213.8 116.0 L216.4 116.6 L219.0 117.4 L221.6 118.6 L224.2 119.9 L226.8 121.5 L229.4 123.2 L232.0 125.0 L234.6 126.8 L237.2 128.5 L239.8 130.1 L242.4 131.4 L245.0 132.6 L247.6 133.4 L250.2 134.0 L252.8 134.4 L255.4 134.6 L258.0 134.6 L260.6 134.6 L263.2 134.6 L265.8 134.7 L268.4 135.0 L271.0 135.5 L273.6 136.2 L276.2 137.3 L278.8 138.6 L281.4 140.1 L284.0 141.9 L286.6 143.7 L289.2 145.6 L291.8 147.5 L294.4 149.2 L297.0 150.7 L299.6 151.9 L302.2 152.9 L304.8 153.5 L307.4 153.9 L310.0 154.0 L312.6 153.9 L315.2 153.7 L317.8 153.5 L320.4 153.4 L323.0 153.4 L325.6 153.7 L328.2 154.4 L330.8 155.3 L333.4 156.6 L336.0 158.3 L338.6 160.2 L341.2 162.4 L343.8 164.6 L346.4 166.8 L349.0 168.9 L351.6 170.8 L354.2 172.3 L356.8 173.5 L359.4 174.1 L362.0 174.4 L364.6 174.2 L367.2 173.6 L369.8 172.8 L372.4 171.9 L375.0 171.1 L377.6 170.4 L380.2 170.1 L382.8 170.3 L385.4 171.1 L388.0 172.6 L390.6 174.7 L393.2 177.5 L395.8 180.8 L398.4 184.5 L401.0 188.4 L403.6 192.2 L406.2 195.6 L408.8 198.4 L411.4 200.3 L414.0 201.0 L416.6 200.2 L419.2 197.9 L421.8 193.8 L424.4 188.1 L427.0 180.6 L429.6 171.6 L432.2 161.2 L434.8 149.8 L437.4 137.6 L440.0 125.0" stroke-width="2.2" />
+</svg>
+</div>
+
+<div class="hide fig-s1">
+<!-- Figure 2: First sinusoid: frequency 1 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 230" width="480" height="230" role="img" aria-label="First sinusoid: frequency 1" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <text x="24" y="20" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="18">First sinusoid: frequency 1</text>
+  <path d="M24 222 V34" />
+  <path d="M20 40 L24 34 L28 40" />
+  <path d="M24 125 H446" />
+  <path d="M440 121 L446 125 L440 129" />
+  <text x="454" y="130" fill="white" stroke="none" font-family="Times New Roman, serif" font-style="italic" font-size="18">t</text>
+  <path d="M24.0 125.0 L26.6 123.2 L29.2 121.4 L31.8 119.6 L34.4 117.8 L37.0 116.0 L39.6 114.3 L42.2 112.5 L44.8 110.8 L47.4 109.1 L50.0 107.4 L52.6 105.7 L55.2 104.1 L57.8 102.5 L60.4 101.0 L63.0 99.4 L65.6 98.0 L68.2 96.5 L70.8 95.1 L73.4 93.8 L76.0 92.5 L78.6 91.2 L81.2 90.0 L83.8 88.9 L86.4 87.8 L89.0 86.8 L91.6 85.8 L94.2 84.9 L96.8 84.0 L99.4 83.2 L102.0 82.5 L104.6 81.8 L107.2 81.3 L109.8 80.7 L112.4 80.3 L115.0 79.9 L117.6 79.6 L120.2 79.3 L122.8 79.1 L125.4 79.0 L128.0 79.0 L130.6 79.0 L133.2 79.1 L135.8 79.3 L138.4 79.6 L141.0 79.9 L143.6 80.3 L146.2 80.7 L148.8 81.3 L151.4 81.8 L154.0 82.5 L156.6 83.2 L159.2 84.0 L161.8 84.9 L164.4 85.8 L167.0 86.8 L169.6 87.8 L172.2 88.9 L174.8 90.0 L177.4 91.2 L180.0 92.5 L182.6 93.8 L185.2 95.1 L187.8 96.5 L190.4 98.0 L193.0 99.4 L195.6 101.0 L198.2 102.5 L200.8 104.1 L203.4 105.7 L206.0 107.4 L208.6 109.1 L211.2 110.8 L213.8 112.5 L216.4 114.3 L219.0 116.0 L221.6 117.8 L224.2 119.6 L226.8 121.4 L229.4 123.2 L232.0 125.0 L234.6 126.8 L237.2 128.6 L239.8 130.4 L242.4 132.2 L245.0 134.0 L247.6 135.7 L250.2 137.5 L252.8 139.2 L255.4 140.9 L258.0 142.6 L260.6 144.3 L263.2 145.9 L265.8 147.5 L268.4 149.0 L271.0 150.6 L273.6 152.0 L276.2 153.5 L278.8 154.9 L281.4 156.2 L284.0 157.5 L286.6 158.8 L289.2 160.0 L291.8 161.1 L294.4 162.2 L297.0 163.2 L299.6 164.2 L302.2 165.1 L304.8 166.0 L307.4 166.8 L310.0 167.5 L312.6 168.2 L315.2 168.7 L317.8 169.3 L320.4 169.7 L323.0 170.1 L325.6 170.4 L328.2 170.7 L330.8 170.9 L333.4 171.0 L336.0 171.0 L338.6 171.0 L341.2 170.9 L343.8 170.7 L346.4 170.4 L349.0 170.1 L351.6 169.7 L354.2 169.3 L356.8 168.7 L359.4 168.2 L362.0 167.5 L364.6 166.8 L367.2 166.0 L369.8 165.1 L372.4 164.2 L375.0 163.2 L377.6 162.2 L380.2 161.1 L382.8 160.0 L385.4 158.8 L388.0 157.5 L390.6 156.2 L393.2 154.9 L395.8 153.5 L398.4 152.0 L401.0 150.6 L403.6 149.0 L406.2 147.5 L408.8 145.9 L411.4 144.3 L414.0 142.6 L416.6 140.9 L419.2 139.2 L421.8 137.5 L424.4 135.7 L427.0 134.0 L429.6 132.2 L432.2 130.4 L434.8 128.6 L437.4 126.8 L440.0 125.0" stroke-width="2.2" />
+</svg>
+</div>
+
+<div class="hide fig-s2">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 230" width="480" height="230" role="img" aria-label="Second sinusoid: frequency 2" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <text x="24" y="20" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="18">Second sinusoid: frequency 2</text>
+  <path d="M24 222 V34" />
+  <path d="M20 40 L24 34 L28 40" />
+  <path d="M24 125 H446" />
+  <path d="M440 121 L446 125 L440 129" />
+  <text x="454" y="130" fill="white" stroke="none" font-family="Times New Roman, serif" font-style="italic" font-size="18">t</text>
+  <path d="M24.0 125.0 L26.6 123.2 L29.2 121.4 L31.8 119.6 L34.4 117.9 L37.0 116.2 L39.6 114.6 L42.2 113.0 L44.8 111.5 L47.4 110.1 L50.0 108.7 L52.6 107.5 L55.2 106.4 L57.8 105.4 L60.4 104.5 L63.0 103.8 L65.6 103.1 L68.2 102.6 L70.8 102.3 L73.4 102.1 L76.0 102.0 L78.6 102.1 L81.2 102.3 L83.8 102.6 L86.4 103.1 L89.0 103.8 L91.6 104.5 L94.2 105.4 L96.8 106.4 L99.4 107.5 L102.0 108.7 L104.6 110.1 L107.2 111.5 L109.8 113.0 L112.4 114.6 L115.0 116.2 L117.6 117.9 L120.2 119.6 L122.8 121.4 L125.4 123.2 L128.0 125.0 L130.6 126.8 L133.2 128.6 L135.8 130.4 L138.4 132.1 L141.0 133.8 L143.6 135.4 L146.2 137.0 L148.8 138.5 L151.4 139.9 L154.0 141.3 L156.6 142.5 L159.2 143.6 L161.8 144.6 L164.4 145.5 L167.0 146.2 L169.6 146.9 L172.2 147.4 L174.8 147.7 L177.4 147.9 L180.0 148.0 L182.6 147.9 L185.2 147.7 L187.8 147.4 L190.4 146.9 L193.0 146.2 L195.6 145.5 L198.2 144.6 L200.8 143.6 L203.4 142.5 L206.0 141.3 L208.6 139.9 L211.2 138.5 L213.8 137.0 L216.4 135.4 L219.0 133.8 L221.6 132.1 L224.2 130.4 L226.8 128.6 L229.4 126.8 L232.0 125.0 L234.6 123.2 L237.2 121.4 L239.8 119.6 L242.4 117.9 L245.0 116.2 L247.6 114.6 L250.2 113.0 L252.8 111.5 L255.4 110.1 L258.0 108.7 L260.6 107.5 L263.2 106.4 L265.8 105.4 L268.4 104.5 L271.0 103.8 L273.6 103.1 L276.2 102.6 L278.8 102.3 L281.4 102.1 L284.0 102.0 L286.6 102.1 L289.2 102.3 L291.8 102.6 L294.4 103.1 L297.0 103.8 L299.6 104.5 L302.2 105.4 L304.8 106.4 L307.4 107.5 L310.0 108.7 L312.6 110.1 L315.2 111.5 L317.8 113.0 L320.4 114.6 L323.0 116.2 L325.6 117.9 L328.2 119.6 L330.8 121.4 L333.4 123.2 L336.0 125.0 L338.6 126.8 L341.2 128.6 L343.8 130.4 L346.4 132.1 L349.0 133.8 L351.6 135.4 L354.2 137.0 L356.8 138.5 L359.4 139.9 L362.0 141.3 L364.6 142.5 L367.2 143.6 L369.8 144.6 L372.4 145.5 L375.0 146.2 L377.6 146.9 L380.2 147.4 L382.8 147.7 L385.4 147.9 L388.0 148.0 L390.6 147.9 L393.2 147.7 L395.8 147.4 L398.4 146.9 L401.0 146.2 L403.6 145.5 L406.2 144.6 L408.8 143.6 L411.4 142.5 L414.0 141.3 L416.6 139.9 L419.2 138.5 L421.8 137.0 L424.4 135.4 L427.0 133.8 L429.6 132.1 L432.2 130.4 L434.8 128.6 L437.4 126.8 L440.0 125.0" stroke-width="2.2" />
+</svg>
+</div>
+
+<div class="hide fig-s3">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 230" width="480" height="230" role="img" aria-label="Third sinusoid: frequency 3" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <text x="24" y="20" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="18">Third sinusoid: frequency 3</text>
+  <path d="M24 222 V34" />
+  <path d="M20 40 L24 34 L28 40" />
+  <path d="M24 125 H446" />
+  <path d="M440 121 L446 125 L440 129" />
+  <text x="454" y="130" fill="white" stroke="none" font-family="Times New Roman, serif" font-style="italic" font-size="18">t</text>
+  <path d="M24.0 125.0 L26.6 123.2 L29.2 121.4 L31.8 119.7 L34.4 118.0 L37.0 116.5 L39.6 115.0 L42.2 113.7 L44.8 112.6 L47.4 111.6 L50.0 110.8 L52.6 110.2 L55.2 109.9 L57.8 109.7 L60.4 109.7 L63.0 110.0 L65.6 110.4 L68.2 111.1 L70.8 111.9 L73.4 113.0 L76.0 114.2 L78.6 115.5 L81.2 117.0 L83.8 118.6 L86.4 120.3 L89.0 122.0 L91.6 123.8 L94.2 125.6 L96.8 127.4 L99.4 129.2 L102.0 130.9 L104.6 132.5 L107.2 134.0 L109.8 135.4 L112.4 136.7 L115.0 137.7 L117.6 138.7 L120.2 139.4 L122.8 139.9 L125.4 140.2 L128.0 140.3 L130.6 140.2 L133.2 139.9 L135.8 139.4 L138.4 138.7 L141.0 137.7 L143.6 136.7 L146.2 135.4 L148.8 134.0 L151.4 132.5 L154.0 130.9 L156.6 129.2 L159.2 127.4 L161.8 125.6 L164.4 123.8 L167.0 122.0 L169.6 120.3 L172.2 118.6 L174.8 117.0 L177.4 115.5 L180.0 114.2 L182.6 113.0 L185.2 111.9 L187.8 111.1 L190.4 110.4 L193.0 110.0 L195.6 109.7 L198.2 109.7 L200.8 109.9 L203.4 110.2 L206.0 110.8 L208.6 111.6 L211.2 112.6 L213.8 113.7 L216.4 115.0 L219.0 116.5 L221.6 118.0 L224.2 119.7 L226.8 121.4 L229.4 123.2 L232.0 125.0 L234.6 126.8 L237.2 128.6 L239.8 130.3 L242.4 132.0 L245.0 133.5 L247.6 135.0 L250.2 136.3 L252.8 137.4 L255.4 138.4 L258.0 139.2 L260.6 139.8 L263.2 140.1 L265.8 140.3 L268.4 140.3 L271.0 140.0 L273.6 139.6 L276.2 138.9 L278.8 138.1 L281.4 137.0 L284.0 135.8 L286.6 134.5 L289.2 133.0 L291.8 131.4 L294.4 129.7 L297.0 128.0 L299.6 126.2 L302.2 124.4 L304.8 122.6 L307.4 120.8 L310.0 119.1 L312.6 117.5 L315.2 116.0 L317.8 114.6 L320.4 113.3 L323.0 112.3 L325.6 111.3 L328.2 110.6 L330.8 110.1 L333.4 109.8 L336.0 109.7 L338.6 109.8 L341.2 110.1 L343.8 110.6 L346.4 111.3 L349.0 112.3 L351.6 113.3 L354.2 114.6 L356.8 116.0 L359.4 117.5 L362.0 119.1 L364.6 120.8 L367.2 122.6 L369.8 124.4 L372.4 126.2 L375.0 128.0 L377.6 129.7 L380.2 131.4 L382.8 133.0 L385.4 134.5 L388.0 135.8 L390.6 137.0 L393.2 138.1 L395.8 138.9 L398.4 139.6 L401.0 140.0 L403.6 140.3 L406.2 140.3 L408.8 140.1 L411.4 139.8 L414.0 139.2 L416.6 138.4 L419.2 137.4 L421.8 136.3 L424.4 135.0 L427.0 133.5 L429.6 132.0 L432.2 130.3 L434.8 128.6 L437.4 126.8 L440.0 125.0" stroke-width="2.2" />
+</svg>
+</div>
+
+<div class="hide fig-recon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 230" width="480" height="230" role="img" aria-label="Approximate reconstruction from the first three sinusoids" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <text x="24" y="20" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="18">Approximate reconstruction from the first three sinusoids</text>
+  <path d="M24 222 V34" />
+  <path d="M20 40 L24 34 L28 40" />
+  <path d="M24 125 H446" />
+  <path d="M440 121 L446 125 L440 129" />
+  <text x="454" y="130" fill="white" stroke="none" font-family="Times New Roman, serif" font-style="italic" font-size="18">t</text>
+  <path d="M24.0 125.0 L26.6 119.6 L29.2 114.2 L31.8 108.9 L34.4 103.7 L37.0 98.7 L39.6 93.9 L42.2 89.2 L44.8 84.9 L47.4 80.8 L50.0 77.0 L52.6 73.5 L55.2 70.4 L57.8 67.6 L60.4 65.2 L63.0 63.2 L65.6 61.5 L68.2 60.2 L70.8 59.3 L73.4 58.8 L76.0 58.6 L78.6 58.8 L81.2 59.3 L83.8 60.1 L86.4 61.2 L89.0 62.5 L91.6 64.1 L94.2 65.9 L96.8 67.8 L99.4 69.9 L102.0 72.1 L104.6 74.4 L107.2 76.7 L109.8 79.1 L112.4 81.5 L115.0 83.8 L117.6 86.1 L120.2 88.3 L122.8 90.5 L125.4 92.5 L128.0 94.3 L130.6 96.1 L133.2 97.6 L135.8 99.1 L138.4 100.3 L141.0 101.4 L143.6 102.4 L146.2 103.2 L148.8 103.8 L151.4 104.3 L154.0 104.6 L156.6 104.9 L159.2 105.0 L161.8 105.1 L164.4 105.1 L167.0 105.0 L169.6 104.9 L172.2 104.8 L174.8 104.7 L177.4 104.7 L180.0 104.6 L182.6 104.7 L185.2 104.8 L187.8 105.0 L190.4 105.3 L193.0 105.7 L195.6 106.2 L198.2 106.8 L200.8 107.6 L203.4 108.5 L206.0 109.5 L208.6 110.6 L211.2 111.9 L213.8 113.3 L216.4 114.7 L219.0 116.3 L221.6 118.0 L224.2 119.7 L226.8 121.4 L229.4 123.2 L232.0 125.0 L234.6 126.8 L237.2 128.6 L239.8 130.3 L242.4 132.0 L245.0 133.7 L247.6 135.3 L250.2 136.7 L252.8 138.1 L255.4 139.4 L258.0 140.5 L260.6 141.5 L263.2 142.4 L265.8 143.2 L268.4 143.8 L271.0 144.3 L273.6 144.7 L276.2 145.0 L278.8 145.2 L281.4 145.3 L284.0 145.4 L286.6 145.3 L289.2 145.3 L291.8 145.2 L294.4 145.1 L297.0 145.0 L299.6 144.9 L302.2 144.9 L304.8 145.0 L307.4 145.1 L310.0 145.4 L312.6 145.7 L315.2 146.2 L317.8 146.8 L320.4 147.6 L323.0 148.6 L325.6 149.7 L328.2 150.9 L330.8 152.4 L333.4 153.9 L336.0 155.7 L338.6 157.5 L341.2 159.5 L343.8 161.7 L346.4 163.9 L349.0 166.2 L351.6 168.5 L354.2 170.9 L356.8 173.3 L359.4 175.6 L362.0 177.9 L364.6 180.1 L367.2 182.2 L369.8 184.1 L372.4 185.9 L375.0 187.5 L377.6 188.8 L380.2 189.9 L382.8 190.7 L385.4 191.2 L388.0 191.4 L390.6 191.2 L393.2 190.7 L395.8 189.8 L398.4 188.5 L401.0 186.8 L403.6 184.8 L406.2 182.4 L408.8 179.6 L411.4 176.5 L414.0 173.0 L416.6 169.2 L419.2 165.1 L421.8 160.8 L424.4 156.1 L427.0 151.3 L429.6 146.3 L432.2 141.1 L434.8 135.8 L437.4 130.4 L440.0 125.0" stroke-width="2.2" />
+</svg>
+
+</div>
+</div>
+
+</section>
+
+
+
+<section class="slide">
+    <h2>Visualising the Fourier Transform: Foundations</h2>
+    <div class="hide">
+        <ul>
+            <li>The <u>Fourier transform</u> takes signals from the <i>time</i> domain
+            and converts them into the <i>frequency</i> domain.</li>
+            <li>Before it, one had to <u>convolve</u> the input signal $x$ with a system's impulse response
+                $h$ to realise an output $y$.</li>
+                <ul>
+                    <li>For a linear time-invariant system, that is $y[n] = \sum_{m=-\infty}^{\infty} x[m]\,h[n-m].$</li>
+                    <li>$n$ is the time-step at which $y$ is computed.</li>
+                    <li>$m$ is a "dummy variable" that parameterises the input samples.</li>
+                    <li>The system's response to a single impulse at time $m$ is the shifted impulse response $h[n-m]$.</li>
+                    <li>I.e., <span class="hide">$x[m]$ is the <u>weight</u>, how large the input sample at time $m$ is </span><span class="hide">and 
+                        $h[n-m]$ is the <u>response delay</u></span><span class="hide">, how much of that sample's response is still showing $n-m$ steps after the sample arrived.
+                    </span></li>
+                </ul>
+        </ul>
+    </div>
+</section>
+
+<section class="slide">
+        <ul>
+            <li>Really, the Fourier transform is a <i>change of basis</i> <span class="hide">where we have:</span></li>
+            <ol>
+                <li>the <i>standard</i> basis (the time domain representation), and</li>
+                <li>the <i>Fourier</i> basis (the frequency domain representation).</li>
+            </ol>
+            <li><kbd>2</kbd> is better stated as the basis of <i>complex exponentials</i></li>
+            <li>A <u>complex exponential</u> is the function $\theta \mapsto e^{i\theta}$ with $\theta \in \mathbb{R}$<span class="hide">: it takes an angle $\theta$ to a point on the unit circle in the complex plane.</span></li>
+        </ul>
+
+        <div class="hide">
+            <svg style="display: block; margin: 0 auto; max-width: 100%; height: auto;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" width="640" height="440" role="img" aria-label="The unit circle in the complex plane with eight labeled points e to the i theta, and a key" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <title>The unit circle in the complex plane</title>
+  <text x="24" y="24" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="18">The unit circle</text>
+  <path d="M24 220 H410" />
+  <path d="M404 216 L410 220 L404 224" />
+  <path d="M220 410 V38" />
+  <path d="M216 44 L220 38 L224 44" />
+  <text x="418" y="212" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="18">Re</text>
+  <text x="208" y="48" text-anchor="end" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="18">Im</text>
+  <circle cx="220" cy="220" r="150" stroke-width="2.2" />
+  <path d="M220 220 L355.9 156.6" stroke-width="2.2" />
+  <path d="M265 220 A45 45 0 0 0 260.8 201.0" />
+  <text x="272" y="214" fill="white" stroke="none" font-family="Times New Roman, serif" font-style="italic" font-size="18">θ</text>
+  <circle cx="355.9" cy="156.6" r="7" fill="white" />
+  <text x="367" y="152" text-anchor="start" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="20"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="14"><tspan font-style="italic">i</tspan>θ</tspan></text>
+  <circle cx="370.0" cy="220.0" r="4.5" fill="white" />
+  <text x="382" y="242" text-anchor="start" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="20"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="14"><tspan font-style="italic">i</tspan>0</tspan></text>
+  <circle cx="326.1" cy="113.9" r="4.5" fill="white" />
+  <text x="338" y="108" text-anchor="start" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="20"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="14"><tspan font-style="italic">i</tspan> π/4</tspan></text>
+  <circle cx="220.0" cy="70.0" r="4.5" fill="white" />
+  <text x="232" y="62" text-anchor="start" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="20"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="14"><tspan font-style="italic">i</tspan> π/2</tspan></text>
+  <circle cx="113.9" cy="113.9" r="4.5" fill="white" />
+  <text x="104" y="108" text-anchor="end" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="20"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="14"><tspan font-style="italic">i</tspan> 3π/4</tspan></text>
+  <circle cx="70.0" cy="220.0" r="4.5" fill="white" />
+  <text x="58" y="242" text-anchor="end" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="20"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="14"><tspan font-style="italic">i</tspan>π</tspan></text>
+  <circle cx="113.9" cy="326.1" r="4.5" fill="white" />
+  <text x="104" y="340" text-anchor="end" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="20"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="14">−<tspan font-style="italic">i</tspan> 3π/4</tspan></text>
+  <circle cx="220.0" cy="370.0" r="4.5" fill="white" />
+  <text x="232" y="398" text-anchor="start" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="20"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="14">−<tspan font-style="italic">i</tspan> π/2</tspan></text>
+  <circle cx="326.1" cy="326.1" r="4.5" fill="white" />
+  <text x="338" y="340" text-anchor="start" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="20"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="14">−<tspan font-style="italic">i</tspan> π/4</tspan></text>
+  <rect x="462" y="150" width="168" height="150" />
+  <text x="478" y="184" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="22"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="15"><tspan font-style="italic">i</tspan>0</tspan><tspan dy="9"> = 1</tspan></text>
+  <text x="478" y="216" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="22"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="15"><tspan font-style="italic">i</tspan> π/2</tspan><tspan dy="9"> = <tspan font-style="italic">i</tspan></tspan></text>
+  <text x="478" y="248" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="22"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="15"><tspan font-style="italic">i</tspan>π</tspan><tspan dy="9"> = −1</tspan></text>
+  <text x="478" y="280" fill="white" stroke="none" font-family="Times New Roman, serif" font-size="22"><tspan font-style="italic">e</tspan><tspan dy="-9" font-size="15">−<tspan font-style="italic">i</tspan> π/2</tspan><tspan dy="9"> = −<tspan font-style="italic">i</tspan></tspan></text>
+</svg>
+        </div>
+
+</section>
+
+<section class="slide">
+        <ul>
+            <li><b>Key Idea 1:</b> <span class="hide">Rather than a "values over time" 
+                representation,</span> <span class="hide">a signal can be seen as coefficients
+                    of <u>oscillatory basis functions</u>,</span> <span class="hide">$$1, e^{2\pi ix},
+                        e^{4\pi ix}, \dots, e^{2\pi ikx}$$ </span></li>
+            <li>These coefficients are numbers $c_k$ in the signal we are representing<span class="hide">, $f(x)=\Sigma_k c_k e^{2\pi ikx}$.</span> </li>
+            <ul>
+                <li>Each $c_k$ is a complex number that states how many oscillations $k$ a signal contains.
+                </li>
+                <li>Incidentally each $c_k$ has a size ($|c_k|$) that tells us the amplitude <span class="hide">and an angle ($\arg c_k$) that tells us the phase in the complex plane. </span></li>
+                <li>E.g.,  suppose $c_1 = 1-i$. <span class="hide">The subscript says this is the coefficient of the wave with $k=1$, namely $e^{2\pi i x}$</span><span class="hide">, the amplitude 
+                    is $\sqrt{2}$ since $|1-i|=\sqrt{2}$</span><span class="hide">, and the angle is $-\pi/4$ radians.</span></li>
+            </ul>
+        </ul>
+</section>
+
+<section class="slide">
+    <h2>" With Euler's Identity</h2>
+    <ul>
+        <li><b>Key Idea 2:</b> <span class="hide">Euler's Identity undergirds the 
+            Fourier transform.</span> <span class="hide">It is $e^{i\theta} = \cos \theta + i\sin \theta$</span></li>
+        <li>With it, we can rewrite sinusoidal functions in terms of complex exponentials<span class="hide">,
+            $$\cos \theta = \frac{e^{i \theta} + e^{-i\theta}}{2}, \quad \sin \theta = \frac{e^{i \theta} - e^{-i\theta}}{2i}.$$
+        </span></li>
+    </ul>
+</section>
+
+<!--<section class="slide">
+    <ul>
+        <li>Recall the information the coefficients of oscillatory basis functions $c_k$ gave us.</li>
+        <ul>
+            <li>Complex exponentials of the form $Ae^{i(\omega t + \phi)}.$</li>
+            <ul>
+                <li>$A$ is the amplitude</li>
+                <li>$\omega$ is the angular frequency</li>
+                <li>$\phi$ is the phase offset</li>
+            </ul>
+            <li>$\theta (t) = \omega t \phi$ is the phase. <span class="hide">As $t$ varies </span> <span class="hide">$e^{i\theta (t)}$ traces out the unit
+                circle in the complex plane like we said before. 
+            </span></li>
+            <li>Writing $c_k = |c_k|e^{i\arg c_k}$ gives $c_k e^{2\pi i k x} = |c_k|\,e^{i(2\pi k x + \arg c_k)}$, which has the form $Ae^{i(\omega t+\varphi)}$ with $A=|c_k|$, $\omega=2\pi k$, $\phi=\arg c_k$.</li>
+        </ul>
+    </ul>
+</section>-->
+
+<section class="slide">
+    <h2>From the Fourier Transform to the Discrete Fourier Transform</h2>
+    <ul>
+        <li>So far the signal $f$ has been a function of continuous $x$, and each coefficient $c_k$ comes from an integral over $x$.</li>
+        <li>A computer stores a <i>finite list</i> of $n$ samples $a_0, \dots, a_{n-1}$, not a continuous function.</li>
+        <li>The <u>discrete</u> Fourier transform finds the frequency coefficients from those $n$ samples alone<span class="hide">, using a finite sum</span> <span class="hide">and this takes $\Theta(n)$ time</span>.</span></li>
+        <li>The Fast Fourier Transform is an algorithm that computes the discrete Fourier transform exactly, in $\Theta(n\log n)$ time.</li>
+    </ul>
+    <p class="small hide">Note: from here on, "Fourier transform" means the discrete one, on a length-$n$ vector over a ring $R.$</p>
+</section>
+
+<section class="slide">
+    <h2>Mathematical Foundations</h2>
+    <ul>
+        <li>A <b>ring</b> is a nonempty set $R$ endowed with the binary operations of addition ($+$) and multiplication ($\cdot$). It satisfies the following properties.</li> 
+        <ol>
+            <li>$R$ is associative and commutative over addition and contains an element $0 \in R$ that provides $R$'s additive identity (i.e., $R$ is an additive abelian group);</li>
+            <li>$R$ is associative over multiplication and $1 \in R$ gives $R$'s multiplicative identity (i.e., $R$ is a multiplicative monoid);</li>
+            <li>Multiplcation is distributive with respect to addition.</li>
+        </ol>
+    </ul>
+</section>
+<section class="slide">
+    <h2>Defining the Fourier Transform</h2>
+    <ul>
+        <li>The Fourier transform is defined over an arbitrary commutative ring $(R, +, \cdot, 0, 1)$ in the complex numbers ($\mathbb{C}$)<span class="hide">; i.e., it is defined over a ring $R$ where addition and
+            multiplication are commutative and are equipped with their respective identities.</span> 
+        </li>
+        <li>This is actually quite useful <span class="hide">since $n$ is an exact power of two in this field of complex numbers.</span></li>
+
+        </ul>
+</section>
+
+<section class="slide">
+    <ul>
+                <span class="hide"><li>$\exists \omega \in R$ called the <u>principal $n$th root of unity</u> s.t.:</li></span>
+        <ol>
+            <li>$\omega \neq 1$;</li>
+            <li>$\omega^n = 1$;</li>
+            <li>$\Sigma_{j=0}^{n-1}\omega^{jp} = 0$ for $1 \leq p < n$.</li>
+            <ul>
+                <li class="hide">Pick any $p$ with $1 \leq p < n$.</span>
+                <span class="hide">Write the $n$ powers $\omega^{0\cdot p}, \omega^{1\cdot p}, \dots, \omega^{(n-1)p}$</span>
+                <span class="hide">and add all of them<span class="hide">, including the first,</span> <span class="hide">which is $\omega^{0}=1$.</span> <span class="hide">The total is $0$.</span>
+                <span class="hide">E.g., $n=4,$ $\omega=i$, $p=1$: $1 + i + (-1) + (-i) = 0$.</span></li>
+            </ul>
+        </ol>
+        <li>The elements $\omega^0, \omega^1, \dots, \omega^{n-1}$ are the $n$th roots of unity.</li>
+        <li>Incidentally a <u>root of unity</u> is any complex number that is 1 once raised to some $n \in \mathbb{Z}^+$.</li>
+        <ul>
+            <li>$e^{2\pi i /n}$ where $i = \sqrt{-1}$ is a principal $n$th root of unity 
+        in the ring of complex numbers.</li>
+        </ul>
+        <li class="hide">Being principal drives the discrete Fourier transform<span class="hide">: the sums that vanish in condition 3 are exactly what let the inverse transform recover the input.</span></li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>The discrete Fourier transform</h2>
+    <ul>
+        <li>Let $R$ be a commutative ring with a principal $n$th root of unity $\omega$, and let $\mathbf{a} = [a_0, a_1, \dots, a_{n-1}]^T \in R^n$.</li>
+        <li>The <u>Fourier matrix</u> is the $n \times n$ matrix $A$ over $R$ with $A[i,j] = \omega^{ij}$ for $0 \leq i, j < n.$</li>
+        <li>The <u>discrete Fourier transform</u> of $\mathbf{a}$ is the vector $F(\mathbf{a}) = A\mathbf{a}$<span class="hide">, with components
+            $$b_i = \sum_{k=0}^{n-1} a_k\,\omega^{ik}, \qquad 0 \leq i < n.$$</span></li>
+        <li>If $n$ has a multiplicative inverse $n^{-1}$ in $R$, <span class="hide">then $A$ is invertible with $A^{-1}[i,j] = n^{-1}\omega^{-ij}$</span><span class="hide">, and $F^{-1}(\mathbf{b}) = A^{-1}\mathbf{b}$ is the <u>inverse</u> discrete Fourier transform.</span></li>
+        <li>Obviously $F^{-1}F(\mathbf{a}) = \mathbf{a}$</li>
+    </ul>
+    <p class="small hide">Here $n$ also denotes $1 + 1 + \cdots + 1$ ($n$ terms) in $R$.</p>
+</section>
+
+<section class="slide">
+    <h2>Evaluation and Interpolation</h2>
+    <ul>
+        <li>Let $p(x)=\sum_{k=0}^{n-1} a_k x^k$. <span class="hide">Its <u>coefficient representation</u> is the vector $\mathbf{a}=[a_0,\dots,a_{n-1}]^T$.</span></li>
+        <li>Its <u>value representation</u> is the list of values $p(x_0),\dots,p(x_{n-1})$ at $n$ distinct points.</li>
+        <li><u>Evaluation</u> goes from coefficients to values. <span class="hide"><u>Interpolation</u> goes back from values (at the $n$th roots of unity) to coefficients.</span></li>
+        <li>The $i$th component of the discrete Fourier transform is $b_i=\sum_k a_k\omega^{ik}=p(\omega^i)$<span class="hide">: the transform <i>evaluates</i> $p$ at $\omega^0,\dots,\omega^{n-1}$,</span> <span class="hide">and the inverse transform <i>interpolates</i> the values $b_0,\dots,b_{n-1}$ back into the coefficients $a_0,\dots,a_{n-1}$ of $p$.</span></li>    </ul>
+</section>
+
+<section class="slide">
+    <h2>The Matrix form of the DFT</h2>
+    <p class="hide"><b>Theorem 1 (Uniqueness of an Interpolating Polynomial).</b> For any set ${(x_0,y_0), (x_1,y_1), \dots, (x_{n-1}, y_{n-1})}$ of $n$ point-value pairs such that
+    all the $x_k$ values are distinct, there is a unique polynomial $A(x)$ of degree-bound $n$ such taht $y_k=A(x_k)$ for $k = 0, 1, \dots, n-1.$</p>
+    <ul class="hide">
+        <li>This theorem uses a special kind of matrix in its proof.</li>
+        <p class="hide"><b>Proof (very rough sketch).</b> <span class="hide">The $n$ equations $y_k=A(x_k)$ form one linear system $V\mathbf{a}=\mathbf{y}$,</span>
+    <span class="hide">where $V$ is a <u>Vandermonde matrix</u> at the nodes $x_k$.</span>
+    <span class="hide">Because the $x_k$ are distinct, $V$ is invertible, so $\mathbf{a}=V^{-1}\mathbf{y}$ exists and is unique.  $\quad \quad \blacksquare$</span>
+    </p>
+    </ul>
+    <p class="small hide">The Fourier matrix is a Vandermonde matrix, namely the one whose nodes are the $n$th roots of unity. The reverse is false, because a Vandermonde matrix at other nodes is not a Fourier matrix.</p>
+</section>
+
+
+<section class="slide">
+    <ul>
+        <li>The fact this matrix form exists means we can observe the discrete Fourier transform as a matrix-vector multiplication given by $F(\mathbf{a}) = A\mathbf{a}$.</li>
+        <li>Explicitly, with $A[i,j]=\omega^{ij}$,
+        <span class="hide">
+            $$
+            A =
+            \begin{bmatrix}
+            1 & 1 & 1 & \cdots & 1 \\
+            1 & \omega & \omega^{2} & \cdots & \omega^{n-1} \\
+            1 & \omega^{2} & \omega^{4} & \cdots & \omega^{2(n-1)} \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            1 & \omega^{n-1} & \omega^{2(n-1)} & \cdots & \omega^{(n-1)^{2}}
+            \end{bmatrix}
+            $$            
+        </span>
+        </li>
+        <li>Thus the discrete Fourier transform is a <u>linear transformation</u>.</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>The Fast Fourier Transform: Entrance</h2>
+    <ul>
+        <li>Computing the DFT (and its inverse) is a $O(n^2)$ process. </li>
+        <li>We can achieve a much better $\Theta(n\log n)$ computation <span class="hide">by...</span> </li>
+        <ol>
+            <li>exploiting the <i>similarities</i> among the portions of the $n$ sums applied by $A\mathbf{a}$, or</li>
+            <li>splitting the input into even and odd indices. </li>
+        </ol>
+        <li>Both are equivalent <span class="hide">because both use divide-and-conquer </span><span class="hide">and rely on the <u>property of repeating powers</u> 
+            of $\omega$.
+        </span></li>
+        <li>We will proceed with expressing the FFT as in <kbd>2</kbd>.</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>Lemmas of the FFT: Cancellation</h2>
+    <p>
+        <span class="hide"><b>The Cancellation Lemma. </b></span> <span class="hide">For any integers $n>0, k\geq 0,$ and $d>0$, $\omega^{dk}_{dn} = \omega^k_n.$</span>
+    </p>
+    <p>
+        <span class="hide"><b>Proof.</b></span> <span class="hide">Recall the $n$th principal root of unity being $\omega_n = e^{2\pi i/n}.$ </span> 
+        <span class="hide">By expansion, we see the following.</span>
+        <span class="hide">
+            $$
+                \begin{aligned}
+                \omega_{dn}^{dk} &= \left(e^{2\pi i/(dn)}\right)^{dk} \\
+                &\class{fragment}{{}= e^{2\pi i\, dk/(dn)}} \\
+                &\class{fragment}{{}= e^{2\pi i\, k/n}} \\
+                &\class{fragment}{{}= \left(e^{2\pi i/n}\right)^{k}} \\
+                &\class{fragment}{{}= \omega_n^{k}. \quad \quad \blacksquare}
+                \end{aligned} 
+            $$
+        </span>
+    </p>
+</section>
+
+<section class="slide">
+    <p>
+        <span class="hide"><b>The Cancellation Corollary.</b></span> <span class="hide">For any even integer $n>0$, $\omega^{n/2}_n = w_2 = -1.$</span>
+    </p>
+    <p>
+        <span class="hide"><b>Proof.</b></span> <span class="hide">Recall again the $n$th principal root of unity. </span> 
+        <span class="hide"> Also recall Euler's Identity as $e^{i\theta} = \cos \theta + i\sin \theta.$</span>
+        <span class="hide">
+            $$
+                \begin{aligned}
+                \omega_n^{n/2} &= \left(e^{2\pi i/n}\right)^{n/2} \\
+                &\class{fragment}{{}= e^{2\pi i\,(n/2)/n}} \\
+                &\class{fragment}{{}= e^{\pi i\, n/n}} \\
+                &\class{fragment}{{}= e^{\pi i}} \\
+                &\class{fragment}{{}= \cos\pi + i\sin\pi} \\
+                &\class{fragment}{{}= -1. \quad \quad \blacksquare}
+                \end{aligned}
+            $$
+        </span>
+    </p>
+</section>
+
+<section class="slide">
+    <h2>Lemmas of the FFT: Halving</h2>
+    <p>
+        <span class="hide"><b>The Halving Lemma.</b></span> <span class="hide">If $n>0$ is even, then the squares of the $n$ complex $n$th roots 
+            of unity are the $n/2$ complex $(n/2)$th roots of unity. 
+        </span>
+    </p>
+    <p>
+        <span class="hide"><b>Proof.</b></span> <span class="hide">Recall the result of the Cancellation Corollary.</span> 
+        <span class="hide">$\omega^{n/2}_n = w_2 = -1$ implies $\omega^{k+(n/2)}_n = -\omega^{k}_n$, so squaring gives the following.</span>
+        <span class="hide">
+            $$
+                \begin{aligned}
+                \left(\omega_n^{k+(n/2)}\right)^2 &= \left(\omega_n^{k} \times \omega_n^{n/2}\right)^2 \\
+                &\class{fragment}{{}= \left(\omega_n^{k} \times (-1)\right)^2} \\
+                &\class{fragment}{{}= \left(-\omega_n^{k}\right)^2} \\
+                &\class{fragment}{{}= \left(\omega_n^{k}\right)^2.}
+                \end{aligned}
+            $$
+        </span>
+        <span class="hide">So $\omega_n^{k}$ and $\omega_n^{k+(n/2)}$ have the same square.</span> <span class="hide">By the Cancellation Lemma with $d = 2$,</span>
+        <span class="hide">
+            $$
+                \begin{aligned}
+                \left(\omega_n^{k}\right)^2 &= \omega_n^{2k} \\
+                &\class{fragment}{{}= \omega_{n/2}^{k}.}
+                \end{aligned}
+            $$
+        </span>
+        <span class="hide">This means as $k$ runs over $0, 1, \ldots, n-1$, the squares give each $(n/2)$th root of unity $\omega_{n/2}^{k}$ <i>exactly twice</i>. $\quad \quad \blacksquare$</span>
+    </p>
+
+</section>
+
+<section class="slide">
+    <h2>Lemmas of the FFT: Summation</h2>
+
+    <p>
+        <span class="hide"><b>Geometric series.</b></span> <span class="hide">For real $x \neq 1$</span><span class="hide">, the summation
+            $$\sum_{k=0}^{n} x^k = 1 + x + x^2 + \cdots + x^n$$</span>
+            <span class="hide">is a geometric series <span class="hide">and has the value
+            $$\sum_{k=0}^{n} x^k = \frac{x^{n+1} - 1}{x - 1}.$$
+        </span>
+    </p>
+</section>
+
+<section class="slide">
+    <p>
+        <span class="hide"><b>The Summation Lemma.</b></span> <span class="hide">For any integer $n \geq 1$ and nonzero integer $k$ not divisible by $n,$
+            $$\sum_{j=0}^{n-1} \left(\omega_n^k\right)^j = 0.$$
+        </span>
+    </p>
+    <p>
+        <span class="hide"><b>Proof.</b></span> <span class="hide">The geometric series applies to complex values as well as to those real, giving</span>
+        <span class="hide">
+            $$
+                \begin{aligned}
+                \sum_{j=0}^{n-1} \left(\omega_n^k\right)^j &= \frac{\left(\omega_n^k\right)^n - 1}{\omega_n^k - 1} \\
+                &\class{fragment}{{}= \frac{\left(\omega_n^n\right)^k - 1}{\omega_n^k - 1}} \\
+                &\class{fragment}{{}= \frac{(1)^k - 1}{\omega_n^k - 1}} \\
+                &\class{fragment}{{}= 0. \quad \quad \blacksquare}
+                \end{aligned}
+            $$
+        </span>
+    </p>
+    <p class="small hide">The denominator is not 0 since $\omega_n^k = 1$ only when $k$ is divisible by $n$<span class="hide">, which the lemma statement prohibits.</span> </p>
+</section>
+
+<section class="slide">
+    <h2>The FFT: on stage</h2>
+        <ul>
+            <li>Split the input $A(x)$ into an $A^{even}(x)$ and an $A^{odd}$ of degree bound $n/2$ <span class="hide">where</span>
+                $$
+                    \begin{aligned}
+                        &\class{fragment}{\llap{A^{even}} = a_0 + a_2 x + a_4 x^2 + \dots + a_{n-2} x^{n/2 - 1} ,} \\
+                        &\class{fragment}{\llap{A^{odd}} = a_1 + a_3 x + \dots + a_{n-1}x^{n/2-1} .}
+                    \end{aligned}
+                $$
+            </li>
+            <li>If we wanted to stitch $A(x)$ back together <span class="hide">then we can use $A(x) = A^{even}(x^2) + xA^{odd}(x^2).$</span></li>
+            <ul>
+                        <li>Example with $n=4$: <span class="hide">$A(x)=a_0+a_1x+a_2x^2+a_3x^3.$</span>
+            <span class="hide">
+                $$
+                \begin{aligned}
+                A(x) &= (a_0 + a_2x^2) + (a_1x + a_3x^3) \\
+                &\class{fragment}{{}= (a_0 + a_2x^2) + x\,(a_1 + a_3x^2)} \\
+                &\class{fragment}{{}= A^{even}(x^2) + x\,A^{odd}(x^2),}
+                \end{aligned}
+                $$
+            </span>
+            <span class="hide">where $A^{even}(y)=a_0+a_2y$ and $A^{odd}(y)=a_1+a_3y.$</span>
+        </li>
+        <li>Factoring out $x$ turns the odd exponents into even ones, since $x^3 = x\cdot x^2$. <span class="hide">Both groups are then polynomials in $x^2$.</span></li>
+        <li>At $x=\omega_n^k$ we get $x^2=\omega_n^{2k}=\omega_{n/2}^{k}$, an $(n/2)$th root of unity <span class="hide">(cancellation lemma).</span></li>
+        <li>Since $\omega_n^{k+n/2}=-\omega_n^k$, <span class="hide">the points $\omega_n^k$ and $\omega_n^{k+n/2}$ have the same square</span><span class="hide">, so only $n/2$ distinct values of $x^2$ occur.</span></li>
+            </ul>
+        </ul>
+</section>
+
+<section class="slide">
+    <h2>The FFT: Backstage</h2>
+    <ul>
+        <li>The process just observed is evaluating the original polynomial $A(x)$ at $\omega^0_n, \omega^1_n, \dots, \omega^{n-1}_n.$</li>
+        <li>But instead of drawing up a Fourier matrix<span class="hide">, all we did was:</span></li>
+        <ol>
+            <li>evalute the degree-bound $n/2$ polynomials at points $(\omega^0_n)^2, (\omega^1_n)^2, \dots, (\omega^{n-1}_n)^2$ <span class="hide">and then</span></li>
+            <li>combine the results.</li>
+        </ol>
+        <li>The "[f]actoring out $x$" from the previous slide means we are keeping the form of the original problem.</li>
+        <li>The FFT is recursively evaluating the $A^{even}$ and $A^{odd}$ splits<span class="hide">, of degree-bound $n/2$,</span> <span class="hide">at the $n/2$ complex $n/2$ roots of unity.</span></li>
+        <li>Altogether, <span class="hide">what was a $\text{DFT}_n$ computation </span><span class="hide"><i>decomposed</i> into two $\text{DFT}_{n/2}$ ones.</span></li>
+        <li>In the end, the running time is $\Theta(n\log n)$<span class="hide">, which can be found via the recurrence relation $T(n) = 2T(n/2) + \Theta(n)$</span> <span class="hide">where $2T(n/2)$ counts the two recursive invocations, each on an input of length $n/2$,</span> <span class="hide">and $\Theta(n)$ is the work done in one invocation outside those recursive calls.</span></li>    </ul>
+</section>
+
+<section class="slide">
+<h2>FFT in the Wild: Caracal</h2>
+<ul>
+    <li>Caracal replaces self-attention in a language model with an FFT-based module <a href="https://proceedings.mlr.press/v306/gan26c.html">[Caracal 2026]</a>.</li>
+    <li>The problem: attention rebuilds token $t$ from all $L$ tokens $v_0, \dots, v_{L-1}$<span class="hide">,
+        $$r_t = \sum_{j=0}^{L-1} \alpha_{tj}\, v_j, \qquad 0 \leq t < L.$$</span>
+        <span class="hide">There are $L \times L$ weights $\alpha_{tj}$, so the cost is $O(L^2)$.</span></li>
+    <li>A language model is also <u>causal</u><span class="hide">: output $t$ may use only $v_0, \dots, v_t$.</span>
+        <span class="hide">Attention enforces this with a mask that sets $\alpha_{tj} = 0$ for $j > t$.</span></li>
+    <li>The discrete Fourier transform has the same weighted-sum shape<span class="hide">, $r_t = \sum_{j} \omega^{tj} v_j$,</span>
+        <span class="hide">but the FFT never forms the weights, so there is nothing to mask.</span></li>
+    <li>One FFT per prefix would work<span class="hide">, but that is $L$ transforms and $O(L^2 \log L)$ in total, which is worse than attention.</span></li>
+</ul>
+</section>
+
+<section class="slide">
+<h2>FFT in the Wild: Caracal's fix</h2>
+<ul>
+    <li>Write the causal sum as a <u>convolution</u><span class="hide">: $r_t = \sum_{j=0}^{t} v_j\, g_{t-j}$ </span><span class="hide">which is familiar to us as
+        $$y[n] = \sum_{m=-\infty}^{\infty} x[m]\,h[n-m]$$</span>
+        <span class="hide">with $x = v$, $h = g$, $y = r$, $n = t$, and $m = j$.</span>
+        <span class="hide">Both $x$ and $h$ are $0$ at negative indices, so only $0 \leq m \leq n$ contributes.</span></li>
+    <li>Recall that convolution is polynomial multiplication<span class="hide">: let $X(u)=\sum_m x[m]\, u^m$ and $H(u)=\sum_k h[k]\, u^k$, with the samples as coefficients.</span>
+        <span class="hide">The coefficient of $u^n$ in $X(u)\,H(u)$ is $\sum_{m+k=n} x[m]\,h[k] = y[n].$</span></li>
+    <li>So we can use evaluation and interpolation:</li>
+    <ol>
+        <li>evaluate $X$ and $H$ at the roots of unity $\omega^0, \dots, \omega^{n-1}$ (FFT);</li>
+        <li>multiply the values pointwise, $X(\omega^i)\,H(\omega^i)$, in $O(n)$ time;</li>
+        <li>interpolate the product's coefficients (inverse FFT).</li>
+    </ol>
+    <li>Each transform costs $O(n \log n)$<span class="hide">, where $n$ is the padded length, so the total is $O(L \log L)$ instead of $O(L^2)$.</span></li>
+</ul>
+<p class="small hide">In Caracal the kernel $h$ is computed from the input by a small network, so the mixing depends on content.</p>
+</section>
+
+<section class="slide">
+<h2>FFT in the Wild: Why Caracal pads</h2>
+<ul>
+    <li>At the $n$th roots of unity $u=\omega^i$, $u^n = 1$<span class="hide">, since $(\omega^i)^n=(\omega^n)^i=1$, so a term of degree $n + k$ wraps onto degree $k$.</span></li>
+    <li>Wrapping lets a later token "leak" into an earlier output<span class="hide">. With $L = n = 2$,
+        $$y'[0] = x[0]\,h[0] + x[1]\,h[1],$$</span>
+        <span class="hide">so $x[1]$, a future token, changes output $0$.</span></li>
+    <li>The fix is <i>pad, FFT, multiply, inverse FFT, truncate</i> procedure where we:</li>
+    <ol>
+        <li>pad $x$ and $h$ with zeros to length $n = 2L$;</li>
+        <li>transform, multiply pointwise, and transform back;</li>
+        <li>keep only the first $L$ outputs.</li>
+    </ol>
+    <li>The product has degree at most $2L-2$, below $n = 2L$<span class="hide">, so nothing wraps into the outputs we keep.</span></li>
+    <li>At a context length of 8192, the paper reports training nearly three times faster than a Llama baseline.</li>
+</ul>
+</section>
+
+
+
+
+
+
+
+
+
+
+  <section class="slide center">
+    <h1>End</h1>
+    <p class="small">Questions?</p>
+  </section>
+
+</main>
+
+<nav id="controls" aria-label="Presentation controls">
+  <button type="button" id="b-prev" aria-label="Previous">◀</button>
+  <button type="button" id="b-next" aria-label="Next">▶</button>
+  <button type="button" id="b-pause" aria-pressed="false">Pause motion</button>
+  <button type="button" id="b-smaller" aria-label="A− smaller text">A−</button>
+  <button type="button" id="b-bigger" aria-label="A+ larger text">A+</button>
+  <button type="button" id="b-doc" aria-pressed="false">Document view</button>
+  <button type="button" id="b-aspect">Aspect 16:9</button>
+  <button type="button" id="b-pdf">Export PDF</button>
+  <button type="button" id="b-help">Help</button>
+  <span id="counter" aria-hidden="true"></span>
+</nav>
+<div id="progress" aria-hidden="true"></div>
+<div id="announce" class="sr-only" role="status" aria-live="polite"></div>
+
+<dialog id="help" aria-labelledby="help-t">
+  <h2 id="help-t" style="margin-top:0">Keys and controls</h2>
+  <table>
+    <tr><th scope="row">Next</th><td><kbd>→</kbd> <kbd>↓</kbd> <kbd>Space</kbd> <kbd>PageDown</kbd>, or click the right of the screen</td></tr>
+    <tr><th scope="row">Back</th><td><kbd>←</kbd> <kbd>↑</kbd> <kbd>PageUp</kbd>, or click the left third</td></tr>
+    <tr><th scope="row">First / last</th><td><kbd>Home</kbd> <kbd>End</kbd></td></tr>
+    <tr><th scope="row">Pause motion</th><td><kbd>K</kbd></td></tr>
+    <tr><th scope="row">Text size</th><td><kbd>-</kbd> <kbd>+</kbd></td></tr>
+    <tr><th scope="row">Export PDF</th><td><kbd>P</kbd> (print dialog &rarr; Save as PDF; every step shown)</td></tr>
+    <tr><th scope="row">Document view</th><td><kbd>D</kbd> (one scrolling page; browser zoom works)</td></tr>
+    <tr><th scope="row">Aspect ratio</th><td><kbd>A</kbd> (switch between 16:9 and 4:3)</td></tr>
+    <tr><th scope="row">Overview</th><td><kbd>O</kbd></td></tr>
+    <tr><th scope="row">Full screen</th><td><kbd>F</kbd></td></tr>
+    <tr><th scope="row">This help</th><td><kbd>?</kbd></td></tr>
+  </table>
+  <label><input type="checkbox" id="opt-keys" checked> Use single-letter keys (K, D, A, O, F, ?, +, −)</label>
+  <label><input type="checkbox" id="opt-controls" checked> Show the control buttons</label>
+  <form method="dialog" style="margin-top:16px"><button>Close</button></form>
+</dialog>
+
+<script>
+/* ===== Engine: plain JavaScript, no libraries. ===== */
+(() => {
+  const $ = id => document.getElementById(id);
+  const body = document.body, deck = $('deck');
+  const slides = [...deck.querySelectorAll(':scope > .slide')];
+
+  // Auto-fragments: on each slide, the first list item (ul or ol, any depth) shows right away and
+  // every later one appears step by step, in document order. Opt out per slide with
+  // <section class="slide" data-no-auto-fragments>, or per item with <li class="no-fragment">.
+  slides.forEach(s => {
+    if (s.hasAttribute('data-no-auto-fragments')) return;
+    s.querySelectorAll('li').forEach((li, n) => {
+      if (n > 0 && !li.classList.contains('no-fragment')) li.classList.add('fragment');
+    });
+  });
+  // class="hide": any element starts hidden and is revealed by the next click/keypress
+  // (→ ↓ Space PageDown, or a presentation clicker), in document order with the list items.
+  deck.querySelectorAll('.hide').forEach(el => el.classList.add('fragment'));
+  const announce = $('announce'), help = $('help');
+  let cur = 0, paused = false, textScale = 1, letterKeys = true, aspect = '16:9';
+
+  // Saved per-viewer settings (fails safely if storage is blocked).
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('slides.' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem('slides.' + k, JSON.stringify(v)); } catch {} }
+  };
+
+  // Label each slide for screen readers: "Slide 3 of 7: heading".
+  slides.forEach((s, i) => {
+    s.setAttribute('role', 'group');
+    s.setAttribute('aria-roledescription', 'slide');
+    const h = s.querySelector('h1, h2, h3');
+    s.setAttribute('aria-label', `${i + 1} of ${slides.length}` + (h ? `: ${h.textContent.trim()}` : ''));
+  });
+
+  const mode = () => body.classList.contains('doc') ? 'doc' : body.classList.contains('overview') ? 'overview' : 'slides';
+  const say = t => { announce.textContent = ''; setTimeout(() => announce.textContent = t, 50); };
+
+  // Scale the fixed 1280x720 canvas to fit the window.
+  const canvasW = () => aspect === '4:3' ? 960 : 1280;
+  const fit = () => deck.style.setProperty('--scale', Math.min(innerWidth / canvasW(), innerHeight / 720));
+
+  // Shrink-to-fit: if a slide's content is too big for the canvas, zoom it down
+  // until it fits, so nothing is lost when the aspect ratio changes. Measured at
+  // the base text size, so the A+ button can still enlarge text after this.
+  function fitContent() {
+    const root = document.documentElement, t = root.style.getPropertyValue('--text');
+    const was = body.className; body.classList.remove('doc', 'overview');
+    root.style.setProperty('--text', 1);
+    // Binary search for the largest zoom that fits. Text reflows when zoomed (lines
+    // wrap less), so a single proportional shrink overshoots and leaves empty space.
+    // Overflow is hidden while measuring so a scrollbar cannot narrow the text mid-search.
+    const fits = (s, f) => { s.style.setProperty('--fit', f);
+      return s.scrollHeight <= s.clientHeight * 1.005 && s.scrollWidth <= s.clientWidth * 1.005; };
+    slides.forEach(s => {
+      s.style.overflow = 'hidden';
+      if (!fits(s, 1)) {
+        let lo = .4, hi = 1;
+        for (let n = 0; n < 10; n++) { const mid = (lo + hi) / 2; if (fits(s, mid)) lo = mid; else hi = mid; }
+        s.style.setProperty('--fit', Math.max(.4, lo * .99));
+      }
+      s.style.overflow = '';
+    });
+    root.style.setProperty('--text', t || 1);
+    body.className = was;
+  }
+
+  function setAspect(a, speak = true) {
+    aspect = a === '4:3' ? '4:3' : '16:9';
+    document.documentElement.style.setProperty('--W', canvasW());
+    pageSize.textContent = `@page { size: ${canvasW()}px 720px; margin: 0; }`;
+    $('b-aspect').textContent = 'Aspect ' + aspect;
+    store.set('aspect', aspect);
+    fit(); fitContent();
+    if (speak) say('Aspect ratio ' + aspect);
+  }
+  const pageSize = document.head.appendChild(document.createElement('style'));
+  addEventListener('resize', fit); fit();
+
+  // Full screen: true for the Fullscreen API and for browser full-screen mode.
+  let mouseTimer;
+  const updateFs = () => {
+    const fs = !!document.fullscreenElement ||
+      (Math.abs(innerWidth - screen.width) < 2 && Math.abs(innerHeight - screen.height) < 2);
+    body.classList.toggle('fs', fs);
+    fit();
+  };
+  addEventListener('resize', updateFs);
+  document.addEventListener('fullscreenchange', updateFs);
+  updateFs();
+  // Show the cursor briefly when the mouse moves in full screen.
+  addEventListener('mousemove', () => {
+    body.classList.add('mouse'); clearTimeout(mouseTimer);
+    mouseTimer = setTimeout(() => body.classList.remove('mouse'), 1500);
+  });
+
+  // Hidden slides are inert: no focus, not read, not clickable.
+  function setInert() {
+    slides.forEach((s, i) => s.inert = mode() === 'slides' && i !== cur);
+  }
+
+  /* ---------- Motion: pause and resume GIF, SVG, CSS, video ---------- */
+  function freezeGifs(root) {
+    root.querySelectorAll('img').forEach(img => {
+      if (!/\.gif($|\?)|^data:image\/gif/i.test(img.src) || img.dataset.frozen) return;
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth || img.width; c.height = img.naturalHeight || img.height;
+      c.style.width = img.width + 'px'; c.style.height = img.height + 'px';
+      c.setAttribute('role', 'img'); c.setAttribute('aria-label', img.alt);
+      try { c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); } catch {}
+      img.dataset.frozen = '1'; img.hidden = true; img.after(c); img._still = c;
+    });
+  }
+  function thawGifs(root) {
+    root.querySelectorAll('img[data-frozen]').forEach(img => {
+      img._still?.remove(); img.hidden = false; delete img.dataset.frozen;
+      const u = img.src; img.src = ''; img.src = u;
+    });
+  }
+  function applyMotion(root) {
+    root.querySelectorAll('svg').forEach(svg => paused ? svg.pauseAnimations?.() : svg.unpauseAnimations?.());
+    root.querySelectorAll('video').forEach(v => { if (paused) v.pause(); });
+    paused ? freezeGifs(root) : thawGifs(root);
+  }
+  function setPaused(p) {
+    paused = p; body.classList.toggle('paused', p);
+    $('b-pause').setAttribute('aria-pressed', p); $('b-pause').textContent = p ? 'Play motion' : 'Pause motion';
+    applyMotion(document);
+    if (!p && mode() === 'slides') playSlideMedia(slides[cur]);
+    store.set('paused', p); say(p ? 'Motion paused' : 'Motion playing');
+  }
+  function playSlideMedia(s) {
+    s.querySelectorAll('video[data-autoplay]').forEach(v => { v.currentTime = 0; v.play().catch(() => {}); });
+  }
+
+  /* ---------- Navigation ---------- */
+  // Skip MathJax's hidden screen-reader copy of \class{fragment} math, so each step takes one click.
+  const frags = i => [...slides[i].querySelectorAll('.fragment')].filter(f => !f.closest('mjx-assistive-mml'));
+
+  function show(i, fromEnd = false, speak = true) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    const old = slides[cur];
+    old.classList.remove('active');
+    old.querySelectorAll('video').forEach(v => v.pause());
+    cur = i;
+    const s = slides[cur];
+    // Re-add "active" so CSS animations restart from the first frame.
+    s.classList.remove('active'); void s.offsetWidth; s.classList.add('active');
+    frags(cur).forEach(f => f.classList.toggle('shown', fromEnd));
+    setInert();
+    if (paused) applyMotion(s);
+    else {
+      s.querySelectorAll('img').forEach(g => { if (/\.gif($|\?)|^data:image\/gif/i.test(g.src)) { const u = g.src; g.src = ''; g.src = u; } });
+      s.querySelectorAll('svg').forEach(svg => svg.setCurrentTime?.(0));
+      playSlideMedia(s);
+    }
+    history.replaceState(null, '', '#' + (cur + 1));
+    $('progress').style.width = (100 * cur / Math.max(1, slides.length - 1)) + '%';
+    $('counter').textContent = (cur + 1) + ' / ' + slides.length;
+    if (speak) say('Slide ' + s.getAttribute('aria-label'));
+  }
+
+  function next() {
+    if (mode() !== 'slides') return;
+    const hidden = frags(cur).find(f => !f.classList.contains('shown'));
+    if (hidden) { hidden.classList.add('shown'); say(hidden.textContent.trim().replace(/\s+/g, ' ')); }
+    else if (cur < slides.length - 1) show(cur + 1);
+    else say('End of presentation');
+  }
+  function prev() {
+    if (mode() !== 'slides') return;
+    const shown = frags(cur).filter(f => f.classList.contains('shown'));
+    if (shown.length) { shown.at(-1).classList.remove('shown'); say('Step back'); }
+    else if (cur > 0) show(cur - 1, true);
+    else say('Start of presentation');
+  }
+
+  /* ---------- Views ---------- */
+  function setView(v) {
+    body.classList.toggle('doc', v === 'doc');
+    body.classList.toggle('overview', v === 'overview');
+    $('b-doc').setAttribute('aria-pressed', v === 'doc');
+    slides.forEach(s => v === 'overview' ? s.tabIndex = 0 : s.removeAttribute('tabindex'));
+    setInert();
+    if (v === 'slides') { fit(); show(cur, false, false); say('Slide view. Slide ' + slides[cur].getAttribute('aria-label')); }
+    else {
+      slides[cur].scrollIntoView({ block: 'start' });
+      if (v === 'overview') slides[cur].focus();
+      say(v === 'doc' ? 'Document view' : 'Overview. Press Enter on a slide to open it.');
+    }
+  }
+  const toggleView = v => setView(mode() === v ? 'slides' : v);
+
+  function setText(t) {
+    textScale = Math.max(.75, Math.min(2, Math.round(t * 100) / 100));
+    document.documentElement.style.setProperty('--text', textScale);
+    store.set('text', textScale);
+  }
+
+  /* ---------- Input ---------- */
+  const interactive = el => el.closest('a, button, input, textarea, select, summary, video, dialog, [contenteditable]');
+
+  addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey || help.open) return;
+    const typing = e.target.closest('input, textarea, select, [contenteditable]');
+    if (typing) return;
+    const onControl = interactive(e.target);
+    const k = e.key;
+
+    if (mode() === 'overview' && k === 'Enter' && e.target.classList?.contains('slide')) {
+      e.preventDefault(); cur = slides.indexOf(e.target); setView('slides'); return;
+    }
+    if (mode() === 'slides') {
+      if (['ArrowRight', 'ArrowDown', 'PageDown'].includes(k) || (!onControl && (k === ' ' || k === 'Enter'))) { e.preventDefault(); return next(); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(k)) { e.preventDefault(); return prev(); }
+      if (k === 'Home') { e.preventDefault(); return show(0); }
+      if (k === 'End') { e.preventDefault(); return show(slides.length - 1, true); }
+    }
+    if (k === 'Escape' && mode() !== 'slides') return setView('slides');
+    if (!letterKeys) return;
+    switch (k.toLowerCase()) {
+      case 'k': setPaused(!paused); break;
+      case 'd': toggleView('doc'); break;
+      case 'o': toggleView('overview'); break;
+      case 'a': setAspect(aspect === '16:9' ? '4:3' : '16:9'); break;
+      case 'f': document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.(); break;
+      case 'p': window.print(); break;
+      case '?': help.showModal(); break;
+      case '+': case '=': setText(textScale + .125); break;
+      case '-': case '_': setText(textScale - .125); break;
+    }
+  });
+
+  // Pointer: click right two-thirds = next, left third = back. Controls are left alone.
+  deck.addEventListener('click', e => {
+    if (mode() === 'overview') {
+      const s = e.target.closest('.slide');
+      if (s) { cur = slides.indexOf(s); setView('slides'); }
+      return;
+    }
+    if (mode() !== 'slides' || interactive(e.target) || getSelection().toString()) return;
+    (e.clientX < innerWidth / 3) ? prev() : next();
+  });
+
+  // Touch swipe (the buttons are the single-tap alternative).
+  let x0 = null;
+  addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', e => {
+    if (x0 === null || mode() !== 'slides') return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) (dx < 0 ? next : prev)();
+  });
+
+  // Wheel / trackpad in slide view only: one flick = one step.
+  let lock = 0;
+  addEventListener('wheel', e => {
+    if (mode() !== 'slides' || Date.now() < lock || e.ctrlKey) return;
+    lock = Date.now() + 500;
+    (e.deltaY > 0 ? next : prev)();
+  }, { passive: true });
+
+  // Buttons.
+  $('b-prev').onclick = prev;
+  $('b-next').onclick = next;
+  $('b-pause').onclick = () => setPaused(!paused);
+  $('b-smaller').onclick = () => setText(textScale - .125);
+  $('b-bigger').onclick = () => setText(textScale + .125);
+  $('b-doc').onclick = () => toggleView('doc');
+  $('b-aspect').onclick = () => setAspect(aspect === '16:9' ? '4:3' : '16:9');
+  $('b-pdf').onclick = () => window.print();
+  $('b-help').onclick = () => help.showModal();
+  $('opt-keys').onchange = e => { letterKeys = e.target.checked; store.set('keys', letterKeys); };
+  $('opt-controls').onchange = e => { body.classList.toggle('nocontrols', !e.target.checked); store.set('controls', e.target.checked); };
+
+  /* ---------- Start ---------- */
+  letterKeys = store.get('keys', true); $('opt-keys').checked = letterKeys;
+  const showControls = store.get('controls', true);
+  $('opt-controls').checked = showControls; body.classList.toggle('nocontrols', !showControls);
+  setText(store.get('text', 1));
+  setAspect(store.get('aspect', '16:9'), false);
+  // Measure again when the fonts and the LaTeX have finished rendering.
+  document.fonts?.ready.then(fitContent);
+  addEventListener('load', () => { fitContent(); window.MathJax?.startup?.promise?.then(fitContent); });
+  const fromHash = () => (parseInt(location.hash.slice(1), 10) || 1) - 1;
+  addEventListener('hashchange', () => { if (fromHash() !== cur) show(fromHash()); });
+  slides.forEach(s => s.classList.remove('active'));
+  show(fromHash(), false, false);
+  // Respect the operating system's "reduce motion" setting, or the viewer's saved choice.
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const p0 = store.get('paused', reduce);
+  if (p0) addEventListener('load', () => setPaused(true));
+})();
+</script>
+</body>
+</html>

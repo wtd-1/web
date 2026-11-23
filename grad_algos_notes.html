@@ -136,6 +136,19 @@
             }
         }
     </style>
+    <style>
+        .mjx-container {
+            font-size: 1.8em !important;
+            line-height: 1 !important;
+        }
+        .mjx-container[display="true"] {
+            font-size: 2.2em !important;
+            line-height: 1.5 !important;
+        }
+        .mjx-container svg {
+            vertical-align: middle !important;
+        }
+    </style>
 <!-- MathJax v3 (TeX input, SVG output) -->
   <script>
     window.MathJax = {
@@ -143,11 +156,14 @@
         inlineMath: [['$', '$'], ['\\(', '\\)']],
         displayMath: [['$$', '$$'], ['\\[', '\\]']]
       },
-      svg: { fontCache: 'global' }
+      svg: {
+        fontCache: 'global',
+        scale: 1.4
+      }
     };
   </script>
   <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    src="https://cdn.jsdelivr.net/npm/mathjax@latest/es5/tex-svg.js"></script>
 
 
 </head>
@@ -157,8 +173,9 @@
         <h2>TABLE OF CONTENTS</h2>
         <a href="#introduction">Introduction</a>
         <a href="#asymptotic-analysis">Asymptotic analysis</a>
+        <a href="#functions">Functions</a>
         <a href="#recurrences">Recurrences</a>
-        <a href="#divide-conquer">Iterative, Recursive, and Divide-and-Conquer algorithms</a>
+        <a href="#divide-conquer">Divide-and-Conquer</a>
         <a href="#dynamic-programming">Dynamic programming</a>
         <a href="#greedy">Greedy methods</a>
         <a href="#matroid">Matroids <span class="red">(Extra)</span></a>
@@ -174,19 +191,196 @@
         <br>
 
 
-        <h2 id="introduction">INTRODUCTION</h2>
-        <p><i>Introduce the course and administrivia.</i></p>
+        <h2 id="introduction"><a href="#introduction"><b>INTRODUCTION</b></a></h2>
+        <p><i>Introducing the course and its administrivia.</i></p><br>
+        <p>The notes herein are written in service to the course of CS 6363 at UTD on the Design and 
+            Analysis of Computer Algorithms. Much care is taken to its presentation: vocabulary terms
+            are bolded, key ideas and notions are italicised, and definitions are underlined. The 
+            notes also offer periodic applications of the concepts so the 
+            student can realise the applicability of the lessons being engaged with. </p>
+            <p>Since these notes are written for a graduate course, 
+            certain methods, notations, algorithms, and background knowledge is assumed. For the brevity of 
+            these notes, we believe it best to simply refer the student to other sources who may better 
+            put the information should a need for them arise. Be certain to check back frequently for updates to this notes page. These notes are only 
+            meant for the student's own enrichment and are not to serve as a complete replacement to 
+            the lecture material or the textbook. 
+        </p><br>
+        <p>The word <b>algorithm</b> is a ubiquitous term in computer science. Algorithms help us solve
+        problems—pure and simple. Simply put, <u>an algorithm is an instruction on the content of a problem and 
+        the sequence of simple operations requisite to solve it. </u> These instructions are to be carried precisely and
+        to the dot. Despite its succinctness, the aforementioned definition benefits from being <i>honed</i> further. Specifically, 
+        thanks to Donald Knuth, an algorithm fulfills the certain properties of: 
+        <blockquote>
+            (1) <b>Finiteness</b> in its number of steps, <br>
+            (2) <b>Definitness</b> in the determination of its steps, and <br>
+            (3) <b>Effectiveness</b> in how basic the steps are.
+        </blockquote>
+       </p>
+       <p>Another more subtle demand of algorithm design is that the product is sufficiently general, applicable to 
+        not only a particular problem but <i>also to the other problems of a similar ilk</i>. This principle transcends this 
+        course. In an industrial setting, one's product is useless if the client can only use it for one 
+        of its problems. For instance, if a municipal healthcare client contracts with a company to design a new provider enrollment
+        solution, it is natural that the product delivered would be able to accomodate all potential providers within a 
+        given jurisdiction. Otherwise, if the product can only sign up providers named "John Smith" and nobody else, 
+        then it is probable the company will no longer find a contract with that municipality.
+       </p>
+       <p>A neat tool in the arsenal of algorithm design is the <b>reduction</b>. This should be a familiar term to 
+        those students familiar with Automata Theory, and the <i>essence</i> is the same: <u>take a problem and show that 
+        it can be thought of as a different problem, which would mean both problems can be solved using one solution to either.</u> 
+        This very concept is useful to an algorithms student because it allows a new, unfamiliar problem to be solvable by 
+        an algorithm for a familiar one by some sort of creative manipulation or rethinking. </p>
+        <p>In this course, we devote ourselves to the study of <b>deterministic</b>, <b>exact</b> algorithms which run <b>sequentially</b> and <b>offline</b>. 
+            That means we will mainly examine algorithms whose <u>executions will produce the same output if given the same input</u> (determinism). These algorithms 
+            <u>have the input in full</u> (offline) and <u>execute commands in the order they are written</u> (sequential).
+        There are some others, such as those who take advantage of multicore architectures and can run instructions concurrently without issue (concurrent algorithms), 
+        those run on NP-hard problems that might not get us the exact answer but rather one within an appropriate factor (approximation algorithms), 
+        and even those whose information is not given or even known at the onset and are received in a stream (online algorithms). These more advanced
+        algorithms and schemes are left to other courses. </p>
+        <p>Additionally, we make a further assumption on the scope of the algorithms we study. That is, we will be operating 
+            under the <b>RAM Model</b> of computation. Indeed, the "RAM" portion of that term is for "Random-Access". Henceforth, it
+            is assumed that the essential operations of $+$, $-$, $/$, and $\times$ all have <b>unit cost</b>, as well as comparisons and any 
+            random access that may occur. Actually, the RAM model is one of four different types of <b>abstract machines</b>, a theoretical 
+            model to describe and analyse the functions of a computer. We refer the reader to [<a href="https://en.wikipedia.org/wiki/Register_machine">Wikipedia</a>] for more. 
+        </p>
         <br>
 
-        <h2 id="asymptotic-analysis">ASYMPTOTIC ANALYSIS</h2>
-        <p><i>Focus on growth rates, bounds, and the difference between worst-case, average-case, and amortized analysis.</i></p>
+        <h2 id="asymptotic-analysis"><a href="#asymptotic-analysis"><b>ASYMPTOTIC ANALYSIS</b></a></h2>
+        <p><i>Focus on growth rates, bounds, and the difference between worst-case, average-case, and amortized analysis.</i></p><br>
+        <p>Naturally, the study of algorithms requires a meter for comparison. Typically, such a meter is in truth a two-in-one tool 
+            that assesses the <b>efficiency</b> of an algorthm via the measures of <b>time complexity</b> and <b>space complexity</b>. 
+            Prior to that, however, the notion of efficiency must be more well-defined. Basically, there are many definitions 
+            for efficiency—perhaps how fast it runs or how much better an algorithm is as compared to a brute-force method. But, these 
+            are qualitative and hold little rigor. 
+        </p>
+        <p>A better definition of efficiency starts with understanding an elementary fact: if the inputs increase, the expectation is 
+            that the performance of an algorithm decreases; <i>the extent to which it does is the interest of a good eye for algorithm design</i>.
+            Ergo, we can say that the input to and the performance of an algorithm are inversely proportional by a constant factor. 
+        </p>
+        <blockquote><b>DEFINITION: EFFICIENCY. </b> An algorithm is said to be <b>efficient</b> if for constants $c$ and $d$, every input
+        of size $n$ is bounded by the expression $T(n) \leq cn^d, \forall n$. </blockquote>
+            <p>
+                With efficiency defined, we may turn now to the matter of properly defining the language of <b>asymptotic analysis</b>; "aymptotic" meaning
+                that for functions $f(x)$ and $g(x)$, define the equivalence relation $f(x) \sim g(x), \text{ }x \rightarrow \infty$ iff
+                $\lim_{x \rightarrow \infty} \frac{f(x)}{g(x)} = 1$. It is through the lens of asmptotic analysis that constant factors and lower-order
+                terms can be ignored. Now, the orders of growth are defined for functions $f$ and $g$ from
+                $\mathbb{R}$ to $\mathbb{R}$ and for constants $c$. The student should note that the bounds are the sets of functions
+                for which the property defined herefrom holds.  
+                <blockquote>
+                    <b>DEFINITION: BIG-OH, THE UPPER BOUND.</b> $f \in O(g)$ if<br>
+                    <center>$\exists c > 0 \land \exists n_0 > 0 : \forall n \geq n_0, f(n) \leq c \cdot g(n)$.</center>
+                    That would mean
+                    <center>$O(g) = \{f : \exists c > 0 \land \exists n_0 > 0, 0 \leq f \leq c \cdot g \quad \forall n \geq n_0\}$.</center>
+                </blockquote>
+                <blockquote>
+                    <b>DEFINITION: BIG-OMEGA, THE LOWER BOUND.</b> $f \in \Omega(g)$ if<br>
+                    <center>$\exists c > 0 \land \exists n_0 : \forall n \geq n_0, f(n) \geq c \cdot g(n)$.</center>
+                    That would mean
+                    <center>$\Omega(g) = \{f : \exists c > 0 \land \exists n_0 > 0, 0 \leq c \cdot g \leq f \quad \forall n \geq n_0\}$.</center>
+                </blockquote>
+                <blockquote>
+                    <b>DEFINITION: BIG-THETA, THE TIGHT BOUND.</b> $f \in \Theta(g)$ if<br>
+                    <center>$\exists c > 0 \land \exists n_0 : \forall n \geq n_0, f(n) \leq c \cdot g(n) \land f(n) \geq c \cdot g(n)$.</center>
+                    Alternatively, 
+                    <center>$f \in O(g) \land f \in \Omega(g)$.</center>
+                    
+                </blockquote>
+                <blockquote>
+                    <b>DEFINITION: LITTLE-OH, THE UNTIGHT UPPER BOUND.</b> $f \in o(g)$ if<br>
+                    <center>$\forall c > 0 \land \exists n_0 : \forall n \geq n_0, f(n) < c \cdot g(n)$.</center>
+                    That would mean
+                    <center>$o(g) = \{f : \forall c > 0 \land \exists n_0 > 0, 0 \leq f < c \cdot g\quad \forall n \geq n_0\}$.</center>
+                </blockquote>                
+                <blockquote>
+                    <b>DEFINITION: LITTLE-OMEGA, THE UNTIGHT LOWER BOUND.</b> $f \in \omega(g)$ if<br>
+                    <center>$\forall c > 0 \land \exists n_0 : \forall n \geq n_0, f(n) > c \cdot g(n)$.</center>
+                    That would mean
+                    <center>$\omega(g) = \{f : \forall c > 0 \land \exists n_0 > 0, 0 \leq c \cdot g < f \quad \forall n \geq n_0\}$.</center>
+                </blockquote>
+            </p>
+            <p>
+                Earlier, we spoke of efficiency being in polynomial time. Surely, the student must be aware of constant time. We dedicate now a portion 
+                of the notes to some of the common functions observed in this class. Exponential time is characterised by $O(c^n)$ for $c > 1$. Polylogarithmic, 
+                "Polylog", time is characterisd by $O(\log^cn)$ for $c>0$ where $\log^cn = (\log n)^x$; it means <u>polynomial in the $
+                    log$ of $n$.</u> Hence, $O(polylog(n))$ is the same as $O((\log n)^k)$ for some $k$. 
+            </p>
+
         <br>
+        <h2 id="functions"><a href="#functions"><b>FUNCTIONS</b></a></h2>
+        <p><i>Having functions in mind can never hurt. Learn about their occurence and identities.</i></p><br>
+        <p> This lecture will see the many functions which are useful to have in one's problem-solving arsenal. We begin certainly with the humble logarithm.
+            Define the <b>logarithm</b>, $\log$, as <u>the inverse of an exponential function</u>. Hence, $c^{\log_c n}=n$ for $c>1$ where we have
+             the base $c$ being arbitrary and greater than one. We furthermore let $\lg n = \log_2 n$ (the binary logarithm) and $\ln = \log_e n$ (the natural logarithm).
+        </p>
+        <p>
+            Let $f(n) = \log_c n$. The inverse would be $f^{-1}(n) = c^n$, its exponential form. Calculating the exponential function of the logarithm of an arbitrary $n > 0$: <br>
+            <center>$f^{-1}(f(n)) = c^{\log_c n}=n$.</center>
+            Respectively, the logarithm of the exponential function is:<br>
+            <center>$f(f^{-1}(n))= \log_c(c^n) = n$.</center>
+        </p>
+        <p>There are some neat rules about the logarithm. They are below.
+            <blockquote>
+            * <b>PRODUCT:</b> $\log_c(n \cdot m) = \log_c(n) + \log_c(m)$<br>
+            * <b>QUOTIENT:</b> $\log_c(n / m) = \log_c(n) - \log_c(m)$<br>
+            * <b>POWER:</b> $\log_c(n^m) = m\log_c(n)$<br>
+            * <b>BASE SWITCH:</b> $\log_c(n) = \frac{1}{\log_n(c)}$<br>
+            * <b>BASE CHANGE:</b> $\log_c(n) = \frac{\log_c(n)}{\log_c(c)}$<br>
+            * <b>DERIVATIVE:</b> $f(n)=\log_c(n) \Rightarrow f'(n)=\frac{1}{n\ln(c)}$<br>
+            * <b>INTEGRAL:</b> $\int \log_c(n)\,dn = n\left(\log_c(n)-\frac{1}{\ln(c)}\right)+C$<br>
+            * <b>NEGATIVE NUMBER:</b> $\log_c(n)$ is undefined when $n \le 0$<br>
+            * <b>ZERO:</b> $\log_c(0)$ is undefined as the logarithm is defined over domain $(0, \infty)$, and $\lim_{n\to 0^+}\log_c(n)=-\infty$<br>
+            * <b>ONE:</b> $\log_c(1)=0$<br>
+            * <b>BASE:</b> $\log_c(c)=1$<br>
+            * <b>INFINITY:</b> $\lim_{n\to\infty}\log_c(n)=\infty$<br>
+            * <b>EXPONENTIATION: $\log^kn = (\log n)^k$</b>
+        </blockquote>
+            Beyond the rules above, there are some additional facts to consider. Notably, <br>
+            <blockquote>
+            * $a^{\log_c n} = n^{\log_c a}$<br>
+            * For a polynomial $P(n)$, $\log(P(n)) = \Theta(\log(n))$<br>
+            * $\lg^{-1} n = 2^n$ by invertability<br><br>
+            * <b>ITERATED LOG:</b> $\log^*(n) = \begin{cases}0, & n \le 1 \\ 1 + \log^*(\log_2 n), & n > 1\end{cases}$<br><br>
+            * $\log^*(2^{2^n}) = 1 + \log^*(2^n) = 2 + \log^*(n)$<br>
+            * $\log^*(n) = o(\log^k n)$ for a fixed $k \in \mathbb{Z} > 0$<br>
+            * $\log_c(\frac{1}{n})=-\log_c{n}$
+            </blockquote>
+            The <b>iterated $\log$</b> is called "log-star". CLRS has a different definition of log-star to the recursive definition above as far as defining it as<br>
+            <center>$\min\{i \geq 0 : lg^{(i)}n \leq 1\}$</center>
+            where the "$(i)$" part is distinguished from simply "$i$" in that the former denotes the $i$-th successive application of 
+            its logarithm and the latter is the power to which such $\log$ was raised. Of note about log-star is <i>how slow it grows</i>. CLRS notes that 
+            $\lg^*(2^{65536})=5$, which is interesting since that number is considerably greater than the number of atoms in the observable universe. 
+        </p>
+        <p>Log-star becomes more useful in the analysis of algorithms such as Union-Find, which can be read further in 
+            [<a hre="https://www.cs.cmu.edu/~15451-s19/lectures/lec04-unionfind.pdf">CMU 15-451/651 '19</a>, 
+            <a href="https://en.wikipedia.org/wiki/Iterated_logarithm">Wikipedia</a>]. In short, 
+            the operation of log-star can be thought of as repeated applications of the $\log_2$ for a base $2$ such that 
+            the exponents are "peeled" off. This is demonstrated in the telescoping example below, due to [<a hre="https://www.cs.cmu.edu/~15451-s19/lectures/lec04-unionfind.pdf">CMU 15-451/651 '19</a>]. 
+            Each step applies one binary logarithm and reduces the exponent by one level, and each application produces a constant 1 to be added. <br>
+            <center>
+                $$
+                \begin{aligned}
+                \lg^*(2^{65536})
+                &= 1 + \lg^*(\lg(2^{65536})) \\
+                &= 1 + \lg^*(65536) \\
+                &= 1 + \left(1 + \lg^*(\lg(65536))\right) \\
+                &= 2 + \lg^*(16) \\
+                &= 2 + \left(1 + \lg^*(\lg(16))\right) \\
+                &= 3 + \lg^*(4) \\
+                &= 3 + \left(1 + \lg^*(\lg(4))\right) \\
+                &= 4 + \lg^*(2) \\
+                &= 4 + \left(1 + \lg^*(\lg(2))\right) \\
+                &= 5 + \lg^*(1) \\
+                &= 5.
+                \end{aligned}
+                $$
+            </center>
+        </p>
+        <p>Broadly, logarithms are useful chiefly </p>
         
         <h2 id="recurrences">RECURRENCES</h2>
         <p><i>It is not always clear the complexity of an algorithm. Learn how forming recurrences can part the fog.</i></p>
         <br>
         
-        <h2 id="divide-conquer">ITERATIVE, RECURSIVE, AND DIVIDE-AND-CONQUER ALGORITHMS</h2>
+        <h2 id="divide-conquer">DIVIDE-AND-CONQUER</h2>
         <p><i>Break problems into smaller subproblems, solve them recursively, and combine the results with a simple merge step.</i></p>
         <br>
         
@@ -225,7 +419,7 @@
 
     </center>
     <p style="text-align: right; font-family: monospace;"> <span style="font-family: monospace;">
-        <span style="font-family: monospace;"> <a href="">pwd</a></span>: /~wtd/TEACHING/grad_algos.html</p> 
+        <span style="font-family: monospace;"> <a href="">pwd</a></span>: /~wtd/TEACHING/grad_algos_notes.html</p> 
         <br>
     </main>
 </div>
